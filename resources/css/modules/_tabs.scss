@@ -1,0 +1,49 @@
+@use '../tools/functions';
+
+// Tabs bar
+// =============
+.tabs-bar {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  .container {
+    display: flex;
+  }
+
+  &::after {
+    content:'';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--border-light);
+  }
+}
+.tabs-bar small {
+  font-size: 14px;
+}
+.tabs-bar a {
+  display: flex;
+  padding: functions.space(2);
+  font-size: 1.2em;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+}
+.tabs-bar a:hover {
+  color: var(--contrast);
+}
+.tabs-bar .icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: functions.space(1);
+  margin-bottom: 4px;
+}
+.tabs-bar a[aria-selected='true'] {
+  color: var(--contrast);
+  border-bottom: 3px solid var(--contrast);
+}

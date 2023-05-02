@@ -1,0 +1,47 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm-run-all --parallel watch dev:vite",
+        "copy": "npm-run-all --parallel copy:*",
+        "copy:assets": "copyfiles -u 4 \"./public/themes/$npm_config_theme/assets/fonts/*\" \"./public/themes/$npm_config_theme\"",
+        "dev:vite": "npx vite --host",
+        "build": "npm-run-all build:*",
+        "build:vite": "npx vite build",
+        "build:sass": "sass --no-source-map public/themes/$npm_config_theme/sass:public/themes/$npm_config_theme/css",
+        "watch": "npm-run-all --parallel watch:*",
+        "watch:sass": "sass --watch --no-source-map public/themes/$npm_config_theme/sass:public/themes/$npm_config_theme/css",
+        "postbuild": "postcss public/themes/$npm_config_theme/css/*.css -u autoprefixer cssnano -r --no-map"
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.2",
+        "@types/node": "^18.16.3",
+        "@types/react": "^18.2.0",
+        "@types/react-dom": "^18.2.1",
+        "@vitejs/plugin-react": "^4.0.0",
+        "alpinejs": "^3.4.2",
+        "autoprefixer": "^10.4.2",
+        "axios": "^1.1.2",
+        "babel-plugin-jsx-pragmatic": "^1.0.2",
+        "copyfiles": "^2.4.1",
+        "cssnano": "^5.1.15",
+        "doctoc": "^2.0.1",
+        "laravel-vite-plugin": "^0.7.2",
+        "npm-run-all": "^4.1.5",
+        "postcss-cli": "^10.1.0",
+        "sass": "^1.32.4",
+        "tailwindcss": "^3.1.0",
+        "typescript": "^5.0.4",
+        "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "@heintouchable/filemanager": "^0.0.6",
+        "@heintouchable/functions": "^0.2.2",
+        "@heintouchable/ui": "^0.1.11",
+        "body-scroll-lock": "^3.1.5",
+        "favicon-badge": "^2.0.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "scriptjs": "^2.5.9",
+        "turbolinks": "^5.2.0"
+    }
+}

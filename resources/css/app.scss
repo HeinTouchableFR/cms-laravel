@@ -1,0 +1,72 @@
+// Modules
+// ==================
+@use 'modules/themeswitcher';
+@use 'modules/card';
+@use 'modules/blur';
+@use 'modules/tabs';
+@use 'modules/user';
+@use 'modules/pagination';
+@use 'modules/table';
+@use 'modules/highlight';
+@use 'modules/comments';
+@use 'modules/notifications';
+@use 'modules/lightbox';
+@use 'modules/searchInput';
+
+// Pages
+// ==================
+//@use 'pages/auth';
+//@use 'pages/blog';
+
+// Outils
+// ==================
+@use 'tools/reset';
+@use 'tools/mixins';
+
+// Dark mode
+// =============
+
+
+// Generic
+// ==================
+
+body.header-light::after {
+    display: none;
+}
+
+body::after {
+    display: none;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 580px;
+    height: 506px;
+    z-index: -1;
+    pointer-events: none;
+
+    @include mixins.up(700) {
+        display: block;
+    }
+}
+
+::selection {
+    background: var(--contrast);
+    color: #fff;
+}
+
+
+//ScrollBar
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-light);
+    padding: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--contrast);
+    border-radius: 4px;
+}

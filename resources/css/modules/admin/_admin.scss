@@ -1,0 +1,50 @@
+// Formulaires
+// =============
+.form-attachment {
+  grid-column: -2 / -1;
+  grid-row-end: span 2;
+}
+
+.form-editor {
+  grid-column: 1 / -1;
+}
+
+.form-switch {
+  align-self: flex-end;
+}
+
+// Commentaires
+// =============
+.dashboard-comment {
+  position: relative;
+}
+
+.dashboard-comment a {
+  text-decoration: underline;
+}
+
+.dashboard-comment strong {
+  font-weight: bold;
+  margin-bottom: space(1);
+}
+
+.dashboard-comment p {
+  opacity: 0.6;
+}
+
+.dashboard-comment .icon-user {
+  height: 12px;
+  width: 12px;
+}
+
+.dashboard-comment__delete .icon {
+  display: block;
+  color: var(--border);
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.dashboard-comment__delete .icon:hover {
+  color: var(--red);
+}

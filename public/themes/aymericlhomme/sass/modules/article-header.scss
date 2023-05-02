@@ -1,0 +1,16 @@
+.article-header {
+  .article-header__meta {
+    a {
+      opacity: 1;
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--contrast);
+      }
+    }
+
+    span {
+      text-decoration: underline;
+    }
+  }
+}

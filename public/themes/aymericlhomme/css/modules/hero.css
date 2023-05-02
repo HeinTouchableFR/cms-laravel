@@ -1,0 +1,8 @@
+.hero .hero__buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.hero .hero__buttons a {
+  margin: initial;
+}

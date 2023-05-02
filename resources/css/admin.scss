@@ -1,0 +1,153 @@
+// Outils
+// ==================
+@use 'tools/functions';
+
+@use 'modules/admin/admin';
+@use 'modules/admin/spotlight';
+
+.admin {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 60px 1fr;
+    min-height: 100vh;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar body";
+
+    nav {
+        display: block;
+        top: 0;
+        position: sticky;
+        max-height: 100vh;
+        overflow: auto;
+        background: var(--color-light);
+        grid-area: sidebar;
+
+        img {
+            display: block;
+            width: auto;
+            height: 110px;
+            margin: auto;
+            margin-block: functions.space(1);
+        }
+
+
+        ul {
+
+            li {
+                display: block;
+
+                &[hidden] {
+                    display: none;
+                }
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    color: var(--color-dark);
+                    padding: 10px 20px;
+                    transition: .3s;
+
+                    &[aria-current] {
+                        background: var(--contrast);
+                        color: var(--color-light);
+
+                        &:hover {
+                            color: var(--color-light);
+                            background: var(--accent);
+                        }
+                    }
+
+                    &:hover {
+                        background: var(--contrast);
+                        color: var(--color-light);
+                    }
+
+                    svg {
+                        width: 18px;
+                        height: 18px;
+                        margin-right: functions.space(1.5);
+                    }
+                }
+            }
+        }
+    }
+
+
+    header {
+        padding: 0 calc(3 * var(--space));
+        background: var(--color-light);
+        color: var(--color-dark);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-area: header;
+
+        site-notifications {
+            position: relative;
+
+            .notifications {
+                background: white;
+                border-radius: 5px;
+                box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5);
+            }
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+            display: block;
+            transition: .3s;
+
+            &:hover {
+                color: var(--contrast);
+            }
+        }
+
+        .admin__body-search {
+            width: 100%;
+            padding: 0 calc(3 * var(--space));
+
+            input {
+                outline: none;
+                width: 100%;
+                padding: calc(1 * var(--space)) 0 calc(1 * var(--space)) calc(2 * var(--space));
+                border: solid 1px var(--border);
+                border-radius: 0.3em;
+                color: inherit;
+            }
+        }
+    }
+
+    main {
+        position: relative;
+        padding: calc(3 * var(--space)) calc(4 * var(--space));
+        grid-area: body;
+
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .admin__body-card {
+            background: white;
+            border-radius: 5px;
+            padding: calc(2 * var(--space));
+            box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.5);
+
+            .bullet {
+                display: block;
+                width: 10px;
+                height: 10px;
+                background: var(--green);
+                margin: auto;
+                border-radius: 50%;
+
+                &.bullet--danger {
+                    background: var(--red);
+                }
+            }
+        }
+    }
+
+}
