@@ -11,6 +11,23 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+
+    /**
+     * Display the user's profile.
+     */
+    public function index(Request $request): View
+    {
+        $comments = [];
+
+        $hasActivity = !empty([]);
+
+        return view('profile.index', [
+            'hasActivity' => $hasActivity,
+            'comments' => $comments,
+            'menu' => route('profile.index')
+        ]);
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -18,6 +35,7 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            'menu' => route('profile.edit')
         ]);
     }
 

@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class PreviewController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:content-list|content-create|content-edit|content-delete', ['only' => ['index', 'template']]);
+    }
+
     /**
      * @throws \JsonException
      */

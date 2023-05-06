@@ -11,25 +11,35 @@ use Illuminate\Support\Facades\Auth;
 
 class PageContentController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:content-list|content-create|content-edit|content-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:content-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:content-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:content-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
         return view('admin.pages.index', [
-            'pages' => Content::where('type', 'page')->orderBy('created_at', 'desc')->paginate(20)
+            'pages' => Content::where('type', 'page')->orderBy('created_at', 'desc')->paginate(20),
+            'menu' => route('admin.page.index')
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() :View
+    public function create(): View
     {
         $page = new Content();
 
         return view('admin.pages.form', [
-            'page' => $page
+            'page' => $page,
+            'menu' => route('admin.page.index')
         ]);
     }
 
@@ -53,7 +63,8 @@ class PageContentController extends Controller
     public function edit(Content $page): View
     {
         return view('admin.pages.form', [
-            'page' => $page
+            'page' => $page,
+            'menu' => route('admin.page.index')
         ]);
     }
 

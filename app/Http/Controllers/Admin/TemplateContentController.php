@@ -11,13 +11,22 @@ use Illuminate\Support\Facades\Auth;
 
 class TemplateContentController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:content-list|content-create|content-edit|content-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:content-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:content-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:content-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
         return view('admin.templates.index', [
-            'templates' => Content::whereIn('type', ['header', 'footer', 'template'])->orderBy('created_at', 'desc')->paginate(20)
+            'templates' => Content::whereIn('type', ['header', 'footer', 'template'])->orderBy('created_at', 'desc')->paginate(20),
+            'menu' => route('admin.template.index')
         ]);
     }
 
@@ -29,7 +38,8 @@ class TemplateContentController extends Controller
         $template = new Content();
 
         return view('admin.templates.form', [
-            'template' => $template
+            'template' => $template,
+            'menu' => route('admin.template.index')
         ]);
     }
 
@@ -52,7 +62,8 @@ class TemplateContentController extends Controller
     public function edit(Content $template): View
     {
         return view('admin.templates.form', [
-            'template' => $template
+            'template' => $template,
+            'menu' => route('admin.template.index')
         ]);
     }
 

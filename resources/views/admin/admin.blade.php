@@ -22,11 +22,12 @@
         <img src="{{ logo() }}" alt="logo">
         <ul>
             <li>
-                <a href="{{ route('admin.index') }}">{!! icon('home') !!} Dashboard</a>
+                <a href="{{ route('admin.index') }}" {{ menu_active($menu, route('admin.index')) }}>{!! icon('home') !!} Dashboard</a>
             </li>
+            @can('content-list')
             <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Contenu</h4>
             <li>
-                <a href="{{ route('admin.template.index') }}">
+                <a href="{{ route('admin.template.index') }}"  {{ menu_active($menu, route('admin.template.index')) }}>
                     {!! icon('pen') !!}
                     Modèles
                 </a>
@@ -37,16 +38,17 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ route('admin.page.index') }}">
+                <a href="{{ route('admin.page.index') }}" {{ menu_active($menu, route('admin.page.index')) }}>
                     {!! icon('pen') !!}
                     Pages
                 </a>
                 <ul>
                     <li hidden="hidden">
-                        <a href="{{ route('admin.page.index') }}">Ajouter une page</a>
+                        <a href="{{ route('admin.page.index') }}" {{ menu_active($menu, route('admin.page.index')) }}>Ajouter une page</a>
                     </li>
                 </ul>
             </li>
+            @endcan
             <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Utilisateurs</h4>
             <li>
                 <a href="#">
@@ -54,10 +56,10 @@
                     Utilisateurs
                 </a>
             </li>
-
+            @can('content-list')
             <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Communauté</h4>
             <li>
-                <a href="{{ route('admin.blog.index') }}">
+                <a href="{{ route('admin.blog.index') }}" {{ menu_active($menu, route('admin.blog.index')) }}>
                     {!! icon('pen') !!}
                     Articles
                 </a>
@@ -83,28 +85,24 @@
                     </li>
                 </ul>
             </li>
-
+            @endcan
             <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Divers</h4>
+            @can('option-list')
             <li>
-                <a href="{{ route('admin.options.index') }}">
+                <a href="{{ route('admin.options.index') }}" {{ menu_active($menu, route('admin.options.index')) }}>
                     {!! icon('edit') !!}
                     Options
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    {!! icon('chart') !!}
-                    Stats
-                </a>
-            </li>
-
-            <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Superadmin</h4>
-            <li>
-                <a href="#">
-                    {!! icon('pen') !!}
-                    Documentation
-                </a>
-            </li>
+            @endcan
+            @can('role-list')
+                <li>
+                    <a href="{{ route('admin.role.index') }}" {{ menu_active($menu, route('admin.role.index')) }}>
+                        {!! icon('edit') !!}
+                        Rôles
+                    </a>
+                </li>
+            @endcan
         </ul>
     </nav>
 
@@ -123,7 +121,12 @@
                     <span class='notification-badge'>spam</span>
                 </a>
             </li>
-            <li class="header__logout"><a href="{{ route('logout') }}">{!! icon('logout') !!}</a></li>
+            <li class="header__logout">
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button>{!! icon('logout') !!}</button>
+                </form>
+            </li>
         </ul>
     </header>
     <main>

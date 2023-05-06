@@ -121,9 +121,12 @@ if (!function_exists('template')) {
 }
 
 if (!function_exists('menu_active')) {
-    function menu_active(string $path)
+    function menu_active(string $menu, string $path): string
     {
-        return false;
+        if ($menu === $path) {
+            return 'aria-current=page';
+        }
+        return '';
     }
 }
 
@@ -134,7 +137,7 @@ if (!function_exists('imageTag')) {
             $entity = Attachment::find($entity);
         }
 
-        if($entity === null) {
+        if ($entity === null) {
             return null;
         }
 

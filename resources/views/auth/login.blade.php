@@ -1,47 +1,39 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('base')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+@section('title', 'Se connecter')
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+@section('description')
+    @parent
+@endsection
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+@section('body')
+    <div class="container p-block-2">
+        <h1 class="h1 text-center animate fadeup">Se connecter</h1>
+        @if (session('status'))
+            <alert-message type="success">
+                Votre mot de passe a bien été réinitialisé
+            </alert-message>
+        @endif
+        @if(count($errors) > 0)
+            @foreach( $errors->all() as $message )
+                <alert-message type="danger">
+                    {{ $message }}
+                </alert-message>
+            @endforeach
+        @endif
+        <form class="auth-form fade fade-1" method="post" action="{{ route('login') }}">
+            @csrf
+            @include('shared.input', ['label' => 'Email', 'name' => 'email', 'value' => old('email'), 'displayError' => false])
+            @include('shared.input', ['label' => 'Mot de passe', 'name' => 'password', 'type' => 'password', 'displayError' => false])
+            <div class="auth-actions flex">
+                @include('shared.switch', ['label' => 'Se souvenir de moi', 'name' => 'remember', 'displayError' => false])
+                <a href="{{ route('password.request') }}" class="auth-password-forgot">Mot de passe oublié ?</a>
+            </div>
+            <button type="submit" class="btn primary">Se connecter</button>
+            <div class="auth-actions">
+                <a href="{{ route('register') }}" class="auth-register">Pas de compte ? S'inscrire</a>
+            </div>
+        </form>
+    </div>
+@endsection
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ml-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>

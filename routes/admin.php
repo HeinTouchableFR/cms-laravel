@@ -5,15 +5,16 @@ use App\Http\Controllers\Admin\PageContentController;
 use App\Http\Controllers\Admin\TemplateContentController;
 use \App\Http\Controllers\Admin\AttachmentController;
 use \App\Http\Controllers\Admin\OptionController;
+use \App\Http\Controllers\Admin\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('blog', BlogContentController::class)->except(['show']);
     Route::resource('page', PageContentController::class)->except(['show']);
     Route::resource('template', TemplateContentController::class)->except(['show']);
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('index');
+    Route::resource('role', RoleController::class)->except(['show']);
+
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('index');
 
     Route::post('/preview', [\App\Http\Controllers\Admin\PreviewController::class, 'index'])->name('preview.index')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
     Route::post('/preview/template', [\App\Http\Controllers\Admin\PreviewController::class, 'template'])->name('preview.template')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);

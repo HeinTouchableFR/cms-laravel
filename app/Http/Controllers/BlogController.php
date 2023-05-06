@@ -22,7 +22,7 @@ class BlogController extends Controller
     public function show(string $post): View
     {
         return view('blogs.show', [
-            'menu' => '/',
+            'menu' => route('blog.index'),
             'content' => Content::where('type', 'blog')->where('slug', $post)->firstOrFail()
         ]);
     }
@@ -41,7 +41,7 @@ class BlogController extends Controller
                 "categories" => $categories,
                 "title" => $title,
                 'content' => template('blog'),
-                "menu" => "blog.index",
+                "menu" => route('blog.index'),
             ],
             $params
         ));

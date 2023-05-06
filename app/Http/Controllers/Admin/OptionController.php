@@ -12,6 +12,11 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class OptionController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:option-list|option-edit', ['only' => ['index']]);
+        $this->middleware('permission:option-edit', ['only' => ['update']]);
+    }
     final public const MANAGEABLE_KEYS = [
         "sitename",
         "logo",
@@ -40,6 +45,7 @@ class OptionController extends Controller
             "pagePosts" => Content::where('type', 'page')->get(),
             "templatePosts" => Content::whereIn('type', ['header', 'footer', 'blog'])->get(),
             "dataEndpoint" => "/admin/attachment",
+            'menu' => route('admin.options.index')
         ]);
     }
 

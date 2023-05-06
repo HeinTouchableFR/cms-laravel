@@ -14,7 +14,7 @@ class PageController extends Controller
         $content = Content::find($homepage->value);
 
         return view('home', [
-            'menu' => '/',
+            'menu' => route('home'),
             'content' => $content
         ]);
     }
@@ -23,7 +23,7 @@ class PageController extends Controller
     public function show(string $post): View
     {
         return view('pages.show', [
-            'menu' => '/',
+            'menu' => route('page.show', $post),
             'content' => Content::where('type', 'page')->where('slug', $post)->firstOrFail()
         ]);
     }

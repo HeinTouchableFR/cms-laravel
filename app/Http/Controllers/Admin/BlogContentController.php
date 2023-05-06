@@ -11,25 +11,35 @@ use Illuminate\Support\Facades\Auth;
 
 class BlogContentController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:content-list|content-create|content-edit|content-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:content-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:content-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:content-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
         return view('admin.blog.index', [
-            'blogs' => Content::where('type', 'blog')->orderBy('created_at', 'desc')->paginate(20)
+            'blogs' => Content::where('type', 'blog')->orderBy('created_at', 'desc')->paginate(20),
+            'menu' => route('admin.blog.index')
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() :View
+    public function create(): View
     {
         $blog = new Content();
 
         return view('admin.blog.form', [
-            'blog' => $blog
+            'blog' => $blog,
+            'menu' => route('admin.blog.index')
         ]);
     }
 
@@ -53,7 +63,8 @@ class BlogContentController extends Controller
     public function edit(Content $blog): View
     {
         return view('admin.blog.form', [
-            'blog' => $blog
+            'blog' => $blog,
+            'menu' => route('admin.blog.index')
         ]);
     }
 

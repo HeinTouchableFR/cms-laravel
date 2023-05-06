@@ -1,39 +1,27 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
+@extends('base')
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+@section('title', 'Réinitialisation du mot de passe')
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+@section('description')
+    @parent
+@endsection
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+@section('body')
+    <div class="container p-block-2">
+        <h1 class="h1 text-center animate fadeup m-bottom-4">Mot de passe oublié</h1>
+        @if (session('status'))
+            <alert-message type="success">
+                Nous vous avons envoyé un lien de réinitialisation de votre mot de passe.
+            </alert-message>
+        @endif
+        <p>Vous avez oublié votre mot de passe ? Pas de problème. Indiquez-nous votre adresse électronique et nous vous enverrons un lien de réinitialisation du mot de passe qui vous permettra d'en choisir un nouveau.</p>
+        <form class="auth-form fade fade-1 m-top-2" method="post" action="{{ route('password.store') }}">
+            @csrf
+            @include('shared.input', ['type' => 'hidden', 'name' => 'token', 'value' => $request->route('token')])
+            @include('shared.input', ['label' => 'Email', 'name' => 'email', 'value' => $request->email])
+            @include('shared.input', ['label' => 'Nouveau mot de passe', 'type' => 'password', 'name' => 'password'])
+            @include('shared.input', ['label' => 'Confirmer mot de passe', 'type' => 'password', 'name' => 'password_confirmation'])
+            <button type="submit" class="btn primary m-top-2">Réinitialiser mon mot de passe</button>
+        </form>
+    </div>
+@endsection
