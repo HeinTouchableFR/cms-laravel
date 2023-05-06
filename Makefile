@@ -29,7 +29,7 @@ help: ## Affiche cette aide
 
 .PHONY: deploy
 deploy: vendor/autoload.php public/assets/manifest.json ## Déploie les fichiers sur le serveur
-	rsync -av --delete --perms --chmod=755 ./ $(server):~/aymericlhomme.fr --include=public/assets --include=vendor --include=node_modules --include=public/uploads --include=public/bundles --include=public/.htaccess --exclude-from=.gitignore --exclude=".*" --exclude="site.conf"
+	rsync -av --delete --perms --chmod=755 ./ $(server):~/laravel.aymericlhomme.fr --include=public/build --include=vendor --include=node_modules --include=public/uploads --include=public/bundles --include=public/.htaccess --exclude-from=.gitignore --exclude=".*" --exclude="site.conf"
 
 .PHONY: deploydev
 deploydev: vendor/autoload.php public/assets/manifest.json ## Déploie les fichiers sur le serveur de developpement

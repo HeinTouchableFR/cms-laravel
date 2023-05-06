@@ -5,6 +5,7 @@
     <title>@yield('title') | {{ siteName() }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="/themes/{{ theme() }}/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{asset("vendor/cookie-consent/css/cookie-consent.css")}}">
     <script src="/themes/{{ theme() }}/assets/app.js" type="module" defer=""></script>
     @vite(['resources/css/app.scss', 'resources/ts/app.ts'])
     @yield('stylesheets')
@@ -40,29 +41,30 @@
 
     <link rel='canonical' href="{{ Request::root() }}"/>
     <script type="application/ld+json">
-        {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"{{ Request::root() }}
-        /#organization","name":"{{ siteName() }}","url":"{{ Request::root() }}","sameAs":["{{ social('facebook') }}
-        ","{{ social('twitter') }}","{{ social('instagram') }}","{{ social('linkedin') }}","{{ social('twitch') }}
-        ","{{ social('rss') }}","{{ social('youtube') }}","{{ social('github') }}
-        "],"logo":{"@type":"ImageObject","@id":"{{ Request::root() }}
-        /#logo","inLanguage":"fr","url":"{{ openGraphLogo() }}
-        ","contentUrl":"{{ openGraphLogo() }}","caption":"{{ siteName() }}
-        "},"image":{"@id":"{{ Request::root() }}/#logo"}},{"@type":"WebSite","@id":"{{ Request::root() }}
-        /#website","url":"{{ Request::root() }}/","name":"{{ siteName() }}","description":"{{ description() }}
-        ","publisher":{"@id":"{{ Request::root() }}
-        /#organization"},"potentialAction":[{"@type":"SearchAction","target":"{{ Request::root() }}
-        /recherche?q={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"fr"},{"@type":"ImageObject","@id":"{{ Request::root() }}
-        /#primaryimage","inLanguage":"fr","url":"{{ openGraphLogo() }}
-        ","contentUrl":"{{ openGraphLogo() }}"},{"@type":"WebPage","@id":"{{ Request::root() }}
-        /#webpage","url":"{{ Request::root() }}","name":"{{ siteName() }}","isPartOf":{"@id":"{{ Request::root() }}
-        /#website"},"about":{"@id":"{{ Request::root() }}
-        /#organization"},"primaryImageOfPage":{"@id":"{{ Request::root() }}
-        /#primaryimage"},"datePublished":null,"dateModified":null,"breadcrumb":{"@id":"{{ Request::root() }}
-        /#breadcrumb"},"inLanguage":"fr","potentialAction":[{"@type":"ReadAction","target":["{{ Request::root() }}
-        /"]}]},{"@type":"BreadcrumbList","@id":"{{ Request::root() }}
-        /#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"{{ Request::root() }}
-        /#webpage"}}]}]}
-
+    @section('jsonLd')
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "{{ siteName() }}",
+              "url": "{{ Request::root() }}",
+              "logo": "{{ openGraphLogo() }}",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "{{ Request::root() }}/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              },
+              "sameAs": [
+                "{{ social('facebook') }}",
+                "{{ social('instagram') }}",
+                "{{ social('twitter') }}",
+                "{{ social('linkedin') }}",
+                "{{ social('twitch') }}",
+                "{{ social('rss') }}",
+                "{{ social('youtube') }}",
+                "{{ social('github') }}"
+              ]
+            }
+        @show
     </script>
 </head>
 <body class="">

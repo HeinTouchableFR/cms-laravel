@@ -6,6 +6,7 @@ use App\Models\Content;
 use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+
 class PageController extends Controller
 {
     public function home(): View
@@ -17,6 +18,33 @@ class PageController extends Controller
             'menu' => route('home'),
             'content' => $content
         ]);
+    }
+
+    public function sitemap(): \Illuminate\Http\Response
+    {
+        $urls = [];
+
+        $urls[] = ["loc" => route('home')];
+
+        foreach (Content::whereIn('type', ['blog', 'page'])->get() as $post) {
+            $urls[] = [
+                "loc" => route($post->type . '.show', $post->slug),
+                "lastmod" => $post->updated_at,
+            ];
+        }
+
+        return response()->view('sitemap', [
+            'urls' => $urls
+        ])->header('Content-Type', 'text/xml');
+    }
+
+    public function robots(): \Illuminate\Http\Response
+    {
+        $sitemap = route('sitemap');
+
+        return response()->view('robots', [
+            'content' => "User-agent: * \nDisallow: /profile/\nDisallow: /admin/\nSitemap: {$sitemap}"
+        ])->header('Content-Type', 'text/txt');
     }
 
 

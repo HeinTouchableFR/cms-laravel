@@ -33,6 +33,7 @@ class PreviewController extends Controller
             return view('admin.preview.index', [
                 "blocs" => $content,
                 "content" => $post,
+                "menu" => route('home')
             ]);
         }
 
@@ -40,6 +41,7 @@ class PreviewController extends Controller
             "bloc" => $content,
             "content" => $post,
             "animate" => "no-animate",
+            "menu" => route('home')
         ]);
     }
 
@@ -53,12 +55,14 @@ class PreviewController extends Controller
         if (array_is_list($content)) {
             return view('admin.preview.template', [
                 "blocs" => $content,
+                "menu" => route('home')
             ]);
         }
 
         return view(theme() . '.views.' . $content['_name'], [
             "bloc" => $content,
             "animate" => "no-animate",
+            "menu" => route('home')
         ]);
     }
 }

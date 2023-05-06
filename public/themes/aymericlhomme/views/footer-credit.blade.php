@@ -15,6 +15,9 @@
             @endif
             @if(key_exists('links', $bloc))
                     <ul>
+                        <li>
+                            <a href="javascript:void(0)" class="js-lcc-settings-toggle">Gérer vos préférences en matière de cookies</a> -
+                        </li>
                         @foreach($bloc['links'] as $link)
                             @if($link['url'] !== '')
                                 @php

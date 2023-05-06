@@ -12,6 +12,50 @@
     @endif
 @endsection
 
+@section('jsonLd')
+    {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ route('blog.show', $content->slug) }}"
+    },
+    "headline": "{{ $content->title }}",
+    "description": "{{ $content->description }}",
+    "image": "{{ image_url_raw($content->attachment_id)}}",
+    "author": {
+        "@type": "Person",
+        "name": "{{ $content->user->username }}",
+        "url": "{{ Request::root() }}"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "{{ sitename() }}",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{ logo() }}"
+        }
+    },
+    "datePublished": "{{ $content->created_at }}",
+    "dateModified": "{{ $content->updated_at }}",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ Request::root() }}/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    "sameAs": [
+    "{{ social('facebook') }}",
+    "{{ social('instagram') }}",
+    "{{ social('twitter') }}",
+    "{{ social('linkedin') }}",
+    "{{ social('twitch') }}",
+    "{{ social('rss') }}",
+    "{{ social('youtube') }}",
+    "{{ social('github') }}"
+    ]
+    }
+@overwrite
+
 @section('meta')
     <meta property="og:image" content="{{ image_url_raw($content->attachment_id)}}"/>
     <meta property="og:created_time" content="{{ $content->created_at }}"/>

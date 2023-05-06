@@ -21,6 +21,8 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 
 Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/sitemap.xml', [PageController::class, 'sitemap'])->name('sitemap');
+Route::get('/robots.txt', [PageController::class, 'robots'])->name('robots');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
