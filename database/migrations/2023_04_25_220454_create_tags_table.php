@@ -22,10 +22,10 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('post_tag', function (Blueprint $table) {
+        Schema::create('content_tag', function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Content::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Tag::class)->constrained()->cascadeOnDelete();
-            $table->primary(['content_id'], 'tag_id');
+            $table->primary(['content_id', 'tag_id']);
         });
     }
 
@@ -34,7 +34,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_tag');
+        Schema::dropIfExists('content_tag');
         Schema::dropIfExists('tags');
     }
 };

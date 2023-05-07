@@ -25,7 +25,7 @@
                             {{ $post->created_at }}
                             @if(!empty($post->category))
                                 - <span>
-                                <a href="{{ route($post->category) }}">{{ $post->category->name }}</a>
+                                <a href="{{ route('blog.category', $post->category->slug) }}">{{ $post->category->name }}</a>
                             </span>
                             @endif
                         </div>

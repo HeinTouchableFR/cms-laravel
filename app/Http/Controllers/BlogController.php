@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Content;
 use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
 {
@@ -14,8 +16,17 @@ class BlogController extends Controller
      */
     public function index(): View
     {
-        $posts = Content::where('type', 'blog')->paginate(10);
+        $posts = Content::where('type', 'blog')->where('online', true)->paginate(10);
         return $this->renderListing('Blog', $posts);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function category(Category $category): View
+    {
+        $posts = Content::where('type', 'blog')->where('online', true)->where('category_id', $category->id)->paginate(10);
+        return $this->renderListing('Blog', $posts, ['currentCategory' => $category]);
     }
 
 
@@ -32,8 +43,12 @@ class BlogController extends Controller
      */
     public function renderListing(string $title, $posts, array $params = []): View
     {
-        $categories = [];
-
+        $categories = DB::table('categories')
+            ->join('contents', 'categories.id', '=', 'contents.category_id')
+            ->where('contents.online', true)
+            ->select(DB::raw('categories.*, COUNT(categories.id) as count'))
+            ->groupBy('categories.id')
+            ->get();
 
         return view('blogs.index', array_merge(
             [

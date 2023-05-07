@@ -4,6 +4,7 @@
     $class ??= null;
     $name ??= '';
     $id ??= $name;
+    $current ??= $id;
     $value ??= '';
 @endphp
 
@@ -13,7 +14,7 @@
                id="{{ $id }}"
                name="{{ $name }}"
                role="switch"
-               value="{{$id}}"
+               value="{{$current}}"
                @checked( old($name, $value ?? false))
                class="form-control @error($name) is-invalid @enderror">
         <label class="form-check-label" for="{{ $name }}"><span class="switch"></span>{{ $label }}</label>

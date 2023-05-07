@@ -14,6 +14,11 @@
                 Votre mot de passe a bien été réinitialisé
             </alert-message>
         @endif
+        @if (session('error') === 'user-banned')
+            <alert-message type="error">
+                Votre compte est suspendu, veuillez contacter l'administrateur.
+            </alert-message>
+        @endif
         @if(count($errors) > 0)
             @foreach( $errors->all() as $message )
                 <alert-message type="danger">

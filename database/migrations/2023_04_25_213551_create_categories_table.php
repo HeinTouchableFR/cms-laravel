@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::table('blog', function (Blueprint $table) {
+        Schema::table('contents', function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Category::class)->nullable()->constrained()->cascadeOnDelete();
         });
     }
@@ -29,7 +29,7 @@ return new class extends Migration {
     {
         Schema::dropIfExists('categories');
 
-        Schema::table('blog', function (Blueprint $table) {
+        Schema::table('contents', function (Blueprint $table) {
             $table->dropForeignIdFor(\App\Models\Category::class);
         });
     }

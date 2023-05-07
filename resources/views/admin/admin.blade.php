@@ -22,78 +22,86 @@
         <img src="{{ logo() }}" alt="logo">
         <ul>
             <li>
-                <a href="{{ route('admin.index') }}" {{ menu_active($menu, route('admin.index')) }}>{!! icon('home') !!} Dashboard</a>
+                <a href="{{ route('admin.index') }}" {{ menu_active($menu, route('admin.index')) }}>{!! icon('home') !!}
+                    Dashboard</a>
             </li>
             @can('content-list')
-            <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Contenu</h4>
-            <li>
-                <a href="{{ route('admin.template.index') }}"  {{ menu_active($menu, route('admin.template.index')) }}>
-                    {!! icon('pen') !!}
-                    Modèles
-                </a>
-                <ul>
-                    <li hidden="hidden">
-                        <a href="{{ route('admin.template.index') }}">Ajouter un modèle</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="{{ route('admin.page.index') }}" {{ menu_active($menu, route('admin.page.index')) }}>
-                    {!! icon('pen') !!}
-                    Pages
-                </a>
-                <ul>
-                    <li hidden="hidden">
-                        <a href="{{ route('admin.page.index') }}" {{ menu_active($menu, route('admin.page.index')) }}>Ajouter une page</a>
-                    </li>
-                </ul>
-            </li>
+                <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Contenu</h4>
+                <li>
+                    <a href="{{ route('admin.template.index') }}" {{ menu_active($menu, route('admin.template.index')) }}>
+                        {!! icon('pen') !!}
+                        Modèles
+                    </a>
+                    <ul>
+                        <li hidden="hidden">
+                            <a href="{{ route('admin.template.index') }}">Ajouter un modèle</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ route('admin.page.index') }}" {{ menu_active($menu, route('admin.page.index')) }}>
+                        {!! icon('pen') !!}
+                        Pages
+                    </a>
+                    <ul>
+                        <li hidden="hidden">
+                            <a href="{{ route('admin.page.index') }}" {{ menu_active($menu, route('admin.page.index')) }}>Ajouter
+                                une page</a>
+                        </li>
+                    </ul>
+                </li>
             @endcan
+            @can('user-list')
             <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Utilisateurs</h4>
             <li>
-                <a href="#">
+                <a href="{{ route('admin.user.index') }}" {{ menu_active($menu, route('admin.user.index')) }}>
                     {!! icon('user') !!}
                     Utilisateurs
                 </a>
             </li>
+            @endcan
             @can('content-list')
-            <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Communauté</h4>
-            <li>
-                <a href="{{ route('admin.blog.index') }}" {{ menu_active($menu, route('admin.blog.index')) }}>
-                    {!! icon('pen') !!}
-                    Articles
-                </a>
-                <ul>
-                    <li hidden="hidden">
-                        <a href="{{ route('admin.blog.index') }}">Ajouter un article</a>
-                    </li>
-                    <li>
-                        <a href="#">Catégories</a>
-                        <ul>
-                            <li hidden="hidden">
-                                <a href="#">Ajouter une catégorie</a>
+                <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Communauté</h4>
+                <li>
+                    <a href="{{ route('admin.blog.index') }}" {{ menu_active($menu, route('admin.blog.index')) }}>
+                        {!! icon('pen') !!}
+                        Articles
+                    </a>
+                    <ul>
+                        <li hidden="hidden">
+                            <a href="{{ route('admin.blog.index') }}">Ajouter un article</a>
+                        </li>
+                        @can('category-list')
+                            <li>
+                                <a href="{{ route('admin.category.index') }}" {{ menu_active($menu, route('admin.category.index')) }}>Catégories</a>
+                                <ul>
+                                    <li hidden="hidden">
+                                        <a href="{{ route('admin.category.index') }}">Ajouter une catégorie</a>
+                                    </li>
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Tag</a>
-                        <ul>
-                            <li hidden="hidden">
-                                <a href="#">Ajouter un tag</a>
+                        @endcan
+                        @can('tag-list')
+                            <li>
+                                <a href="{{ route('admin.tag.index') }}" {{ menu_active($menu, route('admin.tag.index')) }}>Tag</a>
+                                <ul>
+                                    <li hidden="hidden">
+                                        <a href="{{ route('admin.tag.index') }}" {{ menu_active($menu, route('admin.tag.index')) }}>Ajouter un tag</a>
+                                    </li>
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+                        @endcan
+                    </ul>
+                </li>
             @endcan
             <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Divers</h4>
             @can('option-list')
-            <li>
-                <a href="{{ route('admin.options.index') }}" {{ menu_active($menu, route('admin.options.index')) }}>
-                    {!! icon('edit') !!}
-                    Options
-                </a>
-            </li>
+                <li>
+                    <a href="{{ route('admin.options.index') }}" {{ menu_active($menu, route('admin.options.index')) }}>
+                        {!! icon('edit') !!}
+                        Options
+                    </a>
+                </li>
             @endcan
             @can('role-list')
                 <li>

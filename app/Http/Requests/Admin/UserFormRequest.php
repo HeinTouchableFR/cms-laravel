@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules;
 
-class BlogContentFormRequest extends FormRequest
+class UserFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +23,10 @@ class BlogContentFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'min:5'],
-            'slug' => ['required', 'min:5'],
-            'description' => [''],
-            'content' => [''],
-            'online' => ['boolean'],
-            'tags' => ['string'],
-            'attachment_id' => [''],
-            'category_id' => ['required', 'exists:categories,id'],
-            'created_at' => ['required'],
+            'username' => ['required', 'string'],
+            'email' => ['required', 'string'],
+            'new_password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'role' => [''],
         ];
     }
 }

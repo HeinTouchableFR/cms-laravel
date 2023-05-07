@@ -35,5 +35,6 @@ Route::get('/media/resize/{path}', [ImageController::class, 'resize'])->where(['
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->where(['post' => '[a-z0-9\-]+'])->name('blog.show');
+Route::get('/blog/category/{category:slug}', [BlogController::class, 'category'])->where(['category' => '[a-z0-9\-]+'])->name('blog.category');
 
 Route::get('/{post:slug}', [PageController::class, 'show'])->where(['post' => '[a-z0-9\-]+'])->name('page.show');

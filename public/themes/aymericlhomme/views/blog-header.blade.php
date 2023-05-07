@@ -1,8 +1,10 @@
 @extends('aymericlhomme.views.layout')
 
-@section('element')section
+@section('element')
+    section
 @overwrite
-@section('additionalClass')blog-header
+@section('additionalClass')
+    blog-header
 @overwrite
 
 @section('content')
@@ -14,11 +16,18 @@
                 {!! icon('arrow-down') !!}
             </button>
             <ul hidden>
+                @if(!empty ($currentCategory))
+                    <li>
+                        <a href="{{ route('blog.index') }}">
+                            Toutes les catégories
+                        </a>
+                    </li>
+                @endif
                 @foreach($categories as $category)
-                    <li {{ !empty ($currentCategory) and $category->id == $currentCategory->id ? "aria-selected=\"true\"" : "" }}>
-                        <a href="">
+                    <li {{ (!empty ($currentCategory) and $category->id === $currentCategory->id) ? "aria-selected=\"true\"" : "" }}>
+                        <a href="{{ route('blog.category', $category->slug) }}">
                             {{ $category->name }}
-                            <span class="badge">{{ $category->postsCount }}</span>
+                            <span class="badge">{{ $category->count }}</span>
                         </a>
                     </li>
                 @endforeach

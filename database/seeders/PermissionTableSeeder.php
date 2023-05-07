@@ -22,6 +22,10 @@ class PermissionTableSeeder extends Seeder
             'content-create',
             'content-edit',
             'content-delete',
+            'user-list',
+            'user-create',
+            'user-edit',
+            'user-delete',
             'option-list',
             'option-edit',
             'access-administration'
