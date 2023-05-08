@@ -11,7 +11,7 @@
         <div class="article-header__meta">
             Posté le {{ $content->created_at }}
             @if(!empty($content->category))
-                - <a href="{{ route('blog.category', $content->slug)}}">{{$content->category->name}}</a>
+                - <a href="{{ route('blog.category', $content->category->slug)}}">{{$content->category->name}}</a>
             @endif
             - Par <span>{{ $content->user->username }}</span>
         </div>

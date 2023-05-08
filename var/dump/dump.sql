@@ -85,7 +85,7 @@ CREATE TABLE `categories` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `categories_slug_unique` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,39 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES
+(1,'Site e-commerce','site-e-commerce','2023-05-07 12:29:24','2023-05-07 12:29:24'),
+(3,'Site vitrine','site-vitrine','2023-05-07 14:05:21','2023-05-07 14:05:21');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `content_tag`
+--
+
+DROP TABLE IF EXISTS `content_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `content_tag` (
+  `content_id` bigint(20) unsigned NOT NULL,
+  `tag_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`content_id`,`tag_id`),
+  KEY `post_tag_tag_id_foreign` (`tag_id`),
+  CONSTRAINT `content_tag_contents_id_fk` FOREIGN KEY (`content_id`) REFERENCES `contents` (`id`),
+  CONSTRAINT `content_tag_tags_id_fk` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `content_tag`
+--
+
+LOCK TABLES `content_tag` WRITE;
+/*!40000 ALTER TABLE `content_tag` DISABLE KEYS */;
+INSERT INTO `content_tag` VALUES
+(1,4),
+(1,6);
+/*!40000 ALTER TABLE `content_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -125,7 +157,7 @@ CREATE TABLE `contents` (
   CONSTRAINT `contents_attachment_id_foreign` FOREIGN KEY (`attachment_id`) REFERENCES `attachments` (`id`),
   CONSTRAINT `contents_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
   CONSTRAINT `contents_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,13 +167,13 @@ CREATE TABLE `contents` (
 LOCK TABLES `contents` WRITE;
 /*!40000 ALTER TABLE `contents` DISABLE KEYS */;
 INSERT INTO `contents` VALUES
-(1,'VapeHouse','vapehouse','Création d\'un site e-commerce sur mesure pour la vente de cigarettes électronique pour la société VapeHouse','[\r\n  {\r\n    \"padding\": 2,\r\n    \"backgroundColor\": \"var(--color-light)\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"article-header\"\r\n  },\r\n  {\r\n    \"mainImage\": 15,\r\n    \"secondaryImage\": 19,\r\n    \"title\": \"Création d\'un site e-commerce sur mesure pour la vente de cigarettes électronique\",\r\n    \"textAtLeft\": \"<p>Ce projet est une création d\'une boutique en ligne afin de proposé à la vente des cigarettes électroniques et des e-liquides pour l\'entreprise Vapehouse. La boutique à été réalisée grâce à un développement sur mesure, a l\'aide du framework <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://symfony.com/\\\"><strong>Symfony</strong></a> ainsi que de <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://fr.reactjs.org/\\\"><strong>React</strong></a>.</p>\",\r\n    \"textAtRight\": \"<p></p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"invertingImages\": false,\r\n    \"_name\": \"blog-layout\"\r\n  },\r\n  {\r\n    \"mainImage\": 17,\r\n    \"secondaryImage\": 18,\r\n    \"title\": \"Front-End\",\r\n    \"textAtLeft\": \"<p><a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://symfony.com/\\\"><strong>Symfony</strong></a> utilise le moteur de template <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://fr.wikipedia.org/wiki/Twig\\\"><strong>Twig</strong></a>, qui permet de créer la structure HTML du site tout en y incluant les données récupérées par les controlleurs. Un controlleur représente une route (une url) du site internet.</p><p></p>\",\r\n    \"textAtRight\": \"<p>La partie administrative du site à été entièrement réalisée grâce à <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://fr.reactjs.org/\\\"><strong>React</strong></a> afin de proposer une interface dynamique sans temps de chargement apparent.</p><p></p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"invertingImages\": true,\r\n    \"_name\": \"blog-layout\"\r\n  },\r\n  {\r\n    \"mainImage\": 16,\r\n    \"secondaryImage\": 15,\r\n    \"title\": \"Back-End\",\r\n    \"textAtLeft\": \"<p><a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://symfony.com/\\\"><strong>Symfony</strong></a> utilise l\'<a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://fr.wikipedia.org/wiki/Doctrine_(ORM)\\\"><strong>ORM Doctrine</strong></a> afin d\'avoir un lien entre les objets et les éléments de la base de données. Pour cela, il est nécessaire de créer diverses entitées qui représentent un objet et donc une table dans la base de données.</p>\",\r\n    \"textAtRight\": \"<p>Afin de pouvoir communiquer avec l\'administration, il est nécessaire de créer des APIs. Pour cela, j\'ai utilisé le package <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://api-platform.com/\\\"><strong>API Platform</strong></a> qui permet de créer directement toutes les APIs (GET, POST, PUT, DELETE) en se basant sur les entitées <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://symfony.com/\\\"><strong>Symfony</strong></a>.</p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"invertingImages\": false,\r\n    \"_name\": \"blog-layout\"\r\n  }\r\n]',1,'blog',1,'2023-04-26 15:43:18','2023-04-29 13:43:48',NULL,15),
+(1,'VapeHouse','vapehouse','Création d\'un site e-commerce sur mesure pour la vente de cigarettes électronique pour la société VapeHouse','[\r\n  {\r\n    \"padding\": 2,\r\n    \"backgroundColor\": \"var(--color-light)\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"article-header\"\r\n  },\r\n  {\r\n    \"mainImage\": 15,\r\n    \"secondaryImage\": 19,\r\n    \"title\": \"Création d\'un site e-commerce sur mesure pour la vente de cigarettes électronique\",\r\n    \"textAtLeft\": \"<p>Ce projet est une création d\'une boutique en ligne afin de proposé à la vente des cigarettes électroniques et des e-liquides pour l\'entreprise Vapehouse. La boutique à été réalisée grâce à un développement sur mesure, a l\'aide du framework <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://symfony.com/\\\"><strong>Symfony</strong></a> ainsi que de <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://fr.reactjs.org/\\\"><strong>React</strong></a>.</p>\",\r\n    \"textAtRight\": \"<p></p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"invertingImages\": false,\r\n    \"_name\": \"blog-layout\"\r\n  },\r\n  {\r\n    \"mainImage\": 17,\r\n    \"secondaryImage\": 18,\r\n    \"title\": \"Front-End\",\r\n    \"textAtLeft\": \"<p><a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://symfony.com/\\\"><strong>Symfony</strong></a> utilise le moteur de template <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://fr.wikipedia.org/wiki/Twig\\\"><strong>Twig</strong></a>, qui permet de créer la structure HTML du site tout en y incluant les données récupérées par les controlleurs. Un controlleur représente une route (une url) du site internet.</p><p></p>\",\r\n    \"textAtRight\": \"<p>La partie administrative du site à été entièrement réalisée grâce à <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://fr.reactjs.org/\\\"><strong>React</strong></a> afin de proposer une interface dynamique sans temps de chargement apparent.</p><p></p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"invertingImages\": true,\r\n    \"_name\": \"blog-layout\"\r\n  },\r\n  {\r\n    \"mainImage\": 16,\r\n    \"secondaryImage\": 15,\r\n    \"title\": \"Back-End\",\r\n    \"textAtLeft\": \"<p><a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://symfony.com/\\\"><strong>Symfony</strong></a> utilise l\'<a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://fr.wikipedia.org/wiki/Doctrine_(ORM)\\\"><strong>ORM Doctrine</strong></a> afin d\'avoir un lien entre les objets et les éléments de la base de données. Pour cela, il est nécessaire de créer diverses entitées qui représentent un objet et donc une table dans la base de données.</p>\",\r\n    \"textAtRight\": \"<p>Afin de pouvoir communiquer avec l\'administration, il est nécessaire de créer des APIs. Pour cela, j\'ai utilisé le package <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://api-platform.com/\\\"><strong>API Platform</strong></a> qui permet de créer directement toutes les APIs (GET, POST, PUT, DELETE) en se basant sur les entitées <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://symfony.com/\\\"><strong>Symfony</strong></a>.</p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"invertingImages\": false,\r\n    \"_name\": \"blog-layout\"\r\n  }\r\n]',1,'blog',1,'2023-04-26 15:43:18','2023-04-29 13:43:48',1,15),
 (2,'Header','header',NULL,'[\r\n  {\r\n    \"logo\": true,\r\n    \"searchbar\": true,\r\n    \"auth\": true,\r\n    \"links\": [\r\n      {\r\n        \"label\": \"\",\r\n        \"url\": \"{\\\"path\\\":\\\"home\\\",\\\"label\\\":\\\"Accueil\\\"}\"\r\n      },\r\n      {\r\n        \"label\": \"Portfolio\",\r\n        \"url\": \"{\\\"path\\\":\\\"blog.index\\\",\\\"label\\\":\\\"Blog\\\"}\"\r\n      },\r\n      {\r\n        \"label\": \"\",\r\n        \"url\": \"{\\\"path\\\":\\\"page.show\\\",\\\"label\\\":\\\"Contact\\\",\\\"slug\\\":\\\"contact\\\"}\"\r\n      }\r\n    ],\r\n    \"padding\": 2,\r\n    \"backgroundColor\": \"var(--white)\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"logoWidth\": \"275\",\r\n    \"logoHeight\": \"120\",\r\n    \"_name\": \"header\"\r\n  }\r\n]',1,'header',1,'2023-04-27 14:30:03','2023-04-28 17:57:25',NULL,NULL),
 (3,'Footer','footer',NULL,'[\n  {\n    \"columns\": [\n      {\n        \"title\": \"Informations\",\n        \"content\": \"<p>Lhomme Aymeric</p><p>Siret: <strong>89082990600019</strong></p><p>Développeur Full stack Freelance sur la Côte d\'Opale.</p><p><strong><span style=\\\"color: var(--color-1)\\\">Wordpress - Symfony - React</span></strong></p>\",\n        \"links\": [],\n        \"social\": false,\n        \"themeswitcher\": false\n      },\n      {\n        \"title\": \"Plan du site\",\n        \"content\": \"<p></p>\",\n        \"links\": [\n          {\n            \"label\": \"\",\n            \"url\": \"{\\\"path\\\":\\\"home\\\",\\\"label\\\":\\\"Accueil\\\"}\"\n          },\n          {\n            \"label\": \"\",\n            \"url\": \"{\\\"path\\\":\\\"blog.index\\\",\\\"label\\\":\\\"Blog\\\"}\"\n          },\n          {\n            \"label\": \"\",\n            \"url\": \"{\\\"path\\\":\\\"page.show\\\",\\\"label\\\":\\\"Contact\\\",\\\"slug\\\":\\\"contact\\\"}\"\n          }\n        ],\n        \"social\": false,\n        \"themeswitcher\": false\n      },\n      {\n        \"title\": \"Me contacter\",\n        \"content\": \"<p></p>\",\n        \"links\": [\n          {\n            \"label\": \"Par e-mail\",\n            \"url\": \"{\\\"path\\\":\\\"page.show\\\",\\\"label\\\":\\\"Contact\\\",\\\"slug\\\":\\\"contact\\\"}\"\n          }\n        ],\n        \"social\": true,\n        \"themeswitcher\": false\n      }\n    ],\n    \"padding\": 2,\n    \"backgroundColor\": \"var(--color-light)\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"footer-columns\"\n  },\n  {\n    \"credit\": \"<p>Intégration et développement par<span style=\\\"color: rgb(58, 52, 61)\\\"> </span><a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr/\\\"><strong>Aymeric Lhomme</strong></a></p>\",\n    \"links\": [\n      {\n        \"label\": \"\",\n        \"url\": \"{\\\"path\\\":\\\"page.show\\\",\\\"label\\\":\\\"Mentions Légales\\\",\\\"slug\\\":\\\"mentions-legales\\\"}\"\n      }\n    ],\n    \"padding\": 1,\n    \"backgroundColor\": \"var(--color-1)\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-light)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"footer-credit\"\n  }\n]',1,'footer',1,'2023-04-27 14:30:05','2023-04-27 14:30:12',NULL,NULL),
 (4,'Blog','blog',NULL,'[\n  {\n    \"padding\": 2,\n    \"backgroundColor\": \"var(--color-light)\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"blog-header\"\n  },\n  {\n    \"padding\": 2,\n    \"backgroundColor\": \"\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"blog-posts\"\n  }\n]',1,'template',1,'2023-04-27 14:30:06','2023-04-27 14:30:13',NULL,NULL),
 (5,'Bienvenue sur mon site','accueil',NULL,'[\r\n  {\r\n    \"padding\": 2,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"service-section\",\r\n    \"blocs\": [\r\n      {\r\n        \"title\": \"Refonte\",\r\n        \"image\": 12,\r\n        \"content\": \"<p>Si vous souhaitez donner un coup de jeune à votre site internet existant, nous pouvons faire une refonte de votre site.</p>\"\r\n      },\r\n      {\r\n        \"title\": \"Intégration\",\r\n        \"image\": 14,\r\n        \"content\": \"<p>Vous souhaitez convertir votre maquette en vrai page web ? Nous pouvons en discuter.</p>\"\r\n      },\r\n      {\r\n        \"title\": \"E-Commerce\",\r\n        \"image\": 13,\r\n        \"content\": \"<p>Si vous avez besoin de développer une application e-commerce, je maitrise les frameworks Symfony et React.</p>\"\r\n      },\r\n      {\r\n        \"title\": \"Vitrine\",\r\n        \"image\": 11,\r\n        \"content\": \"<p>Vous souhaitez créer un site vitrine ou un portfolio ? Je peux vous mettre en place un site internet facile d’utilisation.</p>\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"title\": \"Mes dernières réalisations\",\r\n    \"content\": \"<p></p>\",\r\n    \"padding\": 5,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"last-posts\"\r\n  }\r\n]',1,'page',1,'2023-04-27 14:46:46','2023-04-28 14:13:49',NULL,NULL),
 (15,'Mentions Légales','mentions-legales',NULL,'[\n  {\n    \"title\": \"1 - Édition du site\",\n    \"titleAlign\": \"left\",\n    \"content\": \"<p>En vertu de l\'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l\'économie numérique, il est précisé aux utilisateurs du site internet <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.aymericlhomme.fr</span></strong></a> l\'identité des différents intervenants dans le cadre de sa réalisation et de son suivi:</p><p>Propriétaire du site : Entrepreneur individuel: Lhomme Aymeric - Contact : <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"mailto:contact@aymericlhomme.fr\\\"><span style=\\\"color: var(--contrast)\\\">contact@aymericlhomme.fr</span></a> - Tél: 06 03 69 51 79 - Adresse : 47 Résidence de l\'Aumônerie, 62830 Samer.</p><p>Identification de l\'entreprise : Entrepreneur individuel: Lhomme Aymeric au capital social de 0€ - SIREN : 890829906 - Adresse postale : 47 Résidence de l\'Aumônerie, 62830 Samer.</p><p>Directeur de la publication : Lhomme Aymeric - Contact : <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"mailto:contact@aymericlhomme.fr\\\"><span style=\\\"color: var(--contrast)\\\">contact@aymericlhomme.fr</span></a>.</p><p>Hébergeur : <strong>o2switch</strong> - <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.o2switch.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.o2switch.fr</span></strong></a> - Tél: 04 44 44 60 40</p><p>Délégué à la protection des données : Lhomme Aymeric - <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"mailto:contact@aymericlhomme.fr\\\"><span style=\\\"color: var(--contrast)\\\">contact@aymericlhomme.fr</span></a></p>\",\n    \"buttons\": [],\n    \"padding\": 2,\n    \"backgroundColor\": \"\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"hero\"\n  },\n  {\n    \"title\": \"2 - Propriété intellectuelle et contrefaçons\",\n    \"titleAlign\": \"left\",\n    \"content\": \"<p>Entrepreneur individuel: Lhomme Aymeric est propriétaire des droits de propriété intellectuelle et détient les droits d’usage sur tous les éléments accessibles sur le site internet, notamment les textes, images, graphismes, logos, vidéos, architecture, icônes et sons.</p><p>Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation écrite préalable de Entrepreneur individuel: Lhomme Aymeric.</p><p>Toute exploitation non autorisée du site ou de l’un quelconque des éléments qu’il contient sera considérée comme constitutive d’une contrefaçon et poursuivie conformément aux dispositions des articles L.335-2 et suivants du Code de Propriété Intellectuelle.</p>\",\n    \"buttons\": [],\n    \"padding\": 2,\n    \"backgroundColor\": \"\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"hero\"\n  },\n  {\n    \"title\": \"3 - Limitations de responsabilité\",\n    \"titleAlign\": \"left\",\n    \"content\": \"<p>Entrepreneur individuel: Lhomme Aymeric ne pourra être tenu pour responsable des dommages directs et indirects causés au matériel de l’utilisateur, lors de l’accès au site <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.aymericlhomme.fr</span></strong></a>.</p><p>Entrepreneur individuel: Lhomme Aymeric décline toute responsabilité quant à l’utilisation qui pourrait être faite des informations et contenus présents sur <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.aymericlhomme.fr</span></strong></a>.</p><p>Entrepreneur individuel: Lhomme Aymeric s’engage à sécuriser au mieux le site <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.aymericlhomme.fr</span></strong></a>, cependant sa responsabilité ne pourra être mise en cause si des données indésirables sont importées et installées sur son site à son insu.</p><p>Des espaces interactifs (espace contact ou commentaires) sont à la disposition des utilisateurs. Entrepreneur individuel: Lhomme Aymeric se réserve le droit de supprimer, sans mise en demeure préalable, tout contenu déposé dans cet espace qui contreviendrait à la législation applicable en France, en particulier aux dispositions relatives à la protection des données.</p><p>Le cas échéant, Entrepreneur individuel: Lhomme Aymeric se réserve également la possibilité de mettre en cause la responsabilité civile et/ou pénale de l’utilisateur, notamment en cas de message à caractère raciste, injurieux, diffamant, ou pornographique, quel que soit le support utilisé (texte, photographie …).</p>\",\n    \"buttons\": [],\n    \"padding\": 2,\n    \"backgroundColor\": \"\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"hero\"\n  },\n  {\n    \"title\": \"4 - CNIL et gestion des données personnelles\",\n    \"titleAlign\": \"left\",\n    \"content\": \"<p>Conformément aux dispositions de la loi 78-17 du 6 janvier 1978 modifiée, l’utilisateur du site <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.aymericlhomme.fr</span></strong></a> dispose d’un droit d’accès, de modification et de suppression des informations collectées. Pour exercer ce droit, envoyez un message à notre Délégué à la Protection des Données : Lhomme Aymeric - <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"mailto:contact@aymericlhomme.fr\\\"><span style=\\\"color: var(--contrast)\\\">contact@aymericlhomme.fr</span></a>.</p><p>Pour plus d\'informations sur la façon dont nous traitons vos données (type de données, finalité, destinataire ...), lisez notre Politique de Confidentialité.</p><p>Il est également possible de déposer une réclamation auprès de la CNIL.</p>\",\n    \"buttons\": [],\n    \"padding\": 2,\n    \"backgroundColor\": \"\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"hero\"\n  },\n  {\n    \"title\": \"5 - Liens hypertextes et cookies\",\n    \"titleAlign\": \"left\",\n    \"content\": \"<p>Le site <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.aymericlhomme.fr</span></strong></a> contient des liens hypertextes vers d’autres sites et dégage toute responsabilité à propos de ces liens externes ou des liens créés par d’autres sites vers <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.aymericlhomme.fr</span></strong></a>.</p><p>La navigation sur le site <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.aymericlhomme.fr</span></strong></a> est susceptible de provoquer l’installation de cookie(s) sur l’ordinateur de l’utilisateur.</p><p>Un \\\"cookie\\\" est un fichier de petite taille qui enregistre des informations relatives à la navigation d’un utilisateur sur un site. Les données ainsi obtenues permettent d\'obtenir des mesures de fréquentation, par exemple.</p><p>Vous avez la possibilité d’accepter ou de refuser les cookies en modifiant les paramètres de votre navigateur. Aucun cookie ne sera déposé sans votre consentement.</p><p>Les cookies sont enregistrés pour une durée maximale d\'un mois.</p><p>Pour plus d\'informations sur la façon dont nous faisons usage des cookies, lisez notre Politique de Confidentialité.</p>\",\n    \"buttons\": [],\n    \"padding\": 2,\n    \"backgroundColor\": \"\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"hero\"\n  },\n  {\n    \"title\": \"6 - Droit applicable et attribution de juridiction\",\n    \"titleAlign\": \"left\",\n    \"content\": \"<p>Tout litige en relation avec l’utilisation du site <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.aymericlhomme.fr\\\"><strong><span style=\\\"color: var(--contrast)\\\">https://www.aymericlhomme.fr</span></strong></a> est soumis au droit français.</p>\",\n    \"buttons\": [],\n    \"padding\": 2,\n    \"backgroundColor\": \"\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"hero\"\n  }\n]',1,'page',1,'2023-04-27 15:23:51','2023-04-27 15:24:37',NULL,NULL),
-(16,'Souvenir d\'Instant','souvenir-d-instant','Développement sur mesure d\'une boutique Wordpress pour la vente d\'objets personnalisables','[\r\n  {\r\n    \"padding\": 2,\r\n    \"backgroundColor\": \"var(--color-light)\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"article-header\"\r\n  },\r\n  {\r\n    \"mainImage\": 20,\r\n    \"secondaryImage\": 23,\r\n    \"title\": \"Intégration & Développement WordPress\",\r\n    \"textAtLeft\": \"<p>Ce projet est une création d\'une boutique en ligne afin de proposé à la vente des produits en bois personnalisable par les client de l\'entreprise Souvenir d\'Instant. La boutique à été réalisée grâce au CMS <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://wordpress.org/\\\"><strong>Wordpress</strong></a>, en créant un thème sur mesure.</p>\",\r\n    \"textAtRight\": \"<p>Avant tout, il a fallut créer une maquette en fonction du brand-board fourni par le client. La maquette à été réalisée grâce à l\'outil de prototypage <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://figma.com\\\"><strong>Figma</strong></a> et est disponible <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.figma.com/file/od1r2wgQl1hRwX92r7TrUw/Souvenir-d-instant?node-id=0%3A1\\\"><strong>ici</strong></a>.</p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"blog-layout\",\r\n    \"invertingImages\": false\r\n  },\r\n  {\r\n    \"mainImage\": 22,\r\n    \"secondaryImage\": 24,\r\n    \"title\": \"Un espace de vente\",\r\n    \"textAtLeft\": \"<p>Afin de créer un espace de vente, j\'ai utilisé le plugin <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://woocommerce.com/\\\"><strong>Woocommerce</strong></a>. Après avoir configuré le module, puis modifié le design de ce dernier en fonction de la maquette, la partie e-commerce du site était prête.</p>\",\r\n    \"textAtRight\": \"<p>Le client souhaitant pouvoir fournir une prévisualisation en temps réel de l\'objet personnalisable, il a fallut trouver une solution afin d\'intégrer cette fonctionnalité à <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://woocommerce.com/\\\"><strong>Woocommerce</strong></a>. Pour cela, j\'ai utilisé un plugin proposé par la société <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"http://Zakeke.com\\\"><strong>Zakeke.com</strong></a>. Ce dernier permet d\'ajouter un éditeur permettant d\'effectuer sa personnalisation, d\'exporter ou de partager la personnalisation et d\'ajouter la personnalisation au panier.</p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"blog-layout\",\r\n    \"invertingImages\": true\r\n  },\r\n  {\r\n    \"mainImage\": 26,\r\n    \"secondaryImage\": 21,\r\n    \"title\": \"Un espace photo\",\r\n    \"textAtLeft\": \"<p>En plus d\'un site de vente, <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://souvenirdinstant.fr/\\\"><strong>Souvenir d\'Instant</strong></a> souhaitait pouvoir proposer ses services en tant que photographe. L\'espace photo permet de mettre en avant certaines images choisi par <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://souvenirdinstant.fr/\\\"><strong>Souvenir d\'Instant</strong></a> ainsi que de proposer ses services et tarifs.</p>\",\r\n    \"textAtRight\": \"<p>De plus, un espace privé pour chaque client doit être disponible afin que <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://souvenirdinstant.fr/\\\"><strong>Souvenir d\'Instant</strong></a> puisse mettre en ligne les différentes photos réalisées lors des différents événements.</p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"blog-layout\",\r\n    \"invertingImages\": false\r\n  }\r\n]',1,'blog',1,'2023-04-27 15:24:23','2023-04-29 13:48:31',NULL,20),
+(16,'Souvenir d\'Instant','souvenir-d-instant','Développement sur mesure d\'une boutique Wordpress pour la vente d\'objets personnalisables','[\r\n  {\r\n    \"padding\": 2,\r\n    \"backgroundColor\": \"var(--color-light)\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"article-header\"\r\n  },\r\n  {\r\n    \"mainImage\": 20,\r\n    \"secondaryImage\": 23,\r\n    \"title\": \"Intégration & Développement WordPress\",\r\n    \"textAtLeft\": \"<p>Ce projet est une création d\'une boutique en ligne afin de proposé à la vente des produits en bois personnalisable par les client de l\'entreprise Souvenir d\'Instant. La boutique à été réalisée grâce au CMS <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://wordpress.org/\\\"><strong>Wordpress</strong></a>, en créant un thème sur mesure.</p>\",\r\n    \"textAtRight\": \"<p>Avant tout, il a fallut créer une maquette en fonction du brand-board fourni par le client. La maquette à été réalisée grâce à l\'outil de prototypage <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://figma.com\\\"><strong>Figma</strong></a> et est disponible <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://www.figma.com/file/od1r2wgQl1hRwX92r7TrUw/Souvenir-d-instant?node-id=0%3A1\\\"><strong>ici</strong></a>.</p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"blog-layout\",\r\n    \"invertingImages\": false\r\n  },\r\n  {\r\n    \"mainImage\": 22,\r\n    \"secondaryImage\": 24,\r\n    \"title\": \"Un espace de vente\",\r\n    \"textAtLeft\": \"<p>Afin de créer un espace de vente, j\'ai utilisé le plugin <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://woocommerce.com/\\\"><strong>Woocommerce</strong></a>. Après avoir configuré le module, puis modifié le design de ce dernier en fonction de la maquette, la partie e-commerce du site était prête.</p>\",\r\n    \"textAtRight\": \"<p>Le client souhaitant pouvoir fournir une prévisualisation en temps réel de l\'objet personnalisable, il a fallut trouver une solution afin d\'intégrer cette fonctionnalité à <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://woocommerce.com/\\\"><strong>Woocommerce</strong></a>. Pour cela, j\'ai utilisé un plugin proposé par la société <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"http://Zakeke.com\\\"><strong>Zakeke.com</strong></a>. Ce dernier permet d\'ajouter un éditeur permettant d\'effectuer sa personnalisation, d\'exporter ou de partager la personnalisation et d\'ajouter la personnalisation au panier.</p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"blog-layout\",\r\n    \"invertingImages\": true\r\n  },\r\n  {\r\n    \"mainImage\": 26,\r\n    \"secondaryImage\": 21,\r\n    \"title\": \"Un espace photo\",\r\n    \"textAtLeft\": \"<p>En plus d\'un site de vente, <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://souvenirdinstant.fr/\\\"><strong>Souvenir d\'Instant</strong></a> souhaitait pouvoir proposer ses services en tant que photographe. L\'espace photo permet de mettre en avant certaines images choisi par <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://souvenirdinstant.fr/\\\"><strong>Souvenir d\'Instant</strong></a> ainsi que de proposer ses services et tarifs.</p>\",\r\n    \"textAtRight\": \"<p>De plus, un espace privé pour chaque client doit être disponible afin que <a target=\\\"_blank\\\" rel=\\\"noopener noreferrer nofollow\\\" href=\\\"https://souvenirdinstant.fr/\\\"><strong>Souvenir d\'Instant</strong></a> puisse mettre en ligne les différentes photos réalisées lors des différents événements.</p>\",\r\n    \"padding\": 4,\r\n    \"backgroundColor\": \"\",\r\n    \"backgroundDesktop\": \"\",\r\n    \"backgroundMobile\": \"\",\r\n    \"titleColor\": \"var(--contrast)\",\r\n    \"textColor\": \"var(--color-dark)\",\r\n    \"backgroundSize\": \"\",\r\n    \"backgroundRepeat\": \"\",\r\n    \"backgroundXPosition\": \"\",\r\n    \"backgroundYPosition\": \"\",\r\n    \"_name\": \"blog-layout\",\r\n    \"invertingImages\": false\r\n  }\r\n]',1,'blog',1,'2023-04-27 15:24:23','2023-04-29 13:48:31',1,20),
 (19,'Contact','contact',NULL,'[\n  {\n    \"title\": \"Me contacter\",\n    \"padding\": 2,\n    \"backgroundColor\": \"var(--color-light)\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--color-1)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"page-header\"\n  },\n  {\n    \"fields\": [\n      {\n        \"label\": \"Votre nom\",\n        \"name\": \"name\",\n        \"type\": \"\",\n        \"full\": false,\n        \"required\": true\n      },\n      {\n        \"label\": \"Votre e-mail\",\n        \"name\": \"email\",\n        \"type\": \"input\",\n        \"full\": false,\n        \"required\": true\n      },\n      {\n        \"label\": \"Votre message\",\n        \"name\": \"content\",\n        \"type\": \"textarea\",\n        \"full\": true,\n        \"required\": true\n      }\n    ],\n    \"padding\": 4,\n    \"backgroundColor\": \"\",\n    \"backgroundDesktop\": \"\",\n    \"backgroundMobile\": \"\",\n    \"titleColor\": \"var(--contrast)\",\n    \"textColor\": \"var(--color-dark)\",\n    \"backgroundSize\": \"\",\n    \"backgroundRepeat\": \"\",\n    \"backgroundXPosition\": \"\",\n    \"backgroundYPosition\": \"\",\n    \"_name\": \"contact-form\"\n  }\n]',1,'page',1,'2023-04-28 17:56:06','2023-04-28 17:56:06',NULL,NULL);
 /*!40000 ALTER TABLE `contents` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -187,7 +219,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +238,8 @@ INSERT INTO `migrations` VALUES
 (7,'2023_04_25_220454_create_tags_table',1),
 (9,'2023_04_26_175806_create_attachments_table',2),
 (10,'2023_04_27_113407_create_options_table',3),
-(11,'2023_05_06_132138_create_permission_tables',4);
+(11,'2023_05_06_132138_create_permission_tables',4),
+(12,'2023_05_07_195416_add_status_to_users_table',5);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +293,8 @@ CREATE TABLE `model_has_roles` (
 LOCK TABLES `model_has_roles` WRITE;
 /*!40000 ALTER TABLE `model_has_roles` DISABLE KEYS */;
 INSERT INTO `model_has_roles` VALUES
-(1,'App\\Models\\User',1);
+(1,'App\\Models\\User',1),
+(2,'App\\Models\\User',3);
 /*!40000 ALTER TABLE `model_has_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -345,7 +379,7 @@ CREATE TABLE `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,7 +399,19 @@ INSERT INTO `permissions` VALUES
 (8,'content-delete','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
 (9,'access-administration','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
 (10,'option-list','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
-(11,'option-edit','web','2023-05-06 13:46:11','2023-05-06 13:46:11');
+(11,'option-edit','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(12,'category-list','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(13,'category-create','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(14,'category-edit','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(15,'category-delete','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(16,'tag-list','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(17,'tag-create','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(18,'tag-edit','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(19,'tag-delete','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(20,'user-list','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(21,'user-create','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(22,'user-edit','web','2023-05-06 13:46:11','2023-05-06 13:46:11'),
+(23,'user-delete','web','2023-05-06 13:46:11','2023-05-06 13:46:11');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -403,32 +449,6 @@ LOCK TABLES `personal_access_tokens` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `post_tag`
---
-
-DROP TABLE IF EXISTS `post_tag`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `post_tag` (
-  `content_id` bigint(20) unsigned NOT NULL,
-  `tag_id` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`content_id`),
-  KEY `post_tag_tag_id_foreign` (`tag_id`),
-  CONSTRAINT `post_tag_content_id_foreign` FOREIGN KEY (`content_id`) REFERENCES `contents` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `post_tag_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `post_tag`
---
-
-LOCK TABLES `post_tag` WRITE;
-/*!40000 ALTER TABLE `post_tag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `post_tag` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `role_has_permissions`
 --
 
@@ -457,12 +477,37 @@ INSERT INTO `role_has_permissions` VALUES
 (3,1),
 (4,1),
 (5,1),
+(5,2),
 (6,1),
+(6,2),
 (7,1),
+(7,2),
 (8,1),
+(8,2),
 (9,1),
+(9,2),
 (10,1),
-(11,1);
+(11,1),
+(12,1),
+(12,2),
+(13,1),
+(13,2),
+(14,1),
+(14,2),
+(15,1),
+(15,2),
+(16,1),
+(16,2),
+(17,1),
+(17,2),
+(18,1),
+(18,2),
+(19,1),
+(19,2),
+(20,1),
+(21,1),
+(22,1),
+(23,1);
 /*!40000 ALTER TABLE `role_has_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -481,7 +526,7 @@ CREATE TABLE `roles` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -491,7 +536,8 @@ CREATE TABLE `roles` (
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` VALUES
-(1,'Administrateur','web','2023-05-06 13:47:11','2023-05-06 13:47:11');
+(1,'Administrateur','web','2023-05-06 13:47:11','2023-05-06 13:47:11'),
+(2,'Editeur','web','2023-05-07 21:27:42','2023-05-07 21:27:42');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,7 +562,7 @@ CREATE TABLE `tags` (
   UNIQUE KEY `tags_slug_unique` (`slug`),
   KEY `tags_tag_id_foreign` (`tag_id`),
   CONSTRAINT `tags_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -525,6 +571,17 @@ CREATE TABLE `tags` (
 
 LOCK TABLES `tags` WRITE;
 /*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+INSERT INTO `tags` VALUES
+(1,'CMS','cms',NULL,1,1,NULL,'2023-05-07 16:15:08','2023-05-07 16:15:08'),
+(2,'Framework','framework',NULL,2,1,NULL,'2023-05-07 16:15:08','2023-05-07 16:15:08'),
+(3,'Wordpress','wordpress',NULL,1,1,1,'2023-05-07 16:15:08','2023-05-07 16:15:08'),
+(4,'React','react',NULL,4,1,2,'2023-05-07 16:15:08','2023-05-07 15:33:46'),
+(5,'NextJS','nextjs',NULL,3,1,2,'2023-05-07 16:15:08','2023-05-07 15:33:46'),
+(6,'Symfony','symfony',NULL,1,1,2,'2023-05-07 16:15:08','2023-05-07 15:34:57'),
+(7,'Service','service',NULL,3,1,NULL,'2023-05-07 16:15:08','2023-05-07 16:15:08'),
+(8,'Intégration','integration',NULL,1,1,7,'2023-05-07 16:15:08','2023-05-07 16:15:08'),
+(9,'Refonte','refonte',NULL,2,1,7,'2023-05-07 16:15:08','2023-05-07 16:15:08'),
+(10,'Laravel','laravel',NULL,2,1,2,'2023-05-07 15:33:39','2023-05-07 15:33:46');
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -544,9 +601,10 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -556,8 +614,10 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'HeinTouchable','aymericlhomme@orange.fr',NULL,'$2y$10$PuLWOg4BlBtLSv3G6TELjODnD.BbtC9zYrw7Dx0e4NXWZG/uN0LX2','cFThNmCh0LOsTHw5vnKrmM5w9YuVT39mP8bOdD4wWJXm9UDuojo0M63OFZEd','2023-04-26 12:06:41','2023-04-26 12:06:41'),
-(3,'test','test@local.fr',NULL,'$2y$10$3kq5BDmZUAHrzwXkXixA3.Y0zkgxc/8554WgJcxLlwysMAHreAWfK',NULL,'2023-05-06 15:30:38','2023-05-06 17:14:35');
+(1,'HeinTouchable','aymericlhomme@orange.fr','2023-05-06 19:35:47','$2y$10$PuLWOg4BlBtLSv3G6TELjODnD.BbtC9zYrw7Dx0e4NXWZG/uN0LX2','FmKbugXK8vixr1cIogvYCiAhupiGiSkwE8TXahUwNKOSBNxXFxNRTNoqkxtf','2023-04-26 12:06:41','2023-05-06 19:35:47',1),
+(3,'test','test@local.fr','2023-05-06 17:36:37','$2y$10$nnT/k6CKPEGxoeQJowLPqOKSeuYVTzCaPKVKqwMH6jpaQkF.pLKLK','4Rj0aIl68PoWNPdxOxoaaIS71lqdwFQfixkBaRO8Jc8hBNnQLXF0dvhRMFO6','2023-05-06 15:30:38','2023-05-07 21:44:52',1),
+(4,'test','test1@local.fr','2023-05-07 20:55:43','$2y$10$aBWxDNqk1yJA1xXe4awecOOOM8OzmOGz7YwvHdOHdbal0VYa77cxS',NULL,'2023-05-06 18:49:51','2023-05-07 20:55:43',0),
+(5,'bite@local.fr','bite@local.fr','2023-05-07 22:14:32','$2y$10$xFqkixpuEEtOz5s381Ovpu5tr09AQxKmovYGQvY0to45w3D9.Rlom',NULL,'2023-05-07 22:10:19','2023-05-07 22:14:32',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -570,4 +630,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-06 17:28:41
+-- Dump completed on 2023-05-07 22:19:05

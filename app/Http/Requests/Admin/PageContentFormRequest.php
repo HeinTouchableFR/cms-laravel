@@ -26,7 +26,7 @@ class PageContentFormRequest extends FormRequest
             'slug' => ['required', 'min:5'],
             'description' => [''],
             'content' => [''],
-            'online' => ['required', 'boolean'],
+            'online' => ['boolean'],
             'attachment_id' => [''],
             'created_at' => ['required'],
         ];

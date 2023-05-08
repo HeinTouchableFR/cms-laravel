@@ -70,3 +70,54 @@ body::after {
     background: var(--contrast);
     border-radius: 4px;
 }
+
+.search-header {
+    background: var(--color-light);
+    padding-bottom: calc(3 * var(--space));
+    padding-top: calc(3 * var(--space));
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        :first-child {
+            flex: none;
+            margin-right: calc(4 * var(--space));
+        }
+
+        form {
+            display: block;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            margin-left: 70px;
+
+            button {
+                display: inline-flex;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: calc(1 * var(--space));
+                width: 35px;
+                height: 35px;
+
+                .icon {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .search-header .container {
+        display: block;
+
+        form {
+            margin-top: calc(2 * var(--space));
+            margin-left: 0;
+        }
+    }
+}

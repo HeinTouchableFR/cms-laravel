@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Content;
 use App\Models\Option;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 
@@ -45,6 +46,79 @@ class PageController extends Controller
         return response()->view('robots', [
             'content' => "User-agent: * \nDisallow: /profile/\nDisallow: /admin/\nSitemap: {$sitemap}"
         ])->header('Content-Type', 'text/txt');
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function search(Request $request): View
+    {
+        $q = $request->get('q', '');
+
+        if ($q) {
+            $results = \App\Models\Content::search($q,
+                function ($meiliSearch, string $query, array $options) {
+                    $options['attributesToHighlight'] = ["title", "content"];
+
+                    return $meiliSearch->search($query, $options);
+                })->whereIn('type', ['blog', 'page'])->where('online', '1')->raw();
+        } else {
+            $results = [
+                'hits' => [],
+                'totalHits' => 0
+            ];
+        }
+
+        $items = [];
+
+        foreach ($results['hits'] as $item) {
+            $type = '';
+
+            if ($item['type'] === 'blog') {
+                $type = 'Article';
+            }
+
+            if ($item['type'] === 'page') {
+                $type = 'Page';
+            }
+
+            $excerpt = '';
+            $json = json_decode($item["_formatted"]["content"], true);
+            if ($json) {
+                foreach ($json as $bloc) {
+                    foreach ($bloc as $v) {
+                        if (is_string($v) and str_contains($v, '<em>')) {
+                            $excerpt .= $v;
+                            $excerpt .= "\n...";
+                        } elseif (is_array($v)) {
+                            foreach ($v as $b) {
+                                foreach ($b as $c) {
+                                    if (is_string($c) and str_contains($c, '<em>')) {
+                                        $excerpt .= $c;
+                                        $excerpt .= "\n...";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            $items[] = [
+                'title' => $item['_formatted']['title'],
+                'created_at' => new Carbon($item['created_at']),
+                'url' => route($item['type'] . '.show', $item['slug']),
+                'excerpt' => $excerpt,
+                'type' => $type
+            ];
+        }
+
+        return view('search', [
+            'menu' => route('search'),
+            'results' => $items,
+            'total' => count($items),
+            'q' => $q
+        ]);
     }
 
 

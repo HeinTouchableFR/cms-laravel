@@ -48,7 +48,7 @@ export function SearchInput({ defaultValue }: Props) {
       ...results,
       {
         title: `Voir les <strong>${hits}</strong> résultats`,
-        url: `${SEARCH_URL}?q=${encodeURI(query)}&redirect=0`,
+        url: `${SEARCH_URL}?q=${encodeURI(query)}`,
       },
     ];
   }

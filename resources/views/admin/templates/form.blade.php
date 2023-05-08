@@ -31,7 +31,7 @@
             @include('shared.input', ['label' => 'URL', 'name' => 'slug', 'value' => $template->slug])
             @include('shared.input', ['label' => 'Description', 'name' => 'description', 'value' => $template->description, 'type' => 'textarea'])
             @include('shared.attachment', ['label' => 'Image', 'name' => 'attachment_id', 'value' => $template->attachment?->id, 'preview' => $template->attachment?->filename])
-            @include('shared.switch', ['label' => 'En ligne ?', 'name' => 'online', 'value' => $template->online])
+            @include('shared.switch', ['label' => 'En ligne ?', 'name' => 'online', 'value' => $template->online, 'current' => true])
             @include('shared.input', ['label' => 'Date de publication', 'name' => 'created_at', 'value' => $template->created_at, 'type' => 'datepicker'])
             @include('shared.select', ['label' => 'Type de modèle', 'name' => 'type', 'value' => $template->type, 'options' => array((object) ['key' => 'header','label' => 'En-tête'],(object) ['key' => 'footer','label' => 'Pied de page'],(object) ['key' => 'template','label' => 'Modèle'])])
             <div x-data="{open: false}">

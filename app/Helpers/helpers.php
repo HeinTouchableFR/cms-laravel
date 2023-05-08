@@ -178,3 +178,11 @@ if (!function_exists('countdown')) {
         return "<time-countdown time=\"{$date->getTimestamp()}\" id=\"{$id}\"></time-countdown>";
     }
 }
+
+if (!function_exists('ago')) {
+    function ago(\Carbon\Carbon $date, string $prefix = ''): string
+    {
+        $prefixAttribute = !empty($prefix) ? " prefix=\"{$prefix}\"" : '';
+        return "<time-ago time=\"{$date->getTimestamp()}\"$prefixAttribute></time-ago>";
+    }
+}

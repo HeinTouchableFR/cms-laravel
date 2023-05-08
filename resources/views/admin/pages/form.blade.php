@@ -31,7 +31,7 @@
             @include('shared.input', ['label' => 'URL', 'name' => 'slug', 'value' => $page->slug])
             @include('shared.input', ['label' => 'Description', 'name' => 'description', 'value' => $page->description, 'type' => 'textarea'])
             @include('shared.attachment', ['label' => 'Image', 'name' => 'attachment_id', 'value' => $page->attachment?->id, 'preview' => $page->attachment?->filename])
-            @include('shared.switch', ['label' => 'En ligne ?', 'name' => 'online', 'value' => $page->online])
+            @include('shared.switch', ['label' => 'En ligne ?', 'name' => 'online', 'value' => $page->online, 'current' => true])
             @include('shared.input', ['label' => 'Date de publication', 'name' => 'created_at', 'value' => $page->created_at, 'type' => 'datepicker'])
             <div x-data="{open: false}">
                 <button @click="open = true" type="button" class="btn primary">Éditer le contenu</button>

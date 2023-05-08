@@ -21,6 +21,7 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 
 Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/recherche', [PageController::class, 'search'])->name('search');
 Route::get('/sitemap.xml', [PageController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [PageController::class, 'robots'])->name('robots');
 

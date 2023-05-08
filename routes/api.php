@@ -19,3 +19,47 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/posts', [\App\Http\Controllers\Api\ContentController::class, 'index']);
+
+Route::get('/search', function (\Illuminate\Http\Request $request) {
+    $q = $request->q;
+
+    if ($q) {
+        $results = \App\Models\Content::search($q,
+            function ($meiliSearch, string $query, array $options) {
+                $options['attributesToHighlight'] = ["title", "content"];
+                $options['attributesToCrop'] = ["content"];
+                $options['cropLength'] = 35;
+
+                return $meiliSearch->search($query, $options);
+            })->whereIn('type', ['blog', 'page'])->where('online', '1')->take(5)->raw();
+    } else {
+        $results = [
+            'hits' => [],
+            'totalHits' => 0
+        ];
+    }
+
+    $items = [];
+    foreach ($results['hits'] as $item) {
+        $category = '';
+
+        if ($item['type'] === 'blog') {
+            $category = 'Article';
+        }
+
+        if ($item['type'] === 'page') {
+            $category = 'Page';
+        }
+
+        $items[] = [
+            'title' => $item['_formatted']['title'],
+            'url' => route($item['type'] . '.show', $item['slug']),
+            'category' => $category
+        ];
+    }
+
+    return [
+        'items' => $items,
+        'hits' => $results['totalHits']
+    ];
+});

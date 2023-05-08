@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 use \Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Scout\EngineManager;
+use Laravel\Scout\Engines\Engine;
+use Laravel\Scout\Searchable;
 
 class Content extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'title',
@@ -54,5 +57,48 @@ class Content extends Model
     public function isScheduled(): bool
     {
         return now() < $this->created_at;
+    }
+
+    public function searchableAs(): string
+    {
+        return 'contents_index';
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        $array = $this->toArray();
+
+        // Customize the data array...
+
+        return $array;
+    }
+
+    /**
+     * Get the value used to index the model.
+     */
+    public function getScoutKey(): mixed
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get the key name used to index the model.
+     */
+    public function getScoutKeyName(): mixed
+    {
+        return 'id';
+    }
+
+    /**
+     * Get the engine used to index the model.
+     */
+    public function searchableUsing(): Engine
+    {
+        return app(EngineManager::class)->engine('meilisearch');
     }
 }

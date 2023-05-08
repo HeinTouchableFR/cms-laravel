@@ -40,7 +40,7 @@
     "dateModified": "{{ $content->updated_at }}",
     "potentialAction": {
         "@type": "SearchAction",
-        "target": "{{ Request::root() }}/search?q={search_term_string}",
+        "target": "{{ Request::root() }}/recherche?q={search_term_string}",
         "query-input": "required name=search_term_string"
     },
     "sameAs": [

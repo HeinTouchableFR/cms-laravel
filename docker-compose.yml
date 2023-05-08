@@ -45,8 +45,9 @@ services:
             MAILER_DSN: smtp://contact@aymericlhomme.fr:*8*PR\A(zYy@nirrti.o2switch.net:465
             DATABASE_URL: mysql://user:user@db:3306/cms
             MESSENGER_TRANSPORT_DSN: doctrine://default?queue_name=async
-            MEILISEARCH_KEY: 58896cc03804fec6473e5346f98b58b06a83e9a1
-            MEILISEARCH_HOST: ms-8fd5e92354d9-2346.fra.meilisearch.io
+            SCOUT_DRIVER: meilisearch
+            MEILISEARCH_HOST: https://ms-633f85766c60-2346.nyc.meilisearch.io
+            MEILISEARCH_KEY: 93200fbddce261de90d120763ead41851889d516
     node:
         user: '${USER_ID}:${GROUP_ID}'
         build:
