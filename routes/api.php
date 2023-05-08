@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/posts', [\App\Http\Controllers\Api\ContentController::class, 'index']);
 
+Route::post('/contact', [\App\Http\Controllers\Api\ContactController::class, 'index']);
+
 Route::get('/search', function (\Illuminate\Http\Request $request) {
     $q = $request->q;
 
