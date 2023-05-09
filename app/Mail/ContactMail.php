@@ -16,6 +16,8 @@ class ContactMail extends Mailable
 
     /**
      * Create a new message instance.
+     *
+     * @param  array<string, string>  $data
      */
     public function __construct(public array $data)
     {
@@ -28,10 +30,10 @@ class ContactMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: Option::where('key', 'noreply-email')->first()->value,
-            to: Option::where('key', 'contact-email')->first()->value,
+            from: Option::where('key', 'noreply-email')->first()?->value,
+            to: [new Address(Option::where('key', 'contact-email')->first()?->value ?: '', Option::where('key', 'sitename')->first()?->value)],
             replyTo: [new Address($this->data['email'], $this->data['name'])],
-            subject: Option::where('key', 'sitename')->first()->value . ' - Contact : ' . $this->data['name']
+            subject: Option::where('key', 'sitename')->first()?->value.' - Contact : '.$this->data['name']
         );
     }
 

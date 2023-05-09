@@ -39,6 +39,20 @@ deploydev: vendor/autoload.php public/assets/manifest.json ## Déploie les fichi
 ssh: ## Se connecte en ssh au serveur
 	ssh $(server)
 
+.PHONY: helpers
+helpers: ## Se connecte en ssh au serveur
+	$(php) php artisan ide-helper:generate
+	$(php) php artisan ide-helper:models -F helpers/ModelHelper.php -M
+	$(php) php artisan ide-helper:meta
+
+.PHONY: analyse
+analyse: ## Se connecte en ssh au serveur
+	$(php) ./vendor/bin/phpstan analyse
+
+.PHONY: pint
+pint: ## Se connecte en ssh au serveur
+	$(php) ./vendor/bin/pint
+
 .PHONY: request
 request: ## Permet d'ajouter un package node
 	$(php) php artisan make:request $(RUN_ARGS)

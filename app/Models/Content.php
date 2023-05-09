@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Database\Eloquent\Relations\BelongsTo;
-use \Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Engines\Engine;
 use Laravel\Scout\Searchable;
 
+/**
+ * @mixin IdeHelperContent
+ */
 class Content extends Model
 {
     use HasFactory, Searchable;
@@ -49,9 +52,9 @@ class Content extends Model
     /**
      * @throws \JsonException
      */
-    public function getContent()
+    public function getContent(): mixed
     {
-        return json_decode($this->content, true, 512, JSON_THROW_ON_ERROR);
+        return json_decode($this->content ?: '[]', true, 512, JSON_THROW_ON_ERROR);
     }
 
     public function isScheduled(): bool

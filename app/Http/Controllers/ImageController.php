@@ -12,8 +12,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ImageController extends Controller
 {
-
-    public function resize(Request $request, string $path)
+    public function resize(Request $request, string $path): mixed
     {
         $server = ServerFactory::create([
             'source' => Storage::disk('public')->getDriver(),

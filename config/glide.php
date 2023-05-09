@@ -1,4 +1,5 @@
 <?php
+
 return [
-  'key' => env('GLIDE_KEY', 'local')
+    'key' => env('GLIDE_KEY', 'local'),
 ];

@@ -1,53 +1,57 @@
 <?php
 
 use App\Models\Attachment;
-use App\Models\Option;
 use App\Models\Content;
+use App\Models\Option;
 use Illuminate\Support\Facades\Storage;
 
-if (!function_exists('sitename')) {
+if (! function_exists('sitename')) {
     function sitename(): string
     {
         $option = Option::where('key', 'sitename')->first();
 
-        return $option->value;
+        return $option?->value ?? '';
     }
 }
 
-if (!function_exists('theme')) {
+if (! function_exists('theme')) {
     function theme(): string
     {
         $option = Option::where('key', 'theme')->first();
-        return $option->value;
+
+        return $option?->value ?? '';
     }
 }
 
-if (!function_exists('logo')) {
-    function logo()
+if (! function_exists('logo')) {
+    function logo(): string
     {
         $option = Option::where('key', 'logo')->first();
-        return image_url($option->value);
+
+        return image_url($option?->value ?? '');
     }
 }
 
-if (!function_exists('openGraphLogo')) {
-    function openGraphLogo()
+if (! function_exists('openGraphLogo')) {
+    function openGraphLogo(): string
     {
         $option = Option::where('key', 'logo')->first();
-        return image_url_raw($option->value);
+
+        return image_url_raw($option?->value ?? '');
     }
 }
 
-if (!function_exists('favicon')) {
-    function favicon()
+if (! function_exists('favicon')) {
+    function favicon(): string
     {
         $option = Option::where('key', 'favicon')->first();
-        return image_url($option->value);
+
+        return image_url($option?->value ?? '');
     }
 }
 
-if (!function_exists('description')) {
-    function description()
+if (! function_exists('description')) {
+    function description(): string
     {
         $option = Option::where('key', 'description')->first();
 
@@ -55,8 +59,8 @@ if (!function_exists('description')) {
     }
 }
 
-if (!function_exists('social')) {
-    function social(string $name)
+if (! function_exists('social')) {
+    function social(string $name): string
     {
         $option = Option::where('key', $name)->first();
 
@@ -64,8 +68,8 @@ if (!function_exists('social')) {
     }
 }
 
-if (!function_exists('image_url')) {
-    function image_url(string|null $entity, ?int $width = null, ?int $height = null)
+if (! function_exists('image_url')) {
+    function image_url(string|null $entity, ?int $width = null, ?int $height = null): string
     {
         if (is_string($entity)) {
             $entity = Attachment::find($entity);
@@ -74,12 +78,13 @@ if (!function_exists('image_url')) {
         if (null === $entity) {
             return '';
         }
+
         return $entity->resize($width, $height);
     }
 }
 
-if (!function_exists('image_url_raw')) {
-    function image_url_raw(string|null $entity)
+if (! function_exists('image_url_raw')) {
+    function image_url_raw(string|null $entity): string
     {
         if (is_string($entity)) {
             $entity = Attachment::find($entity);
@@ -88,11 +93,12 @@ if (!function_exists('image_url_raw')) {
         if (null === $entity) {
             return '';
         }
+
         return Storage::disk('public')->url($entity->filename);
     }
 }
 
-if (!function_exists('icon')) {
+if (! function_exists('icon')) {
     function icon(string $name, ?int $size = null): string
     {
         $attrs = '';
@@ -108,29 +114,31 @@ if (!function_exists('icon')) {
     }
 }
 
-if (!function_exists('template')) {
+if (! function_exists('template')) {
     /**
      * @throws JsonException
      */
-    function template(string $name)
+    function template(string $name): mixed
     {
         $option = Option::where('key', $name)->first();
-        $content = Content::find($option->value);
-        return json_decode($content->content, true, 512, JSON_THROW_ON_ERROR);
+        $content = Content::find($option?->value ?? '');
+
+        return json_decode($content?->content ?: '[]', true, 512, JSON_THROW_ON_ERROR);
     }
 }
 
-if (!function_exists('menu_active')) {
+if (! function_exists('menu_active')) {
     function menu_active(string $menu, string $path): string
     {
         if ($menu === $path) {
             return 'aria-current=page';
         }
+
         return '';
     }
 }
 
-if (!function_exists('imageTag')) {
+if (! function_exists('imageTag')) {
     function imageTag(string $entity, ?int $width = null, ?int $height = null, ?string $class = null): ?string
     {
         if (is_string($entity)) {
@@ -141,11 +149,12 @@ if (!function_exists('imageTag')) {
             return null;
         }
 
-        $url = image_url($entity->id, $width, $height);
+        $url = image_url((string) $entity->id, $width, $height);
 
-        if (null !== $url) {
+        if ('' !== $url) {
             $height = $height ?: '100%';
             $width = $width ?: '100%';
+
             return "<img loading=\"lazy\" class=\"{$class}\" src=\"{$url}\" width=\"{$width}\" height=\"{$height}\" alt=\"{$entity->filename}\"/>";
         }
 
@@ -153,36 +162,38 @@ if (!function_exists('imageTag')) {
     }
 }
 
-if (!function_exists('logoTag')) {
-    function logoTag(?int $width = null, ?int $height = null): string
+if (! function_exists('logoTag')) {
+    function logoTag(?int $width = null, ?int $height = null): ?string
     {
         $option = Option::where('key', 'logo')->first();
+
         return imageTag(
-            $option->value,
+            $option?->value ?? '',
             $width,
             $height
         );
     }
 }
 
-if (!function_exists('lastBlogPosts')) {
-    function lastBlogPosts()
+if (! function_exists('lastBlogPosts')) {
+    function lastBlogPosts(): Illuminate\Database\Eloquent\Collection|Illuminate\Support\Collection
     {
         return Content::where('type', 'blog')->orderBy('created_at', 'desc')->limit(4)->get();
     }
 }
 
-if (!function_exists('countdown')) {
-    function countdown(\Carbon\Carbon $date, ?string $id): string
+if (! function_exists('countdown')) {
+    function countdown(Carbon\Carbon $date, ?string $id): string
     {
         return "<time-countdown time=\"{$date->getTimestamp()}\" id=\"{$id}\"></time-countdown>";
     }
 }
 
-if (!function_exists('ago')) {
-    function ago(\Carbon\Carbon $date, string $prefix = ''): string
+if (! function_exists('ago')) {
+    function ago(Carbon\Carbon $date, string $prefix = ''): string
     {
-        $prefixAttribute = !empty($prefix) ? " prefix=\"{$prefix}\"" : '';
+        $prefixAttribute = ! empty($prefix) ? " prefix=\"{$prefix}\"" : '';
+
         return "<time-ago time=\"{$date->getTimestamp()}\"$prefixAttribute></time-ago>";
     }
 }

@@ -6,17 +6,21 @@ use geertw\IpAnonymizer\IpAnonymizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin IdeHelperContactRequest
+ */
 class ContactRequest extends Model
 {
     use HasFactory;
 
     public $fillable = [
-        'ip'
+        'ip',
     ];
 
     public function setRawIp(?string $ip): self
     {
         $this->ip = (new IpAnonymizer())->anonymize($ip);
+
         return $this;
     }
 }

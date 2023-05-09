@@ -1,0 +1,14 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+parameters:
+    checkGenericClassInNonGenericObjectType: false
+    level: 8
+    paths:
+        - app
+    scanDirectories:
+        - ./helpers
+    ignoreErrors:
+        - "#Method [a-zA-Z0-9\\_\\\\:\\(\\)]+ has parameter \\$[a-zA-Z0-9_]+ with no value type specified in iterable type array#"
+        - "#Method [a-zA-Z0-9\\_\\\\:\\(\\)]+ return type has no value type specified in iterable type array#"
+        - "#Cannot call method store[a-zA-Z0-9\\_\\\\:\\(\\)]+#"
+        - "#Cannot call method getSize[a-zA-Z0-9\\_\\\\:\\(\\)]+#"

@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PageContentFormRequest;
 use App\Models\Content;
-use \Illuminate\Contracts\View\View;
-use \Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class PageContentController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware('permission:content-list|content-create|content-edit|content-delete', ['only' => ['index', 'store']]);
         $this->middleware('permission:content-create', ['only' => ['create', 'store']]);
@@ -26,7 +26,7 @@ class PageContentController extends Controller
     {
         return view('admin.pages.index', [
             'pages' => Content::where('type', 'page')->orderBy('created_at', 'desc')->paginate(20),
-            'menu' => route('admin.page.index')
+            'menu' => route('admin.page.index'),
         ]);
     }
 
@@ -39,7 +39,7 @@ class PageContentController extends Controller
 
         return view('admin.pages.form', [
             'page' => $page,
-            'menu' => route('admin.page.index')
+            'menu' => route('admin.page.index'),
         ]);
     }
 
@@ -49,13 +49,13 @@ class PageContentController extends Controller
     public function store(PageContentFormRequest $request): RedirectResponse
     {
         $page = new Content();
-        $page->user_id = Auth::user()->id;
+        $page->user_id = (int) Auth::user()?->id;
         $page->type = 'page';
         $page->fill($request->validated());
         $page->save();
+
         return to_route('admin.page.index')->with('success', 'Le contenu a bien été créé');
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -64,7 +64,7 @@ class PageContentController extends Controller
     {
         return view('admin.pages.form', [
             'page' => $page,
-            'menu' => route('admin.page.index')
+            'menu' => route('admin.page.index'),
         ]);
     }
 
@@ -74,6 +74,7 @@ class PageContentController extends Controller
     public function update(PageContentFormRequest $request, Content $page): RedirectResponse
     {
         $page->update($request->validated());
+
         return to_route('admin.page.index')->with('success', 'Le contenu a bien été modifié');
     }
 
@@ -83,6 +84,7 @@ class PageContentController extends Controller
     public function destroy(Content $page): RedirectResponse
     {
         $page->delete();
+
         return to_route('admin.page.index')->with('success', 'Le contenu a bien été supprimé');
     }
 }

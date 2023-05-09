@@ -1,14 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\AttachmentController;
 use App\Http\Controllers\Admin\BlogContentController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\PageContentController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TemplateContentController;
-use \App\Http\Controllers\Admin\AttachmentController;
-use \App\Http\Controllers\Admin\OptionController;
-use \App\Http\Controllers\Admin\RoleController;
-use \App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
@@ -34,7 +34,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::post('/preview', [\App\Http\Controllers\Admin\PreviewController::class, 'index'])->name('preview.index')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
     Route::post('/preview/template', [\App\Http\Controllers\Admin\PreviewController::class, 'template'])->name('preview.template')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
-
 
     Route::get('/options', [OptionController::class, 'index'])->name('options.index');
     Route::post('/options', [OptionController::class, 'update'])->name('options.update');

@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\ImageController;
-use \App\Http\Controllers\PageController;
-use \App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +17,8 @@ use \App\Http\Controllers\BlogController;
 |
 */
 
-require __DIR__ . '/auth.php';
-require __DIR__ . '/admin.php';
+require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/recherche', [PageController::class, 'search'])->name('search');

@@ -17,7 +17,7 @@ class ContentResource extends JsonResource
         return [
             'label' => $this->resource->title,
             'type' => $this->resource->type,
-            'path' => $this->resource->type . '.show',
+            'path' => $this->resource->type.'.show',
             'slug' => $this->resource->slug,
         ];
     }

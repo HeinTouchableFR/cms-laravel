@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PreviewController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware('permission:content-list|content-create|content-edit|content-delete', ['only' => ['index', 'template']]);
     }
@@ -17,7 +17,7 @@ class PreviewController extends Controller
     /**
      * @throws \JsonException
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $content = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
@@ -26,43 +26,43 @@ class PreviewController extends Controller
         $post->id = 9_999_999;
         $post->title = 'Lorem ipsum dolor';
         $post->slug = 'lorem-ipsum-dolor';
-        $post->user = Auth::user();
+        $post->user_id = (int) Auth::user()?->id;
         $post->created_at = now();
 
         if (array_is_list($content)) {
             return view('admin.preview.index', [
-                "blocs" => $content,
-                "content" => $post,
-                "menu" => route('home')
+                'blocs' => $content,
+                'content' => $post,
+                'menu' => route('home'),
             ]);
         }
 
-        return view(theme() . '.views.' . $content['_name'], [
-            "bloc" => $content,
-            "content" => $post,
-            "animate" => "no-animate",
-            "menu" => route('home')
+        return view(theme().'.views.'.$content['_name'], [
+            'bloc' => $content,
+            'content' => $post,
+            'animate' => 'no-animate',
+            'menu' => route('home'),
         ]);
     }
 
     /**
      * @throws \JsonException
      */
-    public function template(Request $request)
+    public function template(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $content = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         if (array_is_list($content)) {
             return view('admin.preview.template', [
-                "blocs" => $content,
-                "menu" => route('home')
+                'blocs' => $content,
+                'menu' => route('home'),
             ]);
         }
 
-        return view(theme() . '.views.' . $content['_name'], [
-            "bloc" => $content,
-            "animate" => "no-animate",
-            "menu" => route('home')
+        return view(theme().'.views.'.$content['_name'], [
+            'bloc' => $content,
+            'animate' => 'no-animate',
+            'menu' => route('home'),
         ]);
     }
 }

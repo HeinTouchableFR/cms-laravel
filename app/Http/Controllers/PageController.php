@@ -5,19 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Content;
 use App\Models\Option;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     public function home(): View
     {
         $homepage = Option::where('key', 'homepage')->first();
-        $content = Content::find($homepage->value);
+        $content = Content::find($homepage?->value);
 
         return view('home', [
             'menu' => route('home'),
-            'content' => $content
+            'content' => $content,
         ]);
     }
 
@@ -25,17 +25,17 @@ class PageController extends Controller
     {
         $urls = [];
 
-        $urls[] = ["loc" => route('home')];
+        $urls[] = ['loc' => route('home')];
 
         foreach (Content::whereIn('type', ['blog', 'page'])->get() as $post) {
             $urls[] = [
-                "loc" => route($post->type . '.show', $post->slug),
-                "lastmod" => $post->updated_at,
+                'loc' => route($post->type.'.show', $post->slug),
+                'lastmod' => $post->updated_at,
             ];
         }
 
         return response()->view('sitemap', [
-            'urls' => $urls
+            'urls' => $urls,
         ])->header('Content-Type', 'text/xml');
     }
 
@@ -44,7 +44,7 @@ class PageController extends Controller
         $sitemap = route('sitemap');
 
         return response()->view('robots', [
-            'content' => "User-agent: * \nDisallow: /profile/\nDisallow: /admin/\nSitemap: {$sitemap}"
+            'content' => "User-agent: * \nDisallow: /profile/\nDisallow: /admin/\nSitemap: {$sitemap}",
         ])->header('Content-Type', 'text/txt');
     }
 
@@ -58,14 +58,14 @@ class PageController extends Controller
         if ($q) {
             $results = \App\Models\Content::search($q,
                 function ($meiliSearch, string $query, array $options) {
-                    $options['attributesToHighlight'] = ["title", "content"];
+                    $options['attributesToHighlight'] = ['title', 'content'];
 
                     return $meiliSearch->search($query, $options);
                 })->whereIn('type', ['blog', 'page'])->where('online', '1')->raw();
         } else {
             $results = [
                 'hits' => [],
-                'totalHits' => 0
+                'totalHits' => 0,
             ];
         }
 
@@ -83,7 +83,7 @@ class PageController extends Controller
             }
 
             $excerpt = '';
-            $json = json_decode($item["_formatted"]["content"], true);
+            $json = json_decode($item['_formatted']['content'], true);
             if ($json) {
                 foreach ($json as $bloc) {
                     foreach ($bloc as $v) {
@@ -107,9 +107,9 @@ class PageController extends Controller
             $items[] = [
                 'title' => $item['_formatted']['title'],
                 'created_at' => new Carbon($item['created_at']),
-                'url' => route($item['type'] . '.show', $item['slug']),
+                'url' => route($item['type'].'.show', $item['slug']),
                 'excerpt' => $excerpt,
-                'type' => $type
+                'type' => $type,
             ];
         }
 
@@ -117,16 +117,15 @@ class PageController extends Controller
             'menu' => route('search'),
             'results' => $items,
             'total' => count($items),
-            'q' => $q
+            'q' => $q,
         ]);
     }
-
 
     public function show(string $post): View
     {
         return view('pages.show', [
             'menu' => route('page.show', $post),
-            'content' => Content::where('type', 'page')->where('slug', $post)->firstOrFail()
+            'content' => Content::where('type', 'page')->where('slug', $post)->firstOrFail(),
         ]);
     }
 }

@@ -22,7 +22,7 @@ class UploadAttachmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required']
+            'file' => ['required'],
         ];
     }
 }

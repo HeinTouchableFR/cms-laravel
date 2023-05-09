@@ -134,9 +134,9 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
             \App\Models\Content::class => [
-                'filterableAttributes'=> ['id', 'type', 'online'],
+                'filterableAttributes' => ['id', 'type', 'online'],
                 'sortableAttributes' => ['created_at'],
-            ]
+            ],
         ],
     ],
 

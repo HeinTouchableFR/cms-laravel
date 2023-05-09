@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Attachment;
-use App\Models\Option;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;

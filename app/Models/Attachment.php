@@ -7,18 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use League\Glide\Urls\UrlBuilderFactory;
 
+/**
+ * @mixin IdeHelperAttachment
+ */
 class Attachment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'filename',
-        'filesize'
+        'filesize',
     ];
 
     public function resize(?int $width = null, ?int $height = null): string
     {
         $urlBuilder = UrlBuilderFactory::create('/media/resize/', config('glide.key'));
+
         return $urlBuilder->getUrl($this->filename, ['w' => $width, 'h' => $height, 'fit' => 'crop']);
     }
 

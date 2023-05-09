@@ -22,14 +22,14 @@ Route::get('/posts', [\App\Http\Controllers\Api\ContentController::class, 'index
 
 Route::post('/contact', [\App\Http\Controllers\Api\ContactController::class, 'index']);
 
-Route::get('/search', function (\Illuminate\Http\Request $request) {
+Route::get('/search', function (Request $request) {
     $q = $request->q;
 
     if ($q) {
         $results = \App\Models\Content::search($q,
             function ($meiliSearch, string $query, array $options) {
-                $options['attributesToHighlight'] = ["title", "content"];
-                $options['attributesToCrop'] = ["content"];
+                $options['attributesToHighlight'] = ['title', 'content'];
+                $options['attributesToCrop'] = ['content'];
                 $options['cropLength'] = 35;
 
                 return $meiliSearch->search($query, $options);
@@ -37,7 +37,7 @@ Route::get('/search', function (\Illuminate\Http\Request $request) {
     } else {
         $results = [
             'hits' => [],
-            'totalHits' => 0
+            'totalHits' => 0,
         ];
     }
 
@@ -55,13 +55,13 @@ Route::get('/search', function (\Illuminate\Http\Request $request) {
 
         $items[] = [
             'title' => $item['_formatted']['title'],
-            'url' => route($item['type'] . '.show', $item['slug']),
-            'category' => $category
+            'url' => route($item['type'].'.show', $item['slug']),
+            'category' => $category,
         ];
     }
 
     return [
         'items' => $items,
-        'hits' => $results['totalHits']
+        'hits' => $results['totalHits'],
     ];
 });

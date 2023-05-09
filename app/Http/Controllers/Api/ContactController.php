@@ -11,25 +11,23 @@ use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
-
     /**
      * @throws TooManyContactException
      */
-    public function index(\App\Http\Requests\ContactRequest $request)
+    public function index(\App\Http\Requests\ContactRequest $request): \Illuminate\Http\JsonResponse
     {
         try {
             $this->send($request);
         } catch (TooManyContactException) {
             return response()->json([
-                "title" =>
-                    "Vous avez fait trop de demandes de contact consécutives.",
+                'title' => 'Vous avez fait trop de demandes de contact consécutives.',
             ], 401);
         }
 
         return response()->json([], 204);
     }
 
-    function send(\App\Http\Requests\ContactRequest $request)
+    public function send(\App\Http\Requests\ContactRequest $request): void
     {
         $contactRequest = (new ContactRequest())->setRawIp($request->ip());
         $lastRequest = ContactRequest::where('ip', $contactRequest->ip)->first();

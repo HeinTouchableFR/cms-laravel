@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryFormRequest;
 use App\Models\Category;
-use \Illuminate\Contracts\View\View;
-use \Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class CategoryController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware('permission:category-list|category-create|category-edit|category-delete', ['only' => ['index', 'store']]);
         $this->middleware('permission:category-create', ['only' => ['create', 'store']]);
@@ -26,7 +25,7 @@ class CategoryController extends Controller
     {
         return view('admin.categories.index', [
             'categories' => Category::orderBy('created_at', 'desc')->paginate(20),
-            'menu' => route('admin.category.index')
+            'menu' => route('admin.category.index'),
         ]);
     }
 
@@ -39,7 +38,7 @@ class CategoryController extends Controller
 
         return view('admin.categories.form', [
             'category' => $category,
-            'menu' => route('admin.category.index')
+            'menu' => route('admin.category.index'),
         ]);
     }
 
@@ -51,9 +50,9 @@ class CategoryController extends Controller
         $category = new Category();
         $category->fill($request->validated());
         $category->save();
+
         return to_route('admin.category.index')->with('success', 'Le contenu a bien été créé');
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -62,7 +61,7 @@ class CategoryController extends Controller
     {
         return view('admin.categories.form', [
             'category' => $category,
-            'menu' => route('admin.category.index')
+            'menu' => route('admin.category.index'),
         ]);
     }
 
@@ -72,6 +71,7 @@ class CategoryController extends Controller
     public function update(CategoryFormRequest $request, Category $category): RedirectResponse
     {
         $category->update($request->validated());
+
         return to_route('admin.category.index')->with('success', 'Le contenu a bien été modifié');
     }
 
@@ -81,6 +81,7 @@ class CategoryController extends Controller
     public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
+
         return to_route('admin.category.index')->with('success', 'Le contenu a bien été supprimé');
     }
 }
