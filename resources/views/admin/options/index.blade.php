@@ -91,7 +91,7 @@
                                 <select name="value" id="{{ $option->key }}">
                                     <option>Choisir une option</option>
                                     @foreach($templatePosts as $post)
-                                        @if($post->type === 'blog')
+                                        @if($post->type === 'template')
                                             <option value="{{ $post->id }}"
                                                     @if($option->value== $post->id) selected @endif>{{ $post->title }}</option>
                                         @endif
