@@ -27,7 +27,7 @@ class TemplateContentFormRequest extends FormRequest
             'description' => [''],
             'content' => [''],
             'online' => ['required', 'boolean'],
-            'type' => ['required', 'in:header,footer,blog'],
+            'type' => ['required', 'in:header,footer,template'],
             'attachment_id' => [''],
             'created_at' => ['required'],
         ];
