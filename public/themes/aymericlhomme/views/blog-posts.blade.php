@@ -12,7 +12,7 @@
                 $link = route('blog.show', $post->slug);
             @endphp
             <article
-                class="blog-post animate {{ $post->isScheduled() ? 'blog-scheduled' : '' }}" {{ $post->isScheduled() ? "id=scheduled-" . $post->id : '' }}>
+                class="blog-post {{ $animate}} {{ $post->isScheduled() ? 'blog-scheduled' : '' }}" {{ $post->isScheduled() ? "id=scheduled-" . $post->id : '' }}>
                 <a href="{{ $link }}" class="blog-post__image">
                     @if($post->attachment_id)
                         {!! imageTag($post->attachment_id, 160, 160) !!}
