@@ -26,7 +26,7 @@ class TagFormRequest extends FormRequest
             'slug' => ['required', 'min:5'],
             'description' => [''],
             'visible' => ['boolean'],
-            'tag_id' => ['exists:tags,id'],
+            'tag_id' => [''],
         ];
     }
 }
