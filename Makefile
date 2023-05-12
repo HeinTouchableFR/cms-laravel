@@ -29,7 +29,7 @@ help: ## Affiche cette aide
 
 .PHONY: deploy
 deploy: ## Déploie les fichiers sur le serveur
-	ssh o2switch 'cd ~/aymericlhomme.fr && git clone https://github.com/HeinTouchableFR/cms-laravel.git . && make install'
+	ssh o2switch 'cd ~/aymericlhomme.fr && git pull https://github.com/HeinTouchableFR/cms-laravel.git . && make install'
 
 .PHONY: install
 install: vendor/autoload.php .env public/storage public/build/manifest.json
