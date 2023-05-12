@@ -42,7 +42,7 @@ class OptionController extends Controller
     {
         return view('admin.options.index', [
             'options' => Option::whereIn('key', self::MANAGEABLE_KEYS)->orderBy('created_at', 'asc')->get(),
-            'blogPosts' => Content::where('type', 'post')->get(),
+            'blogPosts' => Content::where('type', 'template')->get(),
             'pagePosts' => Content::where('type', 'page')->get(),
             'templatePosts' => Content::whereIn('type', ['header', 'footer', 'blog'])->get(),
             'dataEndpoint' => '/admin/attachment',
