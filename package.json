@@ -3,15 +3,15 @@
     "scripts": {
         "dev": "npm-run-all --parallel watch dev:vite",
         "copy": "npm-run-all --parallel copy:*",
-        "copy:assets": "copyfiles -u 4 \"./public/themes/$npm_config_theme/assets/fonts/*\" \"./public/themes/$npm_config_theme\"",
+        "copy:assets": "copyfiles -u 4 \"./public/themes/aymericlhomme/assets/fonts/*\" \"./public/themes/aymericlhomme\"",
         "dev:vite": "npx vite --host",
         "build": "npx vite build",
         "build-theme": "npm-run-all build:*",
         "build:vite": "npx vite build",
         "build:sass": "sass --no-source-map public/themes/**/sass:public/themes/**/css",
         "watch": "npm-run-all --parallel watch:*",
-        "watch:sass": "sass --watch --no-source-map public/themes/$npm_config_theme/sass:public/themes/$npm_config_theme/css",
-        "postbuild": "postcss public/themes/$npm_config_theme/css/*.css -u autoprefixer cssnano -r --no-map"
+        "watch:sass": "sass --watch --no-source-map public/themes/aymericlhomme/sass:public/themes/aymericlhomme/css",
+        "postbuild": "postcss public/themes/aymericlhomme/css/*.css -u autoprefixer cssnano -r --no-map"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
