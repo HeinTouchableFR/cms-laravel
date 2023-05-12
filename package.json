@@ -5,7 +5,7 @@
         "copy": "npm-run-all --parallel copy:*",
         "copy:assets": "copyfiles -u 4 \"./public/themes/$npm_config_theme/assets/fonts/*\" \"./public/themes/$npm_config_theme\"",
         "dev:vite": "npx vite --host",
-        "build": "npm run build",
+        "build": "npx vite build",
         "build-theme": "npm-run-all build:*",
         "build:vite": "npx vite build",
         "build:sass": "sass --no-source-map public/themes/**/sass:public/themes/**/css",
