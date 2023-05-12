@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('blog', function (Blueprint $table) {
+        Schema::table('content', function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Attachment::class)->nullable()->constrained();
         });
     }
