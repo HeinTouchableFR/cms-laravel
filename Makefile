@@ -33,26 +33,33 @@ deploy: ## Déploie les fichiers sur le serveur
 
 .PHONY: install
 install: vendor/autoload.php .env public/storage public/build/manifest.json
-	php artisan cache:clear
-	php artisan migrate
+	$(php) php artisan cache:clear
+	$(php) php artisan migrate
+
+.PHONY: seed
+seed:
+	$(php) php artisan db:seed --class=PermissionTableSeeder
+	$(php) php artisan db:seed --class=CreateAdminUserSeeder
+	$(php) php artisan db:seed --class=ContentTableSeeder
+	$(php) php artisan db:seed --class=OptionTableSeeder
 
 # -----------------------------------
 # Dépendances
 # -----------------------------------
 .env:
 	cp .env.example .env
-	php artisan key:generate
+	$(php) php artisan key:generate
 
 public/storage:
-	php artisan storage:link
+	$(php) artisan storage:link
 
 vendor/autoload.php: composer.lock
-	composer install --no-dev --optimize-autoloader
+	$(php) composer install --no-dev --optimize-autoloader
 	touch vendor/autoload.php
 
 public/build/manifest.json: package.json
-	npm i
-	npm run build
+	$(node) npm i
+	$(node) npm run build
 
 
 .PHONY: build-docker
@@ -73,11 +80,6 @@ build-docker:
 dev: vendor/autoload.php node_modules/time ## Lance le serveur de développement
 	$(dc) up
 	$(node) npm run dev
-
-.PHONY: seed
-seed: vendor/autoload.php ## Génère des données dans la base de données (docker-compose up doit être lancé)
-	$(sy) doctrine:migrations:migrate -q
-	$(sy) app:seed -q
 
 .PHONY: rollback
 rollback:

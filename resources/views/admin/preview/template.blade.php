@@ -11,8 +11,11 @@
     <script src="/themes/{{ theme() }}/assets/admin.js" type="module" defer=""></script>
     @vite(['resources/css/app.scss', 'resources/css/admin.scss', 'resources/ts/app.ts', 'resources/ts/admin.ts'])
     <meta name="turbolinks-cache-control" content="no-cache"/>
-    @foreach($blocs as $bloc)
-        <link rel="stylesheet" href="/themes/{{ theme() }}/css/modules/{{ $bloc['_name'] }}.css">
+    @php
+        $storage = File::allFiles(public_path() . "/themes/" . theme() ."/css/modules");
+    @endphp
+    @foreach($storage as $style)
+        <link rel="stylesheet" href="/themes/{{ theme() }}/css/modules/{{ $style->getFileName() }}">
     @endforeach
     <link rel="stylesheet" href="/Editor.css">
 </head>
@@ -20,7 +23,7 @@
 <div class="page-wrapper">
     <div id="ve-components">
         @foreach($blocs as $bloc)
-            @includeIf(theme() . '.views.' . $bloc['_name'], ['bloc' => $bloc, 'animate' => 'animate'])
+            @includeIf(theme() . '.views.' . $bloc['_name'], ['bloc' => $bloc, 'animate' => 'no-animate'])
         @endforeach
     </div>
 </div>

@@ -13,7 +13,7 @@
 @section('content')
     <div class="container">
         @foreach($bloc['blocs'] as $item)
-            <div class="services__card animate">
+            <div class="services__card {{ $animate }}">
                 <div class="services__card-imageBox" data-text="{{ $item['title'] }}">
                     @if(key_exists('image', $item))
                         {!! imageTag($item['image'], 100, 100) !!}

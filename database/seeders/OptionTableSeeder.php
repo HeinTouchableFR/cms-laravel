@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Option;
 use Illuminate\Database\Seeder;
 
-class OptionsTableSeeder extends Seeder
+class OptionTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -28,5 +28,6 @@ class OptionsTableSeeder extends Seeder
         Option::create(['key' => 'twitter', 'value' => '']);
         Option::create(['key' => 'instagram', 'value' => '']);
         Option::create(['key' => 'linkedin', 'value' => '']);
+        Option::create(['key' => 'spam_words', 'value' => '']);
     }
 }
