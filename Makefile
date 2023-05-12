@@ -28,16 +28,86 @@ help: ## Affiche cette aide
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: deploy
-deploy: vendor/autoload.php public/assets/manifest.json ## Déploie les fichiers sur le serveur
-	rsync -av --delete --perms --chmod=755 ./ $(server):~/laravel.aymericlhomme.fr --include=public/build --include=vendor --include=node_modules --include=public/uploads --include=public/bundles --include=public/.htaccess --exclude-from=.gitignore --exclude=".*" --exclude="site.conf"
+deploy: ## Déploie les fichiers sur le serveur
+	ssh o2switch 'cd ~/aymericlhomme.fr && git clone https://github.com/HeinTouchableFR/cms-laravel.git . && make install'
 
-.PHONY: deploydev
-deploydev: vendor/autoload.php public/assets/manifest.json ## Déploie les fichiers sur le serveur de developpement
-	rsync -av --delete --perms --chmod=755 ./ $(server):~/dev.aymericlhomme.fr --include=public/assets --include=vendor --include=node_modules --include=public/uploads --include=public/bundles --include=public/.htaccess --exclude-from=.gitignore --exclude=".*" --exclude="site.conf"
+.PHONY: install
+install: vendor/autoload.php .env public/storage public/build/manifest.json
+	php artisan cache:clear
+	php artisan migrate
 
-.PHONY: ssh
-ssh: ## Se connecte en ssh au serveur
-	ssh $(server)
+# -----------------------------------
+# Dépendances
+# -----------------------------------
+.env:
+	cp .env.example .env
+	php artisan key:generate
+
+public/storage:
+	php artisan storage:link
+
+vendor/autoload.php: composer.lock
+	composer install --no-dev --optimize-autoloader
+	touch vendor/autoload.php
+
+public/build/manifest.json: package.json
+	npm i
+	npm run build
+
+
+.PHONY: build-docker
+build-docker:
+	$(dc) create
+	$(dc) pull --ignore-pull-failures
+	$(dc) build php
+	$(dc) build node
+	$(dc) build db
+	$(dc) start db
+	sleep 5
+	make dumpimport
+	make dev
+	sleep 30
+	make post-build
+
+.PHONY: dev
+dev: vendor/autoload.php node_modules/time ## Lance le serveur de développement
+	$(dc) up
+	$(node) npm run dev
+
+.PHONY: seed
+seed: vendor/autoload.php ## Génère des données dans la base de données (docker-compose up doit être lancé)
+	$(sy) doctrine:migrations:migrate -q
+	$(sy) app:seed -q
+
+.PHONY: rollback
+rollback:
+	$(sy) doctrine:migration:migrate prev
+
+.PHONY: dump
+dump: var/dump ## Génère un dump SQL
+	$(de) db sh -c 'mysqldump --user=user --password=user --databases cms > /var/www/var/dump/dump.sql'
+
+.PHONY: dumpimport
+dumpimport: ## Import un dump SQL
+	$(de) db sh -c 'mysql --user=user --password=user cms < /var/www/var/dump/dump.sql'
+
+.PHONY: clean
+clean:
+	$(php) php bin/console c:c
+
+.PHONY: doc
+doc: ## Génère le sommaire de la documentation
+	npx doctoc ./README.md
+
+
+post-build:
+	$(php) composer install
+	touch vendor/autoload.php
+	$(node) yarn
+	touch node_modules/time
+	$(node) yarn
+	$(node) npm run build --theme=$(theme)
+
 
 .PHONY: helpers
 helpers: ## Se connecte en ssh au serveur
@@ -92,82 +162,6 @@ remove: ## Permet de supprimer un package node
 .PHONY: delete
 delete: ## Permet de supprimer un package node
 	$(php) composer remove $(RUN_ARGS)
-
-.PHONY: install
-install: vendor/autoload.php public/assets/manifest.json ## Installe les différentes dépendances
-	APP_ENV=prod APP_DEBUG=0 $(php) composer install --no-dev --optimize-autoloader
-	make migrate
-	APP_ENV=prod APP_DEBUG=0 $(sy) cache:clear
-	$(sy) cache:pool:clear cache.global_clearer
-	$(sy) messenger:stop-workers
-	sudo service php8.1-fpm reload
-
-.PHONY: build-docker
-build-docker:
-	$(dc) create
-	$(dc) pull --ignore-pull-failures
-	$(dc) build php
-	$(dc) build node
-	$(dc) build db
-	$(dc) start db
-	sleep 5
-	make dumpimport
-	make dev
-
-.PHONY: dev
-dev: vendor/autoload.php node_modules/time ## Lance le serveur de développement
-	$(dc) up
-	$(node) npm run dev
-
-.PHONY: devmac
-devmac: ## Sur MacOS on ne préfèrera exécuter PHP en local pour les performances
-	docker-compose -f docker-compose.macos.yml up
-
-.PHONY: seed
-seed: vendor/autoload.php ## Génère des données dans la base de données (docker-compose up doit être lancé)
-	$(sy) doctrine:migrations:migrate -q
-	$(sy) app:seed -q
-
-.PHONY: rollback
-rollback:
-	$(sy) doctrine:migration:migrate prev
-
-.PHONY: dump
-dump: var/dump ## Génère un dump SQL
-	$(de) db sh -c 'mysqldump --user=user --password=user --databases cms > /var/www/var/dump/dump.sql'
-
-.PHONY: dumpimport
-dumpimport: ## Import un dump SQL
-	$(de) db sh -c 'mysql --user=user --password=user cms < /var/www/var/dump/dump.sql'
-
-.PHONY: clean
-clean:
-	$(php) php bin/console c:c
-
-.PHONY: doc
-doc: ## Génère le sommaire de la documentation
-	npx doctoc ./README.md
-
-# -----------------------------------
-# Dépendances
-# -----------------------------------
-vendor/autoload.php: composer.lock
-	$(php) composer install
-	touch vendor/autoload.php
-
-node_modules/time: yarn.lock
-	$(node) yarn
-	touch node_modules/time
-
-public/assets: node_modules/time
-	$(node) npm run build --theme=$(theme)
-
-var/dump:
-	mkdir var/dump
-
-public/assets/manifest.json: package.json
-	$(node) yarn
-	$(node) npm run build --theme=$(theme)
 
 # -----------------------------------
 # Fonctions
