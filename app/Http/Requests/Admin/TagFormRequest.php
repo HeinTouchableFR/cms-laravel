@@ -22,8 +22,8 @@ class TagFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:5'],
-            'slug' => ['required', 'min:5'],
+            'name' => ['required', 'min:3'],
+            'slug' => ['required', 'min:3'],
             'description' => [''],
             'visible' => ['boolean'],
             'tag_id' => [''],

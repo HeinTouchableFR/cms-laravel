@@ -3,15 +3,15 @@
     "scripts": {
         "dev": "npm-run-all --parallel watch dev:vite",
         "copy": "npm-run-all --parallel copy:*",
-        "copy:assets": "copyfiles -u 4 \"./public/themes/aymericlhomme/assets/fonts/*\" \"./public/themes/aymericlhomme\"",
+        "copy:assets": "copyfiles -u 4 \"./storage/app/public/themes/default/assets/fonts/*\" \"./storage/app/public/themes/default\"",
         "dev:vite": "npx vite --host",
         "build": "npx vite build",
         "build-theme": "npm-run-all build:*",
         "build:vite": "npx vite build",
-        "build:sass": "sass --no-source-map public/themes/**/sass:public/themes/**/css",
+        "build:sass": "sass --no-source-map storage/app/public/themes/**/sass:storage/app/public/themes/**/css",
         "watch": "npm-run-all --parallel watch:*",
-        "watch:sass": "sass --watch --no-source-map public/themes/aymericlhomme/sass:public/themes/aymericlhomme/css",
-        "postbuild": "postcss public/themes/aymericlhomme/css/*.css -u autoprefixer cssnano -r --no-map"
+        "watch:sass": "sass --watch --no-source-map storage/app/public/themes/default/sass:storage/app/public/themes/default/css",
+        "postbuild": "postcss storage/app/public/themes/default/css/*.css -u autoprefixer cssnano -r --no-map"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",

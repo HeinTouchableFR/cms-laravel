@@ -98,6 +98,19 @@
                                     @endforeach
                                 </select>
                             </div>
+                        @elseif($option->key === 'theme')
+                            @php
+                                $storage = Storage::disk('public')->directories('themes');
+                            @endphp
+                            <div class="form-attachment form-group"
+                                 style="grid-row-start:1;align-self:stretch;width: 250px">
+                                <select name="value" id="{{ $option->key }}">
+                                    @foreach($storage as $theme)
+                                        <option value="{{ Str::replace('themes/', '', $theme) }}"
+                                                @if($option->value== Str::replace('themes/', '', $theme)) selected @endif>{{ Str::replace('themes/', '', $theme) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         @else
                             <textarea name="value" id="{{ $option->key }}" cols="30"
                                       rows="10">{{ $option->value }}</textarea>

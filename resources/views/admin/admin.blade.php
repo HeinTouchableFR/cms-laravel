@@ -19,7 +19,11 @@
 <body class="">
 <div class="admin">
     <nav>
-        <img src="{{ logo() }}" alt="logo">
+        @if(logo() !== '')
+            <img src="{{ logo() }}" alt="logo">
+        @else
+            <h2 class="h2 center p-block-2">{{ sitename() }}</h2>
+        @endif
         <ul>
             <li>
                 <a href="{{ route('admin.index') }}" {{ menu_active($menu, route('admin.index')) }}>{!! icon('home') !!}

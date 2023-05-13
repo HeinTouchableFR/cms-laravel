@@ -1,0 +1,106 @@
+@use "modules/animations";
+@use "btn";
+
+@use "../../../../resources/css/tools/reset";
+@use "abstracts/layout";
+@use "abstracts/fonts";
+
+:root {
+  // Font
+  // https://utopia.fyi/type/calculator/?c=320,14,1.2,1100,18,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12
+  --font: "Marianne";
+  --step--2: clamp(0.61rem, calc(0.56rem + 0.23vw), 0.72rem);
+  --step--1: clamp(0.73rem, calc(0.66rem + 0.35vw), 0.90rem);
+  --step-0: clamp(0.88rem, calc(0.77rem + 0.51vw), 1.13rem);
+  --step-1: clamp(1.05rem, calc(0.90rem + 0.73vw), 1.41rem);
+  --step-2: clamp(1.26rem, calc(1.06rem + 1.02vw), 1.76rem);
+  --step-3: clamp(1.51rem, calc(1.23rem + 1.41vw), 2.20rem);
+  --step-4: clamp(1.81rem, calc(1.43rem + 1.91vw), 2.75rem);
+  --step-5: clamp(2.18rem, calc(1.66rem + 2.58vw), 3.43rem);
+  --step-6: clamp(2.61rem, calc(1.92rem + 3.44vw), 4.29rem);
+  --step-7: clamp(3.14rem, calc(2.22rem + 4.57vw), 5.36rem);
+  --step-8: clamp(3.76rem, calc(2.56rem + 6.04vw), 6.71rem);
+  // Layout
+  --container-padding: 20px;
+  --container-width: 1350px;
+  --gap: 20px;
+  --space: 8px;
+  // Colors
+  --color-dark: hsl(277, 10%, 22%);
+  --color: hsl(277, 10%, 68%);
+  --color-light: hsl(277, 10%, 89%);
+  --color-transparent: #{rgba(#121c42, 0)};
+  --contrast: hsl(228, 46%, 39%);
+  --accent: hsl(277, 89%, 50%);
+  --contrast25: #3648933f;
+  --border: #d5e3ec;
+  --border-light: #364893;
+  --background: #fbfafc;
+  --background-light: #fff;
+  --shadow: #d8e1e8;
+  --list-hover: var(--background);
+  --card-footer: #f7fafd;
+  --card-padding: 16px;
+  --red: #f25353;
+  --green: #41cf7c;
+  --yellow: #feb32b;
+  --yellow-alpha: #feb32b4c;
+  --skeleton: var(--color-light);
+  --header-background: #fffffff2;
+  --white: white;
+  --color-1: #023e8a;
+  --color-2: #e85d04;
+  --color-3: #6a994e;
+  --color-4: #d00000;
+  --color-5: #ffb703;
+  --color-6: #8338ec;
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+  .theme-dark {
+
+  }
+  .theme-dark .lighten-dark {
+    filter: brightness(10);
+  }
+}
+*/
+
+body {
+  //letter-spacing: 1.5px;
+  font-size: var(--step-0);
+  font-family: var(--font);
+  color: var(--color-dark);
+  line-height: 1.6;
+  background: var(--background);
+  scroll-margin: 100px 0 0 0;
+  word-break: break-word;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+em {
+  background-color: var(--contrast);
+  color: var(--color-light);
+}
+
+.container {
+  .search-input {
+    position: relative;
+    top: 0;
+    margin-bottom: 0;
+    padding: 0;
+  }
+}
+
+.body {
+  padding-top: 152px;
+}
+
+@media (max-width: 900px) {
+  .body {
+    padding-top: 102px;
+  }
+}

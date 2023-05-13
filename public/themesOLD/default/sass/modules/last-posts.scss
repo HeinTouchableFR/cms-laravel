@@ -1,0 +1,136 @@
+.last-posts {
+  .container {
+    .last-posts__items {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(min(275px, 100%), 1fr));
+      gap: var(--gap);
+
+      .last-posts__card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border-radius: 5px;
+        background: var(--color-light);
+        width: 100%;
+
+        .last-posts__card-imageBox, .last-posts__card-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 10px 14px;
+        }
+
+        .last-posts__card-content {
+          flex: 1;
+          h2 {
+            position: relative;
+            z-index: 10;
+          }
+
+          p {
+            color: var(--color-dark);
+          }
+
+          .btn {
+            margin: auto 0 0;
+            width: 100%;
+          }
+        }
+
+        .last-posts__card-imageBox {
+          position: relative;
+          row-gap: 5px;
+
+          .last-posts__card-imageBox-image {
+            position: relative;
+            height: 150px;
+            width: 100%;
+            border-radius: 10px;
+            background: var(--color-light);
+            padding: 3px;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 10px;
+              border: solid 4px var(--contrast);
+              transition: 0.5s ease-in-out;
+            }
+          }
+
+          .last-posts__card-imageBox-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: var(--contrast);
+            border-radius: 5px 5px 0 25px;
+            transition: 0.5s all ease-in-out;
+
+            &:before, &:after {
+              content: "";
+              position: absolute;
+              height: 40px;
+              width: 40px;
+              background: var(--contrast);
+              right: 0;
+              bottom: -40px;
+              transition: 0.5s all ease-in-out;
+            }
+
+            &:after {
+              background: var(--color-light);
+              border-radius: 0 25px 0 0;
+            }
+          }
+        }
+
+        &:hover {
+          .last-posts__card-imageBox {
+            .last-posts__card-imageBox-overlay {
+              background: var(--accent);
+
+              &:before {
+                background: var(--accent);
+              }
+            }
+
+            .last-posts__card-imageBox-image {
+              img {
+                border: solid 4px var(--accent);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .last-posts {
+    .container {
+      .last-posts__items {
+        grid-template-columns: repeat(2, minmax(min(300px, 100%), 1fr));
+
+        .last-posts__card {
+          margin: auto;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 860px) {
+  .last-posts {
+    .container {
+      .last-posts__items {
+        grid-template-columns: repeat(1, minmax(min(300px, 100%), 1fr));
+      }
+    }
+  }
+
+}

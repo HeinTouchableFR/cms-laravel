@@ -22,8 +22,8 @@ class TemplateContentFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'min:4'],
-            'slug' => ['required', 'min:4'],
+            'title' => ['required', 'min:3'],
+            'slug' => ['required', 'min:3'],
             'description' => [''],
             'content' => [''],
             'online' => ['required', 'boolean'],

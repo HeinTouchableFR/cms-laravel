@@ -1,0 +1,27 @@
+@use "../../../../../resources/css/tools/functions";
+
+.contact-form {
+  .container {
+    --gap: 5;
+    display: grid;
+    grid-gap: functions.space(var(--gap));
+    grid-template-columns: 1fr;
+
+    .full {
+      grid-column: 1/-1;
+    }
+
+    .contact-form__sidebar {
+      .contact-form__sidebar-title {
+        border-bottom: 1px solid var(--border-light);
+        padding-bottom: functions.space(0.5);
+      }
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .contact-form .container {
+    grid-template-columns: 1fr 300px;
+  }
+}
