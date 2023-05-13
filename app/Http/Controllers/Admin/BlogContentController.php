@@ -56,8 +56,8 @@ class BlogContentController extends Controller
         $blog->user_id = (int) Auth::user()?->id;
         $blog->type = 'blog';
         $blog->fill($request->validated());
-        $blog->tags()->sync($this->reverseTagTransform($request->validated('tags')));
         $blog->save();
+        $blog->tags()->sync($this->reverseTagTransform($request->validated('tags')));
 
         return to_route('admin.blog.index')->with('success', 'Le contenu a bien été créé');
     }
