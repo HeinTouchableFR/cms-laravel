@@ -70,14 +70,14 @@
 <body class="">
 <div class="page-wrapper">
     @foreach(template('header') as $bloc)
-        @include(theme() . '.views.' . $bloc['_name'], ['bloc' => $bloc, 'animate' => 'animate'])
+        @includeIf(theme() . '.views.' . $bloc['_name'], ['bloc' => $bloc, 'animate' => 'animate'])
     @endforeach
     <div class="body">
         @yield('body')
     </div>
     <footer>
         @foreach(template('footer') as $bloc)
-            @include(theme() . '.views.' . $bloc['_name'], ['bloc' => $bloc, 'animate' => 'animate'])
+            @includeIf(theme() . '.views.' . $bloc['_name'], ['bloc' => $bloc, 'animate' => 'animate'])
         @endforeach
     </footer>
 </div>

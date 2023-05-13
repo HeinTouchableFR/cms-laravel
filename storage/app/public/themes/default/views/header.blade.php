@@ -1,4 +1,4 @@
-@extends('aymericlhomme.views.layout')
+@extends('default.views.layout')
 
 @section('element')
     nav
