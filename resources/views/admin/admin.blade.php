@@ -107,6 +107,14 @@
                     </a>
                 </li>
             @endcan
+            @can('theme-list')
+                <li>
+                    <a href="{{ route('admin.theme.index') }}" {{ menu_active($menu, route('admin.theme.index')) }}>
+                        {!! icon('edit') !!}
+                        Thèmes
+                    </a>
+                </li>
+            @endcan
             @can('role-list')
                 <li>
                     <a href="{{ route('admin.role.index') }}" {{ menu_active($menu, route('admin.role.index')) }}>

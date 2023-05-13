@@ -35,7 +35,6 @@ class OptionController extends Controller
         'noreply-email',
         'sav-email',
         'spam_words',
-        'theme',
     ];
 
     public function index(): View

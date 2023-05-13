@@ -7,6 +7,7 @@ import {
     ItemSorterElement,
 } from "@heintouchable/ui";
 import Spotlight from "@elements/Spotlight";
+import '@grafikart/drop-files-element'
 
 DatePickerElement.defineElement();
 AutosaveBlurElement.defineElement();

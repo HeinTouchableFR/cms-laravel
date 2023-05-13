@@ -35,6 +35,9 @@ class PermissionTableSeeder extends Seeder
             'tag-delete',
             'option-list',
             'option-edit',
+            'theme-list',
+            'theme-upload',
+            'theme-delete',
             'access-administration',
         ];
 
