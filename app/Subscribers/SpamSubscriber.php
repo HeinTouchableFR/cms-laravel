@@ -8,7 +8,6 @@ class SpamSubscriber
     {
         $comment = $commentCreatedEvent->comment;
         $content = (string) $comment->content;
-        $comment->spam = true;
         foreach ($this->getSpamWords() as $word) {
             if (false !== stripos($content, (string) $word)) {
                 $comment->spam = true;
