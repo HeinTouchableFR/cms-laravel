@@ -6,7 +6,6 @@ use App\Events\CommentCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Option;
-use Illuminate\Http\Request;
 
 class SpamController extends Controller
 {
@@ -23,11 +22,11 @@ class SpamController extends Controller
         $words = preg_split('/\r\n|\r|\n/', Option::where('key', 'spam_words')->first()->value);
         $request = Comment::where('spam', '!=', 0);
         foreach ($words as $word) {
-            $request = $request->orWhere("content", "LIKE", "%{$word}%");
+            $request = $request->orWhere('content', 'LIKE', "%{$word}%");
         }
-        $count = $request->update(array('spam' => true));
+        $count = $request->update(['spam' => true]);
 
-        if($count > 0) {
+        if ($count > 0) {
             return to_route('admin.spam.index')->with('success', "$count spams détectés");
         }
 
@@ -37,7 +36,7 @@ class SpamController extends Controller
     public function unspam(Comment $comment): \Illuminate\Http\RedirectResponse
     {
         $comment->update([
-            'spam' => 0
+            'spam' => 0,
         ]);
 
         // On émet à nouveau l'évènement pour notifier les utilisateurs

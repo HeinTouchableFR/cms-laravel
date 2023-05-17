@@ -27,6 +27,7 @@ class CommentController extends Controller
         $data = $request->validated();
         $comment->user_id = Auth::user()->id;
         $comment->content_id = $data['content_id'];
+        $comment->comment_id = array_key_exists('comment_id', $data) ? $data['comment_id'] : null;
         $comment->content = $data['content'];
         event(new PreCommentCreatedEvent($comment));
         $comment->save();

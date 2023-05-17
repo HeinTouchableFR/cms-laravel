@@ -19,7 +19,7 @@ class SpamSubscriber
 
     private function getSpamWords(): array
     {
-        $spamWords = \App\Models\Option::where('key', 'spam_words')->first();
+        $spamWords = \App\Models\Option::where('key', 'spam_words')->first()->value;
         if (null === $spamWords) {
             return [];
         }

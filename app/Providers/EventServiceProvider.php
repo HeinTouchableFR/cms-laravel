@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Subscribers\CommentSubscriber;
 use App\Subscribers\SpamSubscriber;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -23,6 +24,7 @@ class EventServiceProvider extends ServiceProvider
 
     protected $subscribe = [
         SpamSubscriber::class,
+        CommentSubscriber::class,
     ];
 
     /**
