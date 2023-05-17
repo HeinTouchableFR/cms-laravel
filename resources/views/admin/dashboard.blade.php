@@ -21,9 +21,11 @@
                     <div class="dashboard-card">
                         <div class="flex">
                             <form action="#" method="post">
+                                @csrf
                                 <button class="btn danger">{!! icon('trash') !!} Vider le cache</button>
                             </form>
-                            <form action="#" method="post">
+                            <form action="{{ route('admin.spam.detect') }}" method="post">
+                                @csrf
                                 <button class="btn secondary">{!! icon('comment') !!} Détecter le spam</button>
                             </form>
                         </div>

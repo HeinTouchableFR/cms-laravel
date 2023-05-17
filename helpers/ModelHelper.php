@@ -65,6 +65,47 @@ namespace App\Models{
 
 namespace App\Models{
     /**
+     * App\Models\Comment
+     *
+     * @property int $id
+     * @property string|null $email
+     * @property string|null $username
+     * @property string|null $content
+     * @property int $content_id
+     * @property int $user_id
+     * @property int|null $comment_id
+     * @property int $spam
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read Comment|null $parent
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $replies
+     * @property-read int|null $replies_count
+     * @property-read \App\Models\Content|null $target
+     * @property-read \App\Models\User $user
+     *
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment query()
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereCommentId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereContent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereContentId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereEmail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereSpam($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUserId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUsername($value)
+     *
+     * @mixin \Eloquent
+     */
+    class IdeHelperComment
+    {
+    }
+}
+
+namespace App\Models{
+    /**
      * App\Models\ContactRequest
      *
      * @property int $id
@@ -169,11 +210,11 @@ namespace App\Models{
      * @property int|null $tag_id
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, Tag> $children
+     * @property-read int|null $children_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Content> $contents
      * @property-read int|null $contents_count
-     * @property-read Tag|null $tag
-     * @property-read \Illuminate\Database\Eloquent\Collection<int, Tag> $tags
-     * @property-read int|null $tags_count
+     * @property-read Tag|null $parent
      *
      * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()

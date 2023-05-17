@@ -4,6 +4,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/api/comments', [\App\Http\Controllers\Api\CommentController::class, 'index']);
+
+Route::middleware('auth')->group(function () {
+    Route::post('/api/comments', [\App\Http\Controllers\Api\CommentController::class, 'store'])->withoutMiddleware(VerifyCsrfToken::class);
+    Route::put('/api/comments/{comment:id}', [\App\Http\Controllers\Api\CommentController::class, 'update'])->withoutMiddleware(VerifyCsrfToken::class);
+    Route::delete('/api/comments/{comment:id}', [\App\Http\Controllers\Api\CommentController::class, 'destroy'])->withoutMiddleware(VerifyCsrfToken::class);
 });
 
 Route::get('/media/resize/{path}', [ImageController::class, 'resize'])->where(['path' => '.+']);

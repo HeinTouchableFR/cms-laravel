@@ -134,13 +134,14 @@
 
         </div>
         <ul class="admin__body-nav">
-
-            <li class="header__notification">
-                <a href="#">
-                    {!! icon('trash') !!}
-                    <span class='notification-badge'>spam</span>
-                </a>
-            </li>
+            @if(count_spam() > 0)
+                <li class="header__notification">
+                    <a href="{{ route('admin.spam.index') }}">
+                        {!! icon('trash') !!}
+                        <span class='notification-badge'>{{ count_spam() }}</span>
+                    </a>
+                </li>
+            @endif
             <li class="header__logout">
                 <form action="{{ route('logout') }}" method="post">
                     @csrf

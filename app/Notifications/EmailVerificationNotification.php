@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Auth;
 class EmailVerificationNotification extends VerifyEmail implements ShouldQueue
 {
     use Queueable;
+
     public $user;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($user='')
+    public function __construct($user = '')
     {
-        $this->user =  $user ?: Auth::user();         //if user is not supplied, get from session
+        $this->user = $user ?: Auth::user();         //if user is not supplied, get from session
     }
 
     /**
@@ -38,17 +39,18 @@ class EmailVerificationNotification extends VerifyEmail implements ShouldQueue
      */
     public function toMail(mixed $notifiable): MailMessage
     {
-        $actionUrl  = $this->verificationUrl($notifiable);     //verificationUrl required for the verification link
-        $actionText  = 'Vérifier l\'adresse e-mail';
+        $actionUrl = $this->verificationUrl($notifiable);     //verificationUrl required for the verification link
+        $actionText = 'Vérifier l\'adresse e-mail';
+
         return (new MailMessage)
             ->from(Option::where('key', 'contact-email')->first()?->value, sitename())
             ->subject('Vérification de l\'adresse e-mail')->markdown(
-            'mails.emailverify',
-            [
-                'user'=> $this->user,
-                'actionText' => $actionText,
-                'actionUrl' => $actionUrl,
-            ]);
+                'mails.emailverify',
+                [
+                    'user' => $this->user,
+                    'actionText' => $actionText,
+                    'actionUrl' => $actionUrl,
+                ]);
     }
 
     /**

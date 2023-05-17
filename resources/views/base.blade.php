@@ -81,7 +81,12 @@
         @endforeach
     </footer>
 </div>
-
+<script>
+    window.cms = {
+        ...(window.cms || {}),
+        USER: {{ Auth::user() ? Auth::user()->id : 'null' }},
+    }
+</script>
 @yield('javascripts_footer')
 </body>
 </html>

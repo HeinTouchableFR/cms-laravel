@@ -17,31 +17,31 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "{{ route('blog.show', $content->slug) }}"
+    "@type": "WebPage",
+    "@id": "{{ route('blog.show', $content->slug) }}"
     },
     "headline": "{{ $content->title }}",
     "description": "{{ $content->description }}",
     "image": "{{ image_url_raw($content->attachment_id)}}",
     "author": {
-        "@type": "Person",
-        "name": "{{ $content->user->username }}",
-        "url": "{{ Request::root() }}"
+    "@type": "Person",
+    "name": "{{ $content->user->username }}",
+    "url": "{{ Request::root() }}"
     },
     "publisher": {
-        "@type": "Organization",
-        "name": "{{ sitename() }}",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "{{ logo() }}"
-        }
+    "@type": "Organization",
+    "name": "{{ sitename() }}",
+    "logo": {
+    "@type": "ImageObject",
+    "url": "{{ logo() }}"
+    }
     },
     "datePublished": "{{ $content->created_at }}",
     "dateModified": "{{ $content->updated_at }}",
     "potentialAction": {
-        "@type": "SearchAction",
-        "target": "{{ Request::root() }}/recherche?q={search_term_string}",
-        "query-input": "required name=search_term_string"
+    "@type": "SearchAction",
+    "target": "{{ Request::root() }}/recherche?q={search_term_string}",
+    "query-input": "required name=search_term_string"
     },
     "sameAs": [
     "{{ social('facebook') }}",
@@ -80,5 +80,8 @@
                 <strong>{{ countdown($content->created_at, "scheduled-" . $content->id) }}</strong>
             </div>
         @endif
+        <div class="container p-block-4">
+            <comments-area content_id="{{ $content->id }}"></comments-area>
+        </div>
     </div>
 @endsection

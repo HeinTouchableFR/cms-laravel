@@ -104,6 +104,22 @@
             }
         }
 
+        .admin__body-nav {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+
+            > li {
+                display: block;
+                margin-left: functions.space(2);
+
+                > a, > button {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+
         .admin__body-search {
             width: 100%;
             padding: 0 calc(3 * var(--space));
@@ -115,6 +131,22 @@
                 border: solid 1px var(--border);
                 border-radius: 0.3em;
                 color: inherit;
+            }
+        }
+
+        .header__notification {
+            position: relative;
+            padding-right: functions.space(1);
+
+            button {
+                display: block;
+            }
+
+            .icon, > button {
+                display: block;
+                width: 25px;
+                height: 25px;
+                margin-right: 0;
             }
         }
     }

@@ -3,17 +3,17 @@
 use App\Http\Controllers\Admin\AttachmentController;
 use App\Http\Controllers\Admin\BlogContentController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\PageContentController;
+use App\Http\Controllers\Admin\PreviewController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TemplateContentController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ThemeController;
-use App\Http\Controllers\Admin\PreviewController;
-use App\Http\Controllers\Admin\DashboardController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('blog', BlogContentController::class)->except(['show']);
@@ -46,6 +46,10 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/theme', [ThemeController::class, 'upload'])->name('theme.upload');
     Route::post('/theme/{theme}', [ThemeController::class, 'define'])->name('theme.define');
     Route::delete('/theme/{theme}', [ThemeController::class, 'destroy'])->name('theme.destroy');
+
+    Route::get('/spam', [\App\Http\Controllers\Admin\SpamController::class, 'index'])->name('spam.index');
+    Route::post('/spam/detect', [\App\Http\Controllers\Admin\SpamController::class, 'detect'])->name('spam.detect');
+    Route::delete('/spam/{comment:id}/unspam', [\App\Http\Controllers\Admin\SpamController::class, 'unspam'])->name('spam.unspam')->withoutMiddleware(VerifyCsrfToken::class);
 
     Route::prefix('/attachment')->group(function () {
         Route::post('/', [AttachmentController::class, 'update'])->withoutMiddleware(VerifyCsrfToken::class);

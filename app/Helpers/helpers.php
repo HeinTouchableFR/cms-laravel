@@ -3,6 +3,7 @@
 use App\Models\Attachment;
 use App\Models\Content;
 use App\Models\Option;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('sitename')) {
@@ -195,5 +196,12 @@ if (! function_exists('ago')) {
         $prefixAttribute = ! empty($prefix) ? " prefix=\"{$prefix}\"" : '';
 
         return "<time-ago time=\"{$date->getTimestamp()}\"$prefixAttribute></time-ago>";
+    }
+}
+
+if (! function_exists('count_spam')) {
+    function count_spam(): int
+    {
+        return Comment::where('spam', '1')->count();
     }
 }
