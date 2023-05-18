@@ -139,7 +139,7 @@ function Popup({
           ))
         )}
       </div>
-      <a href="/notifications" className="notifications_footer">
+      <a href="/profile" className="notifications_footer">
         Toutes les notifications
       </a>
     </div>

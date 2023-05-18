@@ -73,6 +73,50 @@ form.profil-header__avatar:hover img {
     opacity: 0.7;
 }
 
+.profil-notifications {
+    width: 35%;
+
+    a {
+        display: block;
+        color: var(--color);
+        border-bottom: solid 1px var(--color-light);
+        transition: .3s color;
+
+        &:hover {
+            color: var(--contrast);
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+    }
+
+    button {
+        display: flex;
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            color: var(--red);
+            align-items: center;
+        }
+    }
+}
+
+@include mixins.down(1000) {
+    .profil {
+        flex-direction: column;
+
+        .profil-notifications {
+            width: 100%;
+        }
+    }
+}
+
 @include mixins.up(600) {
     .profil-header {
         text-align: left;
@@ -108,7 +152,7 @@ form.profil-header__avatar:hover img {
 
     .stack {
         --gap: 2;
-        display: grid!important;
+        display: grid !important;
         grid-template-columns: 1fr;
         align-content: flex-start;
         gap: calc(var(--gap) * var(--space));

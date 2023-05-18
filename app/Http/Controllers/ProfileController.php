@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Resources\NotificationResource;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,14 +15,16 @@ class ProfileController extends Controller
     /**
      * Display the user's profile.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $comments = [];
+        $comments = Auth::user()->comments()->orderBy('created_at', 'desc')->get();
+        $hasActivity = count($comments) > 0;
 
-        $hasActivity = ! empty($comments);
+        $notifications = NotificationResource::collection(Auth::user()->notifications)->toArray($request);
 
         return view('profile.index', [
             'hasActivity' => $hasActivity,
+            'notifications' => $notifications,
             'comments' => $comments,
             'menu' => route('profile.index'),
         ]);
@@ -73,5 +76,11 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function cleanNotification(): RedirectResponse
+    {
+        Auth::user()->notifications()->delete();
+        return Redirect::route('profile.index')->with('success', 'Notifications supprimées avec succès');
     }
 }

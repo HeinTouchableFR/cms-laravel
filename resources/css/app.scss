@@ -30,6 +30,10 @@
 // Generic
 // ==================
 
+.mobile-hidden {
+    display: none;
+}
+
 body.header-light::after {
     display: none;
 }
