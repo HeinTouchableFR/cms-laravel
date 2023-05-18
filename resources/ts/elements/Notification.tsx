@@ -19,8 +19,8 @@ let notificationsCache = [];
 let notificationsLoaded = false;
 
 function countUnread(notifications, notificationReadAt) {
-  return notifications.filter(({ createdAt }) => {
-    return notificationReadAt < Date.parse(createdAt);
+  return notifications.filter(({ created_at }) => {
+    return notificationReadAt < Date.parse(created_at);
   }).length;
 }
 
@@ -152,12 +152,12 @@ function Popup({
 function NotificationComponent({
   url,
   message,
-  createdAt,
+  created_at,
   notificationReadAt,
 }) {
-  const isRead = notificationReadAt > createdAt;
+  const isRead = notificationReadAt > created_at;
   const className = `notifications_item ${isRead ? "is-read" : ""}`;
-  const time = Date.parse(createdAt) / 1000;
+  const time = Date.parse(created_at) / 1000;
   // eslint-disable-next-line react/no-danger
   return (
     <a href={url} className={className}>

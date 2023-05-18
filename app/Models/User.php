@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'status',
+        'notifications_read_at',
     ];
 
     /**
@@ -51,5 +53,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new \App\Notifications\EmailVerificationNotification(Auth::user()));  //pass the currently logged in user to the notification class
+    }
+
+    public function getNotificationsReadAtTimestamp(): int
+    {
+        return Carbon::create($this->notifications_read_at)->getTimestamp();
     }
 }

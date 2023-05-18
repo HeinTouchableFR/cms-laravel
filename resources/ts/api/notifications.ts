@@ -4,7 +4,7 @@ type NotificationType = {
   id: number;
   message: string;
   url: string;
-  createdAt: string;
+  created_at: string;
 };
 
 /**
@@ -15,8 +15,8 @@ export async function loadNotifications(
 ) {
   // On récupère les dernières notifications
   const notifications = await jsonFetch(`/api/notifications?count=15`);
-  notifications.reverse();
-  notifications.forEach((notification: NotificationType) =>
+  notifications['data'].reverse();
+  notifications['data'].forEach((notification: NotificationType) =>
     callback(notification)
   );
 }

@@ -156,6 +156,13 @@
     </main>
 </div>
 <spotlight-bar></spotlight-bar>
+<script>
+    window.cms = {
+        ...(window.cms || {}),
+        USER: {{ Auth::user() ? Auth::user()->id : 'null' }},
+        NOTIFICATION: new Date({{ (\Illuminate\Support\Facades\Auth::user() and \Illuminate\Support\Facades\Auth::user()->notifications_read_at) ? \Illuminate\Support\Facades\Auth::user()->getNotificationsReadAtTimestamp() : 0 }} * 1000)
+    }
+</script>
 </body>
 </html>
 

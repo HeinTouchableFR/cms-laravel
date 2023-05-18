@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/api/comments', [\App\Http\Controllers\Api\CommentController::class, 'index']);
+Route::get('/api/notifications', [\App\Http\Controllers\Api\NotificationController::class, 'index']);
+Route::post('/api/notifications/read', [\App\Http\Controllers\Api\NotificationController::class, 'readAll'])->withoutMiddleware(VerifyCsrfToken::class);
 
 Route::middleware('auth')->group(function () {
     Route::post('/api/comments', [\App\Http\Controllers\Api\CommentController::class, 'store'])->withoutMiddleware(VerifyCsrfToken::class);
