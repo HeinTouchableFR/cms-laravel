@@ -1,12 +1,17 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
-import { resolve } from "path";
 
 
 export default defineConfig({
     emitManifest: true,
+    cors: true,
     optimizeDeps: {
-        include: ["react", "react-dom", "htm/mini"],
+        include: ['preact/hooks', 'preact/compat', 'htm/mini'],
+    },
+    esbuild: {
+        jsxFactory: 'h',
+        jsxFragment: 'Fragment',
+        jsxInject: `import { h, Fragment } from 'preact'`
     },
     server: {
         host: '0.0.0.0',

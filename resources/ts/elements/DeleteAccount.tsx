@@ -5,6 +5,7 @@ import {Button} from "@components/Button";
 import Icon from "@components/Icon";
 import {Form} from "@components/Form/Form/Form";
 import {Modal} from "@components/Modal";
+import Alert from "@elements/Alert";
 
 export default function DeleteAccount({url, csrf, days}) {
     const [modal, toggleModal] = useToggle(false)
@@ -12,7 +13,7 @@ export default function DeleteAccount({url, csrf, days}) {
     const handleSuccess = async ({message}) => {
         toggleModal()
         await redirect('/')
-        AlertElement.flash(message, 'success')
+        Alert.flash(message, 'success')
     }
 
     return (

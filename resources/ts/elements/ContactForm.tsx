@@ -1,7 +1,7 @@
 import {useState} from 'preact/hooks'
 import {Form} from "@components/Form/Form/Form";
 
-export default function ContactForm({content, buttonClass}) {
+export function ContactForm({content, buttonClass}) {
     const [success, setSuccess] = useState(false)
     const [fields] = useState(JSON.parse(content))
 

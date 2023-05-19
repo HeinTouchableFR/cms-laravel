@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useLayoutEffect, useMemo, useRef, useState,} from 'preact/hooks'
+import {PropsWithChildren, useLayoutEffect, useMemo, useRef, useState,} from 'preact/hooks'
 import {FieldTextarea} from './Textarea/Textarea'
 import {FieldCheckbox} from './Checkbox/Checkbox'
 import {FieldInput} from './Input/Input'
@@ -7,7 +7,7 @@ import {useAutofocus} from '@functions/hooks'
 
 type FieldProps = PropsWithChildren<{
     name?: string
-    onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onInput?: (e) => void
     onKeyDown?: (e: any) => void
     value?: string | number | readonly string[]
     error?: string

@@ -81,7 +81,7 @@
             </div>
         @endif
         <div class="container p-block-4">
-            <comments-area content_id="{{ $content->id }}"></comments-area>
+            <comments-area target="{{ $content->id }}"></comments-area>
         </div>
     </div>
 @endsection

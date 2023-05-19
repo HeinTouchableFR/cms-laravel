@@ -15,6 +15,9 @@
         "format": "prettier --config .prettierrc 'resources/ts/**/*.{ts,tsx}' --write"
     },
     "devDependencies": {
+        "@babel/core": "^7.12.10",
+        "@babel/plugin-transform-react-jsx": "^7.12.12",
+        "@babel/preset-env": "^7.12.11",
         "@types/node": "^18.16.3",
         "@types/react": "^18.2.0",
         "@types/react-dom": "^18.2.1",
@@ -46,6 +49,16 @@
         "tom-select": "^1.7.5",
         "scriptjs": "^2.5.9",
         "turbolinks": "^5.2.0"
+    },
+    "eslintConfig": {
+        "extends": "preact",
+        "rules": {
+            "react/jsx-fragments": 0,
+            "import/no-absolute-path": 0
+        },
+        "env": {
+            "browser": true
+        }
     },
     "moduleNameMapper": {
         "@functions/(.*)$": "<rootDir>/../../resources/ts/functions/$1",

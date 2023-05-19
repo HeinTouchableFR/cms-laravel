@@ -10,7 +10,7 @@
                 "./*"
             ]
         },
-        "target": "ESNext",
+        "target": "es2017",
         "useDefineForClassFields": true,
         "lib": [
             "DOM",
@@ -23,16 +23,18 @@
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "module": "ESNext",
         "moduleResolution": "Node",
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "noEmit": true,
-        "jsx": "react-jsx"
+        "noEmit": true
     },
     "include": [
         "resources/ts",
         "index.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "public/build"
     ],
     "references": [
         {

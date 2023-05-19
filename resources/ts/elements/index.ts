@@ -13,13 +13,13 @@ import NavTabsElement from '@elements/NavTabs'
 import TextareaAutogrowElement from '@elements/TextareaAutogrow'
 import preactCustomElement from "@functions/preact";
 import DeleteAccount from "@elements/DeleteAccount";
-import ContactForm from "@elements/ContactForm";
+import {ContactForm} from "@elements/ContactForm";
 import Comments from "@elements/Comments";
 import Notifications from "@elements/Notification";
 import {Alert} from "@components/Alert";
-import {SearchInput} from "@components/SearchInput";
 import Loader from "@components/Loader";
 import {FormField} from "@components/Form/Form/FormField";
+import {SearchInput} from "@components/SearchInput";
 
 // Custom Elements
 SkeletonElement.defineElement()

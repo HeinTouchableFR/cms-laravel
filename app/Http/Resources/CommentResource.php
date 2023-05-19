@@ -18,7 +18,7 @@ class CommentResource extends JsonResource
             'id' => $this->resource->id,
             'content' => $this->resource->content,
             'created_at' => $this->resource->created_at->timestamp,
-            'comment_id' => $this->resource->comment_id ?: 0,
+            'parent' => $this->resource->comment_id ?: 0,
             'avatar' => '/images/default.png',
             'user_id' => $this->resource->user_id,
             'author' => $this->resource->user,
