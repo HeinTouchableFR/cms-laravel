@@ -1,27 +1,26 @@
-import { createRoot } from "react-dom/client";
-import { useRef, useState } from "react";
+import { createRoot } from 'react-dom/client'
+import { useRef, useState } from 'react'
+import { Icon, Loader } from '@heintouchable/ui'
+import { SlideIn } from '@components/Animation/SlideIn'
+import { loadNotifications } from '@api/notifications'
+import { isAuthenticated, lastNotificationRead } from '@functions/auth'
 import {
   useAsyncEffect,
   useClickOutside,
   useNotificationCount,
   usePrepend,
-  isAuthenticated,
-  lastNotificationRead,
-  jsonFetch,
-} from "@heintouchable/functions";
-import { Icon, Loader } from "@heintouchable/ui";
-import { SlideIn } from "@components/Animation/SlideIn";
-import { loadNotifications } from "@api/notifications";
+} from '@functions/hooks'
+import { jsonFetch } from '@functions/api'
 
-const OPEN = 0;
-const CLOSE = 1;
-let notificationsCache = [];
-let notificationsLoaded = false;
+const OPEN = 0
+const CLOSE = 1
+let notificationsCache = []
+let notificationsLoaded = false
 
 function countUnread(notifications, notificationReadAt) {
   return notifications.filter(({ created_at }) => {
-    return notificationReadAt < Date.parse(created_at);
-  }).length;
+    return notificationReadAt < Date.parse(created_at)
+  }).length
 }
 
 /**
@@ -32,50 +31,50 @@ function countUnread(notifications, notificationReadAt) {
  */
 export function Notifications() {
   // Hooks
-  const [state, setState] = useState(CLOSE);
-  const [notifications, pushNotification] = usePrepend(notificationsCache);
+  const [state, setState] = useState(CLOSE)
+  const [notifications, pushNotification] = usePrepend(notificationsCache)
   const [notificationReadAt, setNotificationReadAt] = useState(
-    lastNotificationRead()
-  );
-  const [loading, setLoading] = useState(!notificationsLoaded);
-  const unreadCount = countUnread(notifications, notificationReadAt);
-  useNotificationCount(unreadCount);
-  notificationsCache = notifications;
+    lastNotificationRead(),
+  )
+  const [loading, setLoading] = useState(!notificationsLoaded)
+  const unreadCount = countUnread(notifications, notificationReadAt)
+  useNotificationCount(unreadCount)
+  notificationsCache = notifications
 
   // Méthodes
-  const openMenu = (e) => {
-    e.preventDefault();
-    setState(OPEN);
+  const openMenu = e => {
+    e.preventDefault()
+    setState(OPEN)
     if (unreadCount > 0) {
-      setNotificationReadAt(new Date());
-      jsonFetch("/api/notifications/read", { method: "post" }).catch(
-        console.error
-      );
+      setNotificationReadAt(new Date())
+      jsonFetch('/api/notifications/read', { method: 'post' }).catch(
+        console.error,
+      )
     }
-  };
+  }
   const closeMenu = () => {
-    setState(CLOSE);
-  };
+    setState(CLOSE)
+  }
 
   // On charge les notification la première fois
   useAsyncEffect(async () => {
     if (isAuthenticated() && notificationsLoaded === false) {
-      await loadNotifications(pushNotification);
-      setLoading(false);
-      notificationsLoaded = true;
+      await loadNotifications(pushNotification)
+      setLoading(false)
+      notificationsLoaded = true
     }
-  }, []);
+  }, [])
 
   // Le système de notification ne fonction que pour les utilisateurs
-  if (!isAuthenticated()) return null;
+  if (!isAuthenticated()) return null
 
   return (
     <>
-      <button onClick={openMenu} aria-label="Voir les notifications">
-        <Icon name="bell" />
+      <button onClick={openMenu} aria-label='Voir les notifications'>
+        <Icon name='bell' />
       </button>
       <Badge count={unreadCount} />
-      <SlideIn className="notifications" show={state === OPEN}>
+      <SlideIn className='notifications' show={state === OPEN}>
         <Popup
           loading={loading}
           onClickOutside={closeMenu}
@@ -84,7 +83,7 @@ export function Notifications() {
         />
       </SlideIn>
     </>
-  );
+  )
 }
 
 /**
@@ -92,13 +91,13 @@ export function Notifications() {
  */
 function Badge({ count }) {
   if (count <= 0) {
-    return null;
+    return null
   }
   return count < 10 ? (
-    <span className="notification-badge">{count}</span>
+    <span className='notification-badge'>{count}</span>
   ) : (
-    <span className="notification-badge">9+</span>
-  );
+    <span className='notification-badge'>9+</span>
+  )
 }
 
 /**
@@ -111,26 +110,26 @@ function Popup({
   notificationReadAt,
   ...props
 }) {
-  const ref = useRef();
+  const ref = useRef()
 
-  useClickOutside(ref, onClickOutside);
+  useClickOutside(ref, onClickOutside)
 
   return (
     <div ref={ref} {...props}>
-      <div className="notifications_title">
+      <div className='notifications_title'>
         Nouveaux messages
-        <button aria-label="Fermer" onClick={onClickOutside}>
-          <Icon name="cross" />
+        <button aria-label='Fermer' onClick={onClickOutside}>
+          <Icon name='cross' />
         </button>
       </div>
-      <div className="notifications_body">
+      <div className='notifications_body'>
         {loading && <Loader />}
         {notifications.length === 0 ? (
-          <span className="notifications_body-empty">
+          <span className='notifications_body-empty'>
             Vous n'avez aucune notification :(
           </span>
         ) : (
-          notifications.map((n) => (
+          notifications.map(n => (
             <NotificationComponent
               key={n.id}
               notificationReadAt={notificationReadAt}
@@ -139,11 +138,11 @@ function Popup({
           ))
         )}
       </div>
-      <a href="/profile" className="notifications_footer">
+      <a href='/profile' className='notifications_footer'>
         Toutes les notifications
       </a>
     </div>
-  );
+  )
 }
 
 /**
@@ -155,26 +154,26 @@ function NotificationComponent({
   created_at,
   notificationReadAt,
 }) {
-  const isRead = notificationReadAt > created_at;
-  const className = `notifications_item ${isRead ? "is-read" : ""}`;
-  const time = Date.parse(created_at) / 1000;
+  const isRead = notificationReadAt > created_at
+  const className = `notifications_item ${isRead ? 'is-read' : ''}`
+  const time = Date.parse(created_at) / 1000
   // eslint-disable-next-line react/no-danger
   return (
     <a href={url} className={className}>
       <div dangerouslySetInnerHTML={{ __html: message }} />
-      <small className="text-muted">
+      <small className='text-muted'>
         <time-ago time={time} />
       </small>
     </a>
-  );
+  )
 }
 
 export default class Notification extends HTMLElement {
   constructor() {
-    super();
+    super()
   }
 
   connectedCallback() {
-    createRoot(this).render(<Notifications />);
+    createRoot(this).render(<Notifications />)
   }
 }

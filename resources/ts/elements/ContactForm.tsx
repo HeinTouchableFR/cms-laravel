@@ -1,57 +1,54 @@
-import { createRoot } from "react-dom/client";
-import { Form, Alert } from "@heintouchable/ui";
-import { useState } from "react";
+import { createRoot } from 'react-dom/client'
+import { Form } from '@heintouchable/ui'
+import { useState } from 'react'
 
 function ContactFormComponent({ content, buttonClass }) {
-  const [success, setSuccess] = useState(false);
-  const [fields] = useState(JSON.parse(content));
+  const [success, setSuccess] = useState(false)
+  const [fields] = useState(JSON.parse(content))
 
   if (success) {
     return (
-      <Alert
-        type="success"
-        message={
-          "Votre mail a bien été envoyé, vous recevrez une réponse dans les plus bref délais."
-        }
-        duration={3}
-      />
-    );
+      <alert-message type={'success'} className='full' duration={3}>
+        Votre mail a bien été envoyé, vous recevrez une réponse dans les plus
+        bref délais.
+      </alert-message>
+    )
   }
 
   return (
     <Form.FetchForm
-      action="/api/contact"
+      action='/api/contact'
       onSuccess={() => setSuccess(true)}
-      className="grid two"
+      className='grid two'
     >
-      {fields.map((field) => (
+      {fields.map(field => (
         <Form.FormField
           key={field.name}
           type={field.type}
           name={field.name}
-          wrapperClass={field.full ? "full" : ""}
+          wrapperClass={field.full ? 'full' : ''}
           required={field.required}
         >
           {field.label}
         </Form.FormField>
       ))}
-      <div className="full m-top-2">
+      <div className='full m-top-2'>
         <Form.FormButton className={buttonClass}>Envoyer</Form.FormButton>
       </div>
     </Form.FetchForm>
-  );
+  )
 }
 
 export default class ContactForm extends HTMLElement {
   constructor() {
-    super();
+    super()
   }
 
   connectedCallback() {
-    const content = this.getAttribute("content") || "";
-    const buttonClass = this.getAttribute("buttonClass") || "";
+    const content = this.getAttribute('content') || ''
+    const buttonClass = this.getAttribute('buttonClass') || ''
     createRoot(this).render(
-      <ContactFormComponent content={content} buttonClass={buttonClass} />
-    );
+      <ContactFormComponent content={content} buttonClass={buttonClass} />,
+    )
   }
 }

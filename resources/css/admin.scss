@@ -4,6 +4,10 @@
 
 @use 'modules/admin/admin';
 @use 'modules/admin/spotlight';
+@use 'modules/admin/choices';
+@use 'modules/admin/flatpickr';
+@use 'modules/admin/attachments';
+@use 'modules/admin/sortable';
 
 .admin {
     display: grid;

@@ -1,0 +1,61 @@
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown button {
+  padding-left: calc(2 * var(--space, 8px));
+  padding-right: calc(1 * var(--space, 8px));
+}
+
+.dropdown button svg {
+  margin-left: calc(2 * var(--space, 8px));
+  transition: transform 0.3s;
+}
+
+.dropdown button[aria-expanded] svg {
+  transform: rotate(180deg);
+}
+
+.dropdown ul {
+  background: var(--card-bg, var(--background-light));
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 4px var(--shadow);
+  border-radius: 0.25em;
+  transition: 0.3s;
+  outline: none;
+  display: block;
+  z-index: 100;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 5px);
+  padding-top: calc(1 * var(--space, 8px));
+  padding-bottom: calc(1 * var(--space, 8px));
+  transition: opacity 0.3s, transform 0.3s;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.dropdown ul[hidden] {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(5px);
+}
+
+.dropdown a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px calc(2 * var(--space, 8px));
+  white-space: nowrap;
+}
+
+.dropdown a .badge {
+  margin-left: calc(2 * var(--space, 8px));
+}
+
+.dropdown a:hover,
+.dropdown li[aria-selected] a {
+  color: var(--contrast);
+  background: var(--background);
+}

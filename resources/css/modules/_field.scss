@@ -1,0 +1,120 @@
+label {
+  font-size: 1em;
+}
+
+input:disabled {
+  opacity: 0.7;
+}
+
+.form-group {
+  position: relative;
+
+  input,
+  textarea,
+  select {
+    border: 1px solid var(--border);
+    background: var(--background);
+    border-radius: 0.25em;
+    color: var(--color-dark);
+    padding: calc(1.5 * var(--space, 8px)) calc(1 * var(--space, 8px));
+    display: block;
+    width: 100%;
+    outline: none;
+    min-height: 48px;
+  }
+
+  textarea {
+    min-height: 150px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: calc(1 * var(--space, 8px));
+  }
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%23121c4299' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>");
+    background-size: 12px 12px;
+    background-position: center right 20px;
+    background-repeat: no-repeat;
+  }
+
+  input.is-invalid,
+  textarea.is-invalid {
+    border-color: #fb4635;
+  }
+
+  .invalid-feedback {
+    color: #fb4635;
+    margin-top: calc(1 * var(--space, 8px));
+    font-size: 0.9em;
+  }
+
+  input:focus,
+  input:focus + label::before,
+  select:focus,
+  textarea:focus,
+  form button:focus {
+    border-color: var(--contrast);
+    box-shadow: 0 0 0 3px var(--contrast25);
+  }
+}
+
+.form-check {
+  cursor: pointer;
+  position: relative;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  input:checked + label::after {
+    transform: scale(1);
+  }
+
+  input::after {
+    content: '';
+  }
+
+  label {
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    
+    &:before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-top: -3px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--background);
+      margin-right: calc(1 * var(--space, 8px));
+    }
+
+    &:after {
+      transition: transform 0.2s;
+      content: '';
+      position: absolute;
+      top: calc(50% - 7.5px);
+      left: 4px;
+      width: 10px;
+      height: 10px;
+      background: var(--contrast);
+      transform: scale(0);
+      border-radius: 2px;
+    }
+  }
+}
+
+.form-optional {
+  display: none !important;
+}

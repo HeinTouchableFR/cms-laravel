@@ -1,0 +1,73 @@
+.loader {
+  display: inline-block;
+  width: var(--loader-width);
+  height: var(--loader-width);
+
+  .loaderContainer {
+    animation: fadeIn 0.4s cubic-bezier(0.1, 0.6, 0.3, 1);
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    svg {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+    .circles {
+      animation: spin 16s linear infinite;
+    }
+
+    .halo {
+      animation: spin2 1.6s cubic-bezier(0.5, 0.15, 0.5, 0.85) infinite;
+
+      circle {
+        stroke-dasharray: var(--loader-offset);
+        stroke-dashoffset: var(--loader-dashoffset);
+        animation: trail 1.6s cubic-bezier(0.5, 0.15, 0.5, 0.85) infinite;
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes spin2 {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(720deg);
+      }
+    }
+    @keyframes trail {
+      0% {
+        stroke-dashoffset: var(--loader-dashoffset);
+      }
+      50% {
+        stroke-dashoffset: var(--loader-dashoffset50);
+      }
+      100% {
+        stroke-dashoffset: var(--loader-dashoffset);
+      }
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.1);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+}

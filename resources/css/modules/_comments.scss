@@ -18,8 +18,14 @@
 // Titre
 // ==========================================================================
 .comments__title {
- // @extend %h2;
- // @extend %underlined;
+    color: var(--contrast);
+    font-weight: 700;
+    font-style: normal;
+    font-size: 32px;
+    line-height: 1.2;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: calc(1 * var(--space));
+    margin-bottom: calc(3 * var(--space));
 }
 
 // Commentaire

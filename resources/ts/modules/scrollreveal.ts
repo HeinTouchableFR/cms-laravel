@@ -1,16 +1,21 @@
-export {};
+export {}
 const ratio = 0.02
 const options = {
   root: null,
   rootMargin: '0px',
-  threshold: ratio
+  threshold: ratio,
 }
-const handleIntersect = function (entries: IntersectionObserverEntry[], observer: IntersectionObserver) {
+const handleIntersect = function (
+  entries: IntersectionObserverEntry[],
+  observer: IntersectionObserver,
+) {
   entries.forEach(entry => {
     if (entry.intersectionRatio > ratio) {
       entry.target.classList.add('in')
       if ((entry.target as HTMLElement).dataset.delay) {
-        (entry.target as HTMLElement).style.transitionDelay = `.${(entry.target as HTMLElement).dataset.delay}s`
+        ;(entry.target as HTMLElement).style.transitionDelay = `.${
+          (entry.target as HTMLElement).dataset.delay
+        }s`
       }
       observer.unobserve(entry.target)
     }

@@ -6,7 +6,7 @@ import { resolve } from "path";
 export default defineConfig({
     emitManifest: true,
     optimizeDeps: {
-        include: ["react", "react-dom"],
+        include: ["react", "react-dom", "htm/mini"],
     },
     server: {
         host: '0.0.0.0',
@@ -19,6 +19,7 @@ export default defineConfig({
             '@css': '/resources/css',
             '@elements': '/resources/ts/elements',
             '@components': '/resources/ts/components',
+            '@functions': '/resources/ts/functions',
             '@modules': '/resources/ts/modules',
             '@api': '/resources/ts/api',
         },

@@ -1,12 +1,10 @@
-import {
-  isAuthenticated,
-  jsonFetchOrFlash,
-  cookie,
-} from "@heintouchable/functions";
+import { isAuthenticated } from '@functions/auth'
+import { jsonFetchOrFlash } from '@functions/api'
+import { cookie } from '@functions/cookie'
 
 export class ThemeSwitcher extends HTMLElement {
   connectedCallback() {
-    this.classList.add("theme-switcher");
+    this.classList.add('theme-switcher')
     this.innerHTML = `
         <input type="checkbox" is="input-switch" id="theme-switcher" aria-label="Changer de thème">
         <label for="theme-switcher">
@@ -16,48 +14,48 @@ export class ThemeSwitcher extends HTMLElement {
           <svg class="icon icon-sun">
             <use xlink:href="/sprite.svg#sun"></use>
           </svg>
-        </label>`;
-    const input = this.querySelector("input");
+        </label>`
+    const input = this.querySelector('input')
     if (input)
-      input.addEventListener("change", (e) => {
+      input.addEventListener('change', e => {
         const themeToRemove = (e.currentTarget as HTMLInputElement)?.checked
-          ? "light"
-          : "dark";
+          ? 'light'
+          : 'dark'
         const themeToAdd = (e.currentTarget as HTMLInputElement)?.checked
-          ? "dark"
-          : "light";
-        document.body.classList.add(`theme-${themeToAdd}`);
-        document.body.classList.remove(`theme-${themeToRemove}`);
+          ? 'dark'
+          : 'light'
+        document.body.classList.add(`theme-${themeToAdd}`)
+        document.body.classList.remove(`theme-${themeToRemove}`)
         if (!isAuthenticated()) {
-          cookie("theme", themeToAdd, { expires: 7 });
+          cookie('theme', themeToAdd, { expires: 7 })
         } else {
-          jsonFetchOrFlash("/api/profil/theme", {
+          jsonFetchOrFlash('/api/profil/theme', {
             body: { theme: themeToAdd },
-            method: "POST",
-          }).catch(console.error);
+            method: 'POST',
+          }).catch(console.error)
         }
-      });
+      })
 
     // On lit le theme utilisateur
     if (input)
       if (!isAuthenticated()) {
-        const savedTheme = cookie("theme");
+        const savedTheme = cookie('theme')
         // Si l'utilisateur n'a pas déjà de préférence
         if (savedTheme === null) {
-          const mq = window.matchMedia("(prefers-color-scheme: dark)");
-          input.checked = mq.matches;
+          const mq = window.matchMedia('(prefers-color-scheme: dark)')
+          input.checked = mq.matches
         } else {
-          document.body.classList.add(`theme-${savedTheme}`);
-          input.checked = savedTheme === "dark";
+          document.body.classList.add(`theme-${savedTheme}`)
+          input.checked = savedTheme === 'dark'
         }
-      } else if (document.body.classList.contains("theme-dark")) {
-        input.checked = true;
-      } else if (document.body.classList.contains("theme-light")) {
-        input.checked = false;
+      } else if (document.body.classList.contains('theme-dark')) {
+        input.checked = true
+      } else if (document.body.classList.contains('theme-light')) {
+        input.checked = false
       } else {
         input.checked = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
+          '(prefers-color-scheme: dark)',
+        ).matches
       }
   }
 }

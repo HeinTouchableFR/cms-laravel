@@ -1,74 +1,74 @@
 export function registerSlider() {
-  const sliders = document.querySelectorAll(".slider");
+  const sliders = document.querySelectorAll('.slider')
 
-  sliders.forEach((slider) => {
-    const autoplay = slider.getAttribute("autoplay");
-    const duration = parseInt(slider.getAttribute("duration") ?? "0", 10) * 1000;
-    let slideInterval = null;
-    let current: Element | null = null;
+  sliders.forEach(slider => {
+    const autoplay = slider.getAttribute('autoplay')
+    const duration = parseInt(slider.getAttribute('duration') ?? '0', 10) * 1000
+    let slideInterval = null
+    let current: Element | null = null
 
     function initArrows() {
-      const prev = slider.querySelector(".slider__prev");
+      const prev = slider.querySelector('.slider__prev')
       if (!prev) {
-        return;
+        return
       }
-      prev.addEventListener("click", prevSlide);
+      prev.addEventListener('click', prevSlide)
 
-      const next = slider.querySelector(".slider__next");
+      const next = slider.querySelector('.slider__next')
       if (!next) {
-        return;
+        return
       }
-      next.addEventListener("click", nextSlide);
+      next.addEventListener('click', nextSlide)
     }
 
     function initSlider() {
-      const firstItem = slider.querySelector<HTMLElement>(".slider__item");
+      const firstItem = slider.querySelector<HTMLElement>('.slider__item')
       if (!firstItem) {
-        return;
+        return
       }
-      firstItem.classList.add("slider__item-active");
-      current = firstItem;
+      firstItem.classList.add('slider__item-active')
+      current = firstItem
     }
 
-    initSlider();
-    initArrows();
+    initSlider()
+    initArrows()
 
     function nextSlide() {
       if (!current) {
-        return;
+        return
       }
-      current.classList.remove("slider__item-active");
+      current.classList.remove('slider__item-active')
       if (current.nextElementSibling) {
-        current = current.nextElementSibling;
-        current.classList.add("slider__item-active");
+        current = current.nextElementSibling
+        current.classList.add('slider__item-active')
       } else {
-        current = slider.querySelector(".slider__item:first-child");
+        current = slider.querySelector('.slider__item:first-child')
         if (!current) {
-          return;
+          return
         }
-        current.classList.add("slider__item-active");
+        current.classList.add('slider__item-active')
       }
     }
 
     function prevSlide() {
       if (!current) {
-        return;
+        return
       }
-      current.classList.remove("slider__item-active");
+      current.classList.remove('slider__item-active')
       if (current.previousElementSibling) {
-        current = current.previousElementSibling;
-        current.classList.add("slider__item-active");
+        current = current.previousElementSibling
+        current.classList.add('slider__item-active')
       } else {
-        current = slider.querySelector(".slider__item:last-child");
+        current = slider.querySelector('.slider__item:last-child')
         if (!current) {
-          return;
+          return
         }
-        current.classList.add("slider__item-active");
+        current.classList.add('slider__item-active')
       }
     }
 
     if (autoplay) {
-      slideInterval = setInterval(nextSlide, duration);
+      slideInterval = setInterval(nextSlide, duration)
     }
-  });
+  })
 }
