@@ -129,6 +129,7 @@ export function SearchInput({defaultValue}: Props) {
                 />
                 <button
                     onClick={handleClick}
+                    aria-label="Rechercher..."
                     className={`nav-button uil uil-${isOpen ? 'multiply' : 'search'}`}
                 >
                     {hook.loading ? (
