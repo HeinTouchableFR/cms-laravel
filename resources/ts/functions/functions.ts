@@ -1,22 +1,22 @@
-import { SyntheticEvent } from 'react'
+import {SyntheticEvent} from 'preact/hooks'
 
 export function prevent(callback?: Function) {
-  if (!callback) {
-    return
-  }
-  return (e: SyntheticEvent) => {
-    e.preventDefault()
-    callback(e)
-  }
+    if (!callback) {
+        return
+    }
+    return (e: SyntheticEvent) => {
+        e.preventDefault()
+        callback(e)
+    }
 }
 
 export function preventPropagation(callback?: Function) {
-  if (!callback) {
-    return
-  }
-  return (e: SyntheticEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    callback(e)
-  }
+    if (!callback) {
+        return
+    }
+    return (e: SyntheticEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
+        callback(e)
+    }
 }
