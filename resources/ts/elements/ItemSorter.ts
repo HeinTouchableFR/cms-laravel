@@ -84,9 +84,8 @@ export default class ItemSorter {
         item: HTMLElement
       }) {
         const parentId = e.to.dataset.parent || null
-        const positions = Array.from(e.to.children).map((li, k) => {
+        const positions = Array.from(e.to.children).map((li: any, k) => {
           return {
-            //@ts-ignore
             id: li.dataset.id,
             position: k,
             parent: parentId,

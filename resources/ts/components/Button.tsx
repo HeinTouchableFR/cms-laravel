@@ -18,7 +18,6 @@ export function Button({
   size,
   ...props
 }: Props) {
-  //@ts-ignore
   className = classNames('btn', `${className}`, size ? `btn-${size}` : '')
   return (
     <button className={className} disabled={loading} {...props}>

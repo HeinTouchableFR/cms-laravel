@@ -38,7 +38,7 @@ function highlight($codes: NodeListOf<HTMLElement>) {
           )
         }
       })
-      if (lazy === false) {
+      if (!lazy) {
         window.hljs.highlightBlock(code)
       }
     }
@@ -56,8 +56,7 @@ export function bindHighlight(root = document) {
     } else {
       const link = document.createElement('link')
       link.setAttribute('rel', 'stylesheet')
-      //@ts-ignore
-      document.querySelector('head').appendChild(link)
+      document.querySelector('head')?.appendChild(link)
       scriptjs(
         '//cdnjs.cloudflare.com/ajax/libs/highlight.ts/9.18.1/highlight.min.ts',
         () => {

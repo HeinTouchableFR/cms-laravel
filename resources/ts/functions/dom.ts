@@ -1,4 +1,4 @@
-import htm from 'htm/mini'
+import htm from "htm/mini";
 
 /**
  * Trouve la position de l'élément par rapport au haut de la page de manière recursive
@@ -41,7 +41,6 @@ export function createElement(
   // On lui associe les bons attributs
   for (let k of Object.keys(attributes || {})) {
     if (typeof k === 'number') {
-      //@ts-ignore
       k = k.toString()
     }
     if (typeof attributes[k] === 'function' && k.startsWith('on')) {

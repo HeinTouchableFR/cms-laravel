@@ -32,15 +32,10 @@ export default class AjaxDelete {
               await jsonFetch(url, {
                 method: 'DELETE',
               })
-              //@ts-ignore
-              loader.hide()
               parent.remove()
             }
-          } catch (e) {
-            //@ts-ignore
-            loader.hide()
+          } catch (e: any) {
             const alert = document.createElement('alert-floating')
-            //@ts-ignore
             alert.innerHTML = e.detail
             document.body.appendChild(alert)
           }

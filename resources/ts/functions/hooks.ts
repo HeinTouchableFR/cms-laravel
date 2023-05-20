@@ -1,10 +1,10 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'preact/hooks'
-import {ApiError, jsonFetch} from './api'
-import {strToDom} from './dom'
-import {debounce} from './timers'
-import {uniqId} from './string'
-import Alert from '@/elements/Alert'
-import {RefObject} from 'preact/compat'
+import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { ApiError, jsonFetch } from "./api";
+import { strToDom } from "./dom";
+import { debounce } from "./timers";
+import { uniqId } from "./string";
+import Alert from "@/elements/Alert";
+import { RefObject } from "preact/compat";
 
 /**
  * Alterne une valeur
@@ -21,16 +21,14 @@ export function usePrepend(initialValue: any = []) {
   const [value, setValue] = useState(initialValue)
   return [
     value,
-    // @ts-ignore
-    useCallback(item => {
-      // @ts-ignore
-      setValue(v => [item, ...v])
+    useCallback((item: any) => {
+      setValue((v: any) => [item, ...v])
     }, []),
   ]
 }
 
 /**
- * Hook d'effet pour détecter le clique en dehors d'un élément
+ * Hook d'effet pour détecter le clic en dehors d'un élément
  */
 export function useClickOutside(ref: any, cb: () => void) {
   useEffect(() => {
@@ -118,17 +116,16 @@ export const PROMISE_ERROR = -1
 /**
  * Décore une promesse et renvoie son état
  */
-export function usePromiseFn<Args extends any[]>(fn: (...args: Args) => void) {
+export function usePromiseFn(fn: (...args: any[]) => void) {
   const [state, setState] = useState(-10)
   const resetState = useCallback(() => {
     setState(-10)
   }, [])
 
   const wrappedFn = useCallback(
-    async <Args extends any[]>(...args: Args) => {
+    async (...args: any[]) => {
       setState(PROMISE_PENDING)
       try {
-        // @ts-ignore
         await fn(...args)
         setState(PROMISE_DONE)
       } catch (e) {
@@ -152,8 +149,7 @@ export function useVisibility(node: any, once = true, options = {}) {
   const [visible, setVisibilty] = useState(false)
   const isIntersecting = useRef()
 
-  // @ts-ignore
-  const handleObserverUpdate = entries => {
+  const handleObserverUpdate = (entries: any) => {
     const ent = entries[0]
 
     if (isIntersecting.current !== ent.isIntersecting) {
@@ -192,20 +188,18 @@ export function useNotificationCount(n: number) {
       if (n === 0) {
         return
       }
-      // @ts-ignore
       //await import('favicon-badge')
-      // @ts-ignore
       favIconBadge = strToDom(
         `<favicon-badge src="${document
           .querySelector('link[rel=icon]')
           ?.getAttribute('href')}" badge="true" badgeSize="6"/>`,
       )
-      // @ts-ignore
       document.head.appendChild(favIconBadge)
       return
     }
-    // @ts-ignore
-    favIconBadge.setAttribute('badge', n === 0 ? 'false' : 'true')
+    if ('setAttribute' in favIconBadge) {
+      favIconBadge.setAttribute('badge', n === 0 ? 'false' : 'true')
+    }
   }, [n])
 }
 

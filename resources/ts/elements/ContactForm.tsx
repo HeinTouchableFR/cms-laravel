@@ -12,11 +12,9 @@ export function ContactForm({ content, buttonClass }: Props) {
 
   if (success) {
     return (
-      // @ts-ignore
       <alert-message type={'success'} className='full' duration={3}>
         Votre mail a bien été envoyé, vous recevrez une réponse dans les plus
         bref délais.
-        {/* @ts-ignore */}
       </alert-message>
     )
   }

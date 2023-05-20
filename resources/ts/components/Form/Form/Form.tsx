@@ -52,7 +52,7 @@ function FetchForm({
   })
   const mainError = errors.main || null
 
-  // Vide l'erreur associée à un champs donnée
+  // Vide l'erreur associée à un champ donnée
   const emptyError = (name: string) => {
     if (!errors[name]) return null
     const newErrors: IError = { ...errors }
@@ -65,22 +65,18 @@ function FetchForm({
     e.preventDefault()
     setState({ loading: true, errors: {} })
     const form = e.target as HTMLFormElement
-    // @ts-ignore
     const formData = { ...data, ...Object.fromEntries(new FormData(form)) }
     try {
       const response = await jsonFetch(action, { method, body: formData })
       onSuccess(response)
       form.reset()
-    } catch (e) {
+    } catch (e: any) {
       const result = (e as Error).message
       if (e instanceof ApiError) {
         const violations = (e as ApiError).violations
-        //@ts-ignore
-        setState(s => ({ ...s, errors: violations }))
-        //@ts-ignore
+        setState(s => ({ ...s, errors: violations } as IState))
       } else if (e.detail) {
-        //@ts-ignore
-        Alert.flash(e.detail, 'error', null)
+        Alert.flash(e.detail, 'error', undefined)
       } else {
         Alert.flash(result, 'error')
         throw e

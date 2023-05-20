@@ -3,19 +3,20 @@ type Option = {
   label: string
 }
 
-export function FieldSelect(props: object) {
+type Props = {
+  options: Option[]
+}
+
+export function FieldSelect({ options, ...props }: Props) {
   return (
     <select {...props}>
-      {
-        // @ts-ignore
-        props.options.map((option: Option, key) => {
-          return (
-            <option value={option.value} key={key}>
-              {option.label}
-            </option>
-          )
-        })
-      }
+      {options.map((option: Option, key) => {
+        return (
+          <option value={option.value} key={key}>
+            {option.label}
+          </option>
+        )
+      })}
     </select>
   )
 }

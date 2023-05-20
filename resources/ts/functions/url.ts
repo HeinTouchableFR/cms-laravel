@@ -1,4 +1,4 @@
-import Turbolinks from 'turbolinks'
+import Turbolinks from "turbolinks";
 
 /**
  * @return {URLSearchParams}
@@ -9,8 +9,7 @@ export function objToSearchParams(obj: { [key: string]: string }) {
   }
   const params = new URLSearchParams()
   Object.keys(obj).forEach(k => {
-    //@ts-ignore
-    params.append(k.toString(), obj[k])
+    params.append(k.toString(), obj[k] ?? '')
   })
   return params
 }

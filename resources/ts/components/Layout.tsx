@@ -16,7 +16,6 @@ export function Stack({ children, gap }: StackProps) {
     style['--gap'] = gap
   }
   return (
-    //@ts-ignore
     <div className='stack' style={style}>
       {children}
     </div>

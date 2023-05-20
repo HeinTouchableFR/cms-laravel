@@ -2,12 +2,25 @@ import TomSelect from 'tom-select'
 import { jsonFetch } from '@/functions/api'
 import { redirect } from '@/functions/url'
 
-export class InputChoicesElement extends HTMLInputElement {}
+export class InputChoicesElement extends HTMLInputElement {
+  widget: any = undefined
 
-export class SelectChoicesElement extends HTMLSelectElement {}
+  connectedCallback() {}
 
-function bindBehaviour(cls: InputChoicesElement | SelectChoicesElement) {
-  //@ts-ignore
+  disconnectedCallback() {}
+}
+
+export class SelectChoicesElement extends HTMLSelectElement {
+  widget: any = undefined
+
+  connectedCallback() {}
+
+  disconnectedCallback() {}
+}
+
+function bindBehaviour(
+  cls: typeof InputChoicesElement | typeof SelectChoicesElement,
+) {
   cls.prototype.connectedCallback = function () {
     if (this.getAttribute('choicesBinded')) {
       return
@@ -69,16 +82,15 @@ function bindBehaviour(cls: InputChoicesElement | SelectChoicesElement) {
     if (this.dataset.create) {
       options.create = true
     }
-    //@ts-ignore
+    // @ts-ignore
     this.widget = new TomSelect(this, options)
 
     // Si l'option "redirect" est présente, on redirige au changement de valeur
     if (this.dataset.redirect !== undefined) {
-      this.widget.on('change', () => redirectOnChange(this))
+      this.widget?.on('change', () => redirectOnChange(this))
     }
   }
 
-  //@ts-ignore
   cls.prototype.disconnectedCallback = function () {
     if (this.widget) {
       this.widget.destroy()
@@ -86,7 +98,7 @@ function bindBehaviour(cls: InputChoicesElement | SelectChoicesElement) {
   }
 }
 
-function redirectOnChange(select: SelectChoicesElement) {
+function redirectOnChange(select: any) {
   const params = new URLSearchParams(window.location.search)
   if (select.value === '') {
     params.delete(select.name)
@@ -99,5 +111,4 @@ function redirectOnChange(select: SelectChoicesElement) {
   redirect(`${location.pathname}?${params}`)
 }
 
-//@ts-ignore
 Array.from([InputChoicesElement, SelectChoicesElement]).forEach(bindBehaviour)

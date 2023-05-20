@@ -1,8 +1,7 @@
 import prefresh from '@prefresh/vite'
-import {defineConfig} from 'vite'
+import { defineConfig } from 'vite'
 import laravel from 'laravel-vite-plugin'
 
-// @ts-ignore
 export default defineConfig({
   emitManifest: true,
   cors: true,

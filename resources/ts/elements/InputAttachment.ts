@@ -57,13 +57,12 @@ export default class InputAttachment {
         e.preventDefault()
       }
 
-      async onDrop(e: Event) {
+      async onDrop(e: any) {
         e.preventDefault()
         this.container.classList.add('is-hovered')
         const loader = document.createElement('loader-element')
         loader.classList.add('input-attachment__loader')
         this.container.appendChild(loader)
-        //@ts-ignore
         const files = e.dataTransfer.files
         if (files.length === 0) return false
         const data = new FormData()
@@ -90,7 +89,7 @@ export default class InputAttachment {
         this.container.classList.remove('is-hovered')
       }
 
-      onClick(e: Event) {
+      onClick(e: any) {
         e.preventDefault()
         const modal = document.createElement('modal-dialog')
         modal.setAttribute('overlay-close', 'overlay-close')
@@ -98,11 +97,8 @@ export default class InputAttachment {
         const endpoint = this.getAttribute('data-endpoint')
         if (endpoint) fm.setAttribute('data-endpoint', endpoint)
         modal.appendChild(fm)
-        fm.addEventListener('file', e => {
-          //@ts-ignore
+        fm.addEventListener('file', (e: any) => {
           this.setAttachment(e.detail)
-          //@ts-ignore
-          modal.close()
         })
         document.body.appendChild(modal)
       }

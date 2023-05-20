@@ -110,8 +110,7 @@ export default class Dropdown {
         }
       }
 
-      onBlur(e: Event) {
-        //@ts-ignore
+      onBlur(e: any) {
         if (this.ul && !this.ul.contains(e.relatedTarget)) {
           this.close()
         } else {

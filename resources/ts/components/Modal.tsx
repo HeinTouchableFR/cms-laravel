@@ -22,12 +22,10 @@ export function Modal({
   )
 
   return createPortal(
-    // @ts-ignore
-    <modal-dialog overlay-close onClose={onClose}>
+    <modal-dialog overlay-close='true' onClose={onClose}>
       <section className={bodyClassName} style={{ ...style }}>
         {children}
       </section>
-      {/* @ts-ignore */}
     </modal-dialog>,
     document.body,
   )

@@ -81,6 +81,7 @@ class ProfileController extends Controller
     public function cleanNotification(): RedirectResponse
     {
         Auth::user()->notifications()->delete();
+
         return Redirect::route('profile.index')->with('success', 'Notifications supprimées avec succès');
     }
 }

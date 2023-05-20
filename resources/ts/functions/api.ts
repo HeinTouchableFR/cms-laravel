@@ -106,8 +106,7 @@ export class ApiError {
     return this.data.violations.reduce(
       (acc: Record<string, Array<string>>, violation: Violation) => {
         if (acc[violation.propertyPath]) {
-          //@ts-ignore
-          acc[violation.propertyPath].push(violation.message)
+          acc[violation.propertyPath]?.push(violation.message)
         } else {
           acc[violation.propertyPath] = [violation.message]
         }
