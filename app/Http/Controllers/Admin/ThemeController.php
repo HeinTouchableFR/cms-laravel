@@ -33,12 +33,27 @@ class ThemeController extends Controller
         if ($status !== true) {
             throw new \Exception($status);
         } else {
-            $storageDestinationPath = storage_path('app/public/themes/');
+            $storageDestinationPath = storage_path('app/public/themes');
 
-            if (! \File::exists($storageDestinationPath)) {
+            if (!\File::exists($storageDestinationPath)) {
                 \File::makeDirectory($storageDestinationPath, 0755, true);
             }
-            $zip->extractTo($storageDestinationPath);
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $OnlyFileName = $zip->getNameIndex($i);
+                $FullFileName = $zip->statIndex($i);
+                if ($FullFileName['name'][strlen($FullFileName['name']) - 1] == "/") {
+                    @mkdir($storageDestinationPath . "/" . $FullFileName['name'], 0700, true);
+                }
+            }
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $OnlyFileName = $zip->getNameIndex($i);
+                $FullFileName = $zip->statIndex($i);
+                if (!($FullFileName['name'][strlen($FullFileName['name']) - 1] == "/")) {
+                    if (preg_match('#\.(jpg|jpeg|gif|png|svg|css|scss|php|js|woff|ttf)$#i', $OnlyFileName)) {
+                        copy('zip://' . $request->file('zip')->getRealPath() . '#' . $OnlyFileName, $storageDestinationPath . "/" . $FullFileName['name']);
+                    }
+                }
+            }
             $zip->close();
 
             return to_route('admin.theme.index')->with('success', 'Le thème a bien été envoyé');
