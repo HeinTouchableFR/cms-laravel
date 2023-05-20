@@ -1,4 +1,5 @@
-import LoaderElement from '@components/Loader'
+import preactCustomElement from '@/functions/preact'
+import Loader from '@/components/Loader'
 
 export default class LoaderOverlay {
   /**
@@ -26,19 +27,15 @@ export default class LoaderOverlay {
         this.style.background = 'rgba(255,255,255,.8)'
         // On crée le loader
         if (!customElements.get('loader-element')) {
-          LoaderElement.defineElement()
+          preactCustomElement('loader-element', Loader, null, null)
         }
         const loader = document.createElement('loader-element')
         loader.style.width = '20px'
         loader.style.height = '20px'
 
-        // On ajoute le loader à notre élément
         this.appendChild(loader)
       }
 
-      /**
-       * Masque le loader avec un effet d'animation
-       */
       hide() {
         this.style.opacity = '0'
       }

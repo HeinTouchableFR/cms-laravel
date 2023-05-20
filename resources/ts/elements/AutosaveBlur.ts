@@ -1,5 +1,6 @@
-import LoaderElement from '@components/Loader'
-import { jsonFetchOrFlash } from '@functions/api'
+import { jsonFetchOrFlash } from '@/functions/api'
+import preactCustomElement from '@/functions/preact'
+import Loader from '@/components/Loader'
 
 export default class AutosaveBlur {
   /**
@@ -22,7 +23,7 @@ export default class AutosaveBlur {
 
       save() {
         if (!customElements.get('loader-element')) {
-          LoaderElement.defineElement()
+          preactCustomElement('loader-element', Loader, null, null)
         }
         const loader = document.createElement('loader-element')
         this.style.position = 'relative'
@@ -45,6 +46,7 @@ export default class AutosaveBlur {
 
       disconnectedCallback() {}
     }
+
     customElements.define(name, AutosaveBlurElement, { extends: 'form' })
   }
 }

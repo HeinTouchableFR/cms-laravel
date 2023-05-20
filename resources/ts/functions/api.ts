@@ -1,88 +1,80 @@
-import Alert from "@elements/Alert";
-
-export const HTTP_UNPROCESSABLE_ENTITY = 422
-export const HTTP_NOT_FOUND = 404
-export const HTTP_FORBIDDEN = 403
-export const HTTP_OK = 200
-export const HTTP_NO_CONTENT = 204
+import Alert from '@/elements/Alert'
 
 type Params = {
-    [key: string]: string | object | FormData
+  [key: string]: string | object | FormData
 }
 
 /**
  * @return {Promise<Object>}
  */
 export async function jsonFetch(url: URL | string, params: Params = {}) {
-    // Si on reçoit un FormData on le convertit en objet
-    if (params.body instanceof FormData) {
-        params.body = Object.fromEntries(params.body)
-    }
-    // Si on reçoit un objet on le convertit en chaine JSON
-    if (params.body && typeof params.body === 'object') {
-        params.body = JSON.stringify(params.body)
-    }
-    params = {
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-        },
-        ...params,
-    }
+  // Si on reçoit un FormData on le convertit en objet
+  if (params.body instanceof FormData) {
+    params.body = Object.fromEntries(params.body)
+  }
+  // Si on reçoit un objet, on le convertit en chaine JSON
+  if (params.body && typeof params.body === 'object') {
+    params.body = JSON.stringify(params.body)
+  }
+  params = {
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    ...params,
+  }
 
-    const response = await fetch(url, params)
-    if (response.status === 204) {
-        return null
-    }
-    const data = await response.json()
-    if (response.ok) {
-        return data
-    }
-    throw new ApiError(data, response.status)
+  const response = await fetch(url, params)
+  if (response.status === 204) {
+    return null
+  }
+  const data = await response.json()
+  if (response.ok) {
+    return data
+  }
+  throw new ApiError(data, response.status)
 }
 
 /**
  * @return {Promise<Object>}
  */
 export async function jsonFetchOrFlash(url: URL | string, params: Params = {}) {
-    try {
-        return await jsonFetch(url, params)
-    } catch (e) {
-        const result = (e as Error).message
-        if (e instanceof ApiError) {
-            Alert.flash(e.name, 'danger', 4)
-        } else {
-            Alert.flash(result, 'danger', 4)
-        }
-        return null
+  try {
+    return await jsonFetch(url, params)
+  } catch (e) {
+    const result = (e as Error).message
+    if (e instanceof ApiError) {
+      Alert.flash(e.name, 'danger', 4)
+    } else {
+      Alert.flash(result, 'danger', 4)
     }
+    return null
+  }
 }
 
 /**
  * Capture un retour d'API
- *
- * @param {function} fn
  */
 export async function catchViolations(p: Promise<any>) {
-    try {
-        return [await p, null]
-    } catch (e) {
-        if (e instanceof ApiError) {
-            return [null, e.violations]
-        }
-        throw e
+  try {
+    return [await p, null]
+  } catch (e) {
+    if (e instanceof ApiError) {
+      return [null, e.violations]
     }
+    throw e
+  }
 }
 
 type Violation = {
-    propertyPath: string
-    message: string
+  propertyPath: string
+  message: string
 }
 type Data = {
-    title?: string
-    detail?: string
-    violations: Violation[]
+  title?: string
+  detail?: string
+  violations: Violation[]
 }
 
 /**
@@ -92,43 +84,43 @@ type Data = {
  * }} data
  */
 export class ApiError {
-    data: Data
-    status: number
+  data: Data
+  status: number
 
-    constructor(data: Data, status: number) {
-        this.data = data
-        this.status = status
+  constructor(data: Data, status: number) {
+    this.data = data
+    this.status = status
+  }
+
+  get name() {
+    return `${this.data.title} ${this.data.detail || ''}`
+  }
+
+  // Renvoie les violations indexé par propertyPath
+  get violations() {
+    if (!this.data.violations) {
+      return {
+        main: `${this.data.title} ${this.data.detail || ''}`,
+      }
     }
-
-    get name() {
-        return `${this.data.title} ${this.data.detail || ''}`
-    }
-
-    // Renvoie les violations indexé par propertyPath
-    get violations() {
-        if (!this.data.violations) {
-            return {
-                main: `${this.data.title} ${this.data.detail || ''}`,
-            }
+    return this.data.violations.reduce(
+      (acc: Record<string, Array<string>>, violation: Violation) => {
+        if (acc[violation.propertyPath]) {
+          //@ts-ignore
+          acc[violation.propertyPath].push(violation.message)
+        } else {
+          acc[violation.propertyPath] = [violation.message]
         }
-        return this.data.violations.reduce(
-            (acc: Record<string, Array<string>>, violation: Violation) => {
-                if (acc[violation.propertyPath]) {
-                    //@ts-ignore
-                    acc[violation.propertyPath].push(violation.message)
-                } else {
-                    acc[violation.propertyPath] = [violation.message]
-                }
-                return acc
-            },
-            {},
-        )
-    }
+        return acc
+      },
+      {},
+    )
+  }
 
-    // Récupère la liste de violation pour un champs donnée
-    violationsFor(field: string) {
-        return this.data.violations
-            .filter((v: Violation) => v.propertyPath === field)
-            .map((v: Violation) => v.message)
-    }
+  // Récupère la liste de violation pour un champs donnée
+  violationsFor(field: string) {
+    return this.data.violations
+      .filter((v: Violation) => v.propertyPath === field)
+      .map((v: Violation) => v.message)
+  }
 }

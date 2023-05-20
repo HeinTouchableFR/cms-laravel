@@ -46,7 +46,7 @@ export default class NavTabs {
 
           // Keyboard navigation (for accessibility purpose)
           tab.addEventListener('keyup', e => {
-            let index = null
+            let index: number | null = null
             if ((e as KeyboardEvent).key === 'ArrowRight') {
               index = i === tabs.length - 1 ? 0 : i + 1
             } else if ((e as KeyboardEvent).key === 'ArrowLeft') {

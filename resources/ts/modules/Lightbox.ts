@@ -4,6 +4,18 @@ export class Lightbox {
   element: HTMLDivElement
   images: string[]
   url: string | null
+
+  constructor(url: string, images: string[]) {
+    this.element = this.buildDOM(url)
+    this.url = null
+    this.images = images
+    this.loadImage(url)
+    this.onKeyUp = this.onKeyUp.bind(this)
+    document.body.appendChild(this.element)
+    disableBodyScroll(this.element)
+    document.addEventListener('keyup', this.onKeyUp)
+  }
+
   static init(element: string) {
     const containers = document.querySelectorAll<HTMLElement>(element)
     containers.forEach(container => {
@@ -18,17 +30,6 @@ export class Lightbox {
         }),
       )
     })
-  }
-
-  constructor(url: string, images: string[]) {
-    this.element = this.buildDOM(url)
-    this.url = null
-    this.images = images
-    this.loadImage(url)
-    this.onKeyUp = this.onKeyUp.bind(this)
-    document.body.appendChild(this.element)
-    disableBodyScroll(this.element)
-    document.addEventListener('keyup', this.onKeyUp)
   }
 
   buildDOM(url: string) {
@@ -102,7 +103,7 @@ export class Lightbox {
     if (i === this.images.length - 1) {
       i = -1
     }
-    this.loadImage(this.images[i + 1])
+    this.loadImage(this.images[i + 1] ?? '')
   }
 
   prev(e: MouseEvent | KeyboardEvent) {
@@ -111,6 +112,6 @@ export class Lightbox {
     if (i === 0) {
       i = this.images.length
     }
-    this.loadImage(this.images[i - 1])
+    this.loadImage(this.images[i - 1] ?? '')
   }
 }

@@ -8,6 +8,7 @@ export default class DatePicker {
   static defineElement(name: string = 'date-picker') {
     class DatePickerElement extends HTMLInputElement {
       flatpickr: any
+
       connectedCallback() {
         const hour = this.getAttribute('hour')
         const defaultHour = hour ? parseInt(hour, 10) : undefined
@@ -83,6 +84,7 @@ export default class DatePicker {
         this.flatpickr.destroy()
       }
     }
+
     customElements.define(name, DatePickerElement, { extends: 'input' })
   }
 }

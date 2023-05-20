@@ -1,4 +1,4 @@
-import { redirect } from '@functions/url'
+import { redirect } from '@/functions/url'
 
 export default class Switch {
   /**
@@ -7,6 +7,7 @@ export default class Switch {
   static defineElement(name: string = 'input-switch') {
     class SwitchElement extends HTMLInputElement {
       switch: any
+
       connectedCallback() {
         if (
           this.nextElementSibling === null ||
@@ -48,6 +49,7 @@ export default class Switch {
         this.switch.parentElement.remove(this.switch)
       }
     }
+
     customElements.define(name, SwitchElement, { extends: 'input' })
   }
 }

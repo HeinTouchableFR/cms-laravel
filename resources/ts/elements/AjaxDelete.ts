@@ -1,5 +1,5 @@
-import { closest } from '@functions/dom'
-import { jsonFetch } from '@functions/api'
+import { closest } from '@/functions/dom'
+import { jsonFetch } from '@/functions/api'
 
 export default class AjaxDelete {
   /**
@@ -47,6 +47,7 @@ export default class AjaxDelete {
         })
       }
     }
+
     customElements.define(name, AjaxDeleteElement)
   }
 }

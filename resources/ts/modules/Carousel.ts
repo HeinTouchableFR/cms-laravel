@@ -82,22 +82,22 @@ export function registerCarousel() {
       if (carouselLeft && carouselRight) {
         if (!repeat) {
           if (slideCurrent === slide.length - 1) {
-            slide[0].classList.add('not-visible')
-            slide[slide.length - 1].classList.remove('not-visible')
+            slide[0]?.classList.add('not-visible')
+            slide[slide.length - 1]?.classList.remove('not-visible')
             if (!noArrows) {
               carouselRight.classList.add('not-visible')
               carouselLeft.classList.remove('not-visible')
             }
           } else if (slideCurrent === 0) {
-            slide[slide.length - 1].classList.add('not-visible')
-            slide[0].classList.remove('not-visible')
+            slide[slide.length - 1]?.classList.add('not-visible')
+            slide[0]?.classList.remove('not-visible')
             if (!noArrows) {
               carouselLeft.classList.add('not-visible')
               carouselRight.classList.remove('not-visible')
             }
           } else {
-            slide[slide.length - 1].classList.remove('not-visible')
-            slide[0].classList.remove('not-visible')
+            slide[slide.length - 1]?.classList.remove('not-visible')
+            slide[0]?.classList.remove('not-visible')
             if (!noArrows) {
               carouselLeft.classList.remove('not-visible')
               carouselRight.classList.remove('not-visible')
@@ -145,23 +145,8 @@ export function registerCarousel() {
           thisSlide.classList.add('preactivede')
         }
       })
-      preactiveSlide.classList.remove('preactivede')
-      preactiveSlide.classList.remove('active')
-      preactiveSlide.classList.remove('proactive')
-      preactiveSlide.classList.remove('proactivede')
-      preactiveSlide.classList.add('preactive')
 
-      activeSlide.classList.remove('preactivede')
-      activeSlide.classList.remove('preactive')
-      activeSlide.classList.remove('proactive')
-      activeSlide.classList.remove('proactivede')
-      activeSlide.classList.add('active')
-
-      proactiveSlide.classList.remove('preactivede')
-      proactiveSlide.classList.remove('preactive')
-      proactiveSlide.classList.remove('active')
-      proactiveSlide.classList.remove('proactivede')
-      proactiveSlide.classList.add('proactive')
+      setClassToSlides(preactiveSlide, activeSlide, proactiveSlide)
 
       updateBullet()
     }
@@ -204,25 +189,33 @@ export function registerCarousel() {
         }
       })
 
-      preactiveSlide.classList.remove('preactivede')
-      preactiveSlide.classList.remove('active')
-      preactiveSlide.classList.remove('proactive')
-      preactiveSlide.classList.remove('proactivede')
-      preactiveSlide.classList.add('preactive')
-
-      activeSlide.classList.remove('preactivede')
-      activeSlide.classList.remove('preactive')
-      activeSlide.classList.remove('proactive')
-      activeSlide.classList.remove('proactivede')
-      activeSlide.classList.add('active')
-
-      proactiveSlide.classList.remove('preactivede')
-      proactiveSlide.classList.remove('preactive')
-      proactiveSlide.classList.remove('active')
-      proactiveSlide.classList.remove('proactivede')
-      proactiveSlide.classList.add('proactive')
+      setClassToSlides(preactiveSlide, activeSlide, proactiveSlide)
 
       updateBullet()
+    }
+
+    function setClassToSlides(
+      preactiveSlide: Element | undefined,
+      activeSlide: Element | undefined,
+      proactiveSlide: Element | undefined,
+    ) {
+      preactiveSlide?.classList.remove('preactivede')
+      preactiveSlide?.classList.remove('active')
+      preactiveSlide?.classList.remove('proactive')
+      preactiveSlide?.classList.remove('proactivede')
+      preactiveSlide?.classList.add('preactive')
+
+      activeSlide?.classList.remove('preactivede')
+      activeSlide?.classList.remove('preactive')
+      activeSlide?.classList.remove('proactive')
+      activeSlide?.classList.remove('proactivede')
+      activeSlide?.classList.add('active')
+
+      proactiveSlide?.classList.remove('preactivede')
+      proactiveSlide?.classList.remove('preactive')
+      proactiveSlide?.classList.remove('active')
+      proactiveSlide?.classList.remove('proactivede')
+      proactiveSlide?.classList.add('proactive')
     }
 
     function goToIndexSlide(index: number) {
@@ -236,7 +229,7 @@ export function registerCarousel() {
     slideInitial()
 
     if (autoplay) {
-      slideInterval = setInterval(slideRight, duration)
+      setInterval(slideRight, duration)
     }
   })
 }

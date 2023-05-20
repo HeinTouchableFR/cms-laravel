@@ -1,5 +1,5 @@
 import Sortable from 'sortablejs'
-import { jsonFetch } from '@functions/api'
+import { jsonFetch } from '@/functions/api'
 
 export default class ItemSorter {
   /**

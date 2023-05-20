@@ -8,6 +8,10 @@ export default class InputAttachment {
       preview: any
       overwrite: boolean | undefined
 
+      get attachmentId() {
+        return this.value
+      }
+
       connectedCallback() {
         const preview = this.getAttribute('preview')
         this.insertAdjacentHTML(
@@ -112,10 +116,6 @@ export default class InputAttachment {
         this.dispatchEvent(
           new CustomEvent('attachment', { detail: attachment }),
         )
-      }
-
-      get attachmentId() {
-        return this.value
       }
     }
 

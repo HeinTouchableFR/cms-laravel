@@ -1,43 +1,40 @@
-import {PropsWithChildren, useEffect, useState} from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
+import { CSSProperties, PropsWithChildren } from 'preact/compat'
 
 type SlideInProps = PropsWithChildren<{
-    show: boolean
+  className?: string | null
+  show: boolean
+  style?: CSSProperties | null
 }>
 
-export function SlideIn({
-                            show,
-                            children,
-                            style = {},
-                            forwardedRef = null,
-                            ...props
-                        }) {
-    const [shouldRender, setRender] = useState(show)
+export function SlideIn({ show, children, style }: SlideInProps) {
+  const [shouldRender, setRender] = useState(show)
 
-    useEffect(() => {
-        if (show) {
-            setRender(true)
-        } else {
-            setRender(false)
-        }
-    }, [show])
-
-    const onAnimationEnd = e => {
-        if (!show && e.animationName === 'slideOut') setRender(false)
+  useEffect(() => {
+    if (show) {
+      setRender(true)
+    } else {
+      setRender(false)
     }
+  }, [show])
 
-    return (
-        shouldRender && (
-            <div
-                style={{
-                    animation: `${show ? 'slideIn' : 'slideOut'} .3s both`,
-                    ...style,
-                }}
-                onAnimationEnd={onAnimationEnd}
-                ref={forwardedRef}
-                {...props}
-            >
-                {children}
-            </div>
-        )
-    )
+  const onAnimationEnd = (e: any) => {
+    if (!show && e.animationName === 'slideOut') setRender(false)
+  }
+
+  return (
+    <>
+      {shouldRender && (
+        <div
+          style={{
+            animation: `${show ? 'slideIn' : 'slideOut'} .3s both`,
+            ...style,
+          }}
+          onAnimationEnd={onAnimationEnd}
+        >
+          {children}
+        </div>
+      )}
+    </>
+  )
 }

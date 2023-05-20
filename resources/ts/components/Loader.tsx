@@ -13,7 +13,7 @@ export default function Loader({
 }: Props) {
   const buildCircles = (w: number, n: number, r: number) => {
     const circleRadius = w / 2 - r
-    let dom = []
+    let dom: JSX.Element[] = []
     for (let i = 0; i < n; i++) {
       const a = (Math.PI / (n / 2)) * i
       const x = circleRadius * Math.sin(a) + w / 2
@@ -33,7 +33,7 @@ export default function Loader({
   } as React.CSSProperties
 
   return (
-    <div className={`loader ${className}`} style={style}>
+    <div className={`loader ${className}`} style={{ ...style }}>
       <div className={'loaderContainer'}>
         <svg
           className={'circles'}

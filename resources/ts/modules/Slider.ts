@@ -68,7 +68,7 @@ export function registerSlider() {
     }
 
     if (autoplay) {
-      slideInterval = setInterval(nextSlide, duration)
+      setInterval(nextSlide, duration)
     }
   })
 }

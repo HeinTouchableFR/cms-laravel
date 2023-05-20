@@ -7,7 +7,7 @@ export const debounce = <F extends (...args: any[]) => any>(
 ) => {
   let timeout: ReturnType<typeof setTimeout> | null = null
 
-  const debounced = (...args) => {
+  const debounced = (...args: any) => {
     if (timeout !== null) {
       clearTimeout(timeout)
       timeout = null
@@ -15,7 +15,7 @@ export const debounce = <F extends (...args: any[]) => any>(
     timeout = setTimeout(() => func(...args), wait)
   }
 
-  return debounced as (...args) => ReturnType<F>
+  return debounced as (...args: any) => ReturnType<F>
 }
 
 /**

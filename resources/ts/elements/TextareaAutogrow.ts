@@ -1,4 +1,4 @@
-import { debounce } from '@functions/timers'
+import { debounce } from '@/functions/timers'
 
 export default class TextareaAutogrow {
   /**
@@ -6,6 +6,13 @@ export default class TextareaAutogrow {
    */
   static defineElement(name: string = 'textarea-autogrow') {
     class TextareaAutogrowElement extends HTMLTextAreaElement {
+      constructor() {
+        super()
+        this.autogrow = this.autogrow.bind(this)
+        this.onResize = debounce(this.onResize.bind(this), 300)
+        this.onFocus = this.onFocus.bind(this)
+      }
+
       autogrow() {
         const previousHeight = this.style.height
         this.style.height = 'auto'
@@ -40,13 +47,6 @@ export default class TextareaAutogrow {
 
       disconnectedCallback() {
         window.removeEventListener('resize', this.onResize)
-      }
-
-      constructor() {
-        super()
-        this.autogrow = this.autogrow.bind(this)
-        this.onResize = debounce(this.onResize.bind(this), 300)
-        this.onFocus = this.onFocus.bind(this)
       }
     }
 

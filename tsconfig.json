@@ -4,14 +4,9 @@
             "node",
             "vite/client"
         ],
-        "baseUrl": "resources/ts",
-        "paths": {
-            "/*": [
-                "./*"
-            ]
-        },
-        "target": "es2017",
+        "target": "ESNext",
         "useDefineForClassFields": true,
+        "declaration": true,
         "lib": [
             "DOM",
             "DOM.Iterable",
@@ -21,24 +16,41 @@
         "skipLibCheck": true,
         "esModuleInterop": false,
         "allowSyntheticDefaultImports": true,
+        "noUncheckedIndexedAccess": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "moduleResolution": "Node",
+        "module": "ESNext",
+        "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "noEmit": true
+        "noEmit": true,
+        "baseUrl": ".",
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact",
+        "paths": {
+            "@/components/*": [
+                "resources/ts/components/*"
+            ],
+            "@/functions/*": [
+                "resources/ts/functions/*"
+            ],
+            "@/api/*": [
+                "resources/ts/api/*"
+            ],
+            "@/modules/*": [
+                "resources/ts/modules/*"
+            ],
+            "@/elements/*": [
+                "resources/ts/elements/*"
+            ]
+        }
     },
     "include": [
-        "resources/ts",
+        "./resources/ts/**/*",
         "index.d.ts"
     ],
     "exclude": [
         "node_modules",
         "public/build"
-    ],
-    "references": [
-        {
-            "path": "./tsconfig.node.json"
-        }
     ]
 }

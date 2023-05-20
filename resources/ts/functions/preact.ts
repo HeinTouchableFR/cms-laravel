@@ -1,94 +1,123 @@
-import {cloneElement, h, hydrate, render} from 'preact'
+// @ts-nocheck
+import { cloneElement, h, hydrate, render } from 'preact'
 
-export default function preactCustomElement(tagName, Component, propNames, options) {
-    function PreactElement() {
-        const inst = Reflect.construct(HTMLElement, [], PreactElement)
-        inst._vdomComponent = Component
-        inst._root = options && options.shadow ? inst.attachShadow({mode: 'open'}) : inst
-        return inst
-    }
+export default function preactCustomElement(
+  tagName: string | string[] | null,
+  Component: any,
+  propNames: string[] | null,
+  options: any,
+) {
+  function PreactElement() {
+    const inst: any = Reflect.construct(HTMLElement, [], PreactElement)
+    inst._vdomComponent = Component
+    inst._root =
+      options && options.shadow ? inst.attachShadow({ mode: 'open' }) : inst
+    return inst
+  }
 
-    PreactElement.prototype = Object.create(HTMLElement.prototype)
-    PreactElement.prototype.constructor = PreactElement
-    PreactElement.prototype.connectedCallback = connectedCallback
-    PreactElement.prototype.attributeChangedCallback = attributeChangedCallback
-    PreactElement.prototype.disconnectedCallback = disconnectedCallback
+  PreactElement.prototype = Object.create(HTMLElement.prototype)
+  PreactElement.prototype.constructor = PreactElement
+  PreactElement.prototype.connectedCallback = connectedCallback
+  PreactElement.prototype.attributeChangedCallback = attributeChangedCallback
+  PreactElement.prototype.disconnectedCallback = disconnectedCallback
 
-    propNames = propNames || Component.observedAttributes || Object.keys(Component.propTypes || {})
-    PreactElement.observedAttributes = propNames
+  propNames =
+    propNames ||
+    Component.observedAttributes ||
+    Object.keys(Component.propTypes || {})
+  PreactElement.observedAttributes = propNames
 
-    // Keep DOM properties and Preact props in sync
-    propNames.forEach(name => {
-        Object.defineProperty(PreactElement.prototype, name, {
-            get() {
-                return this._vdom.props[name]
-            },
-            set(v) {
-                if (this._vdom) {
-                    this.attributeChangedCallback(name, null, v)
-                } else {
-                    if (!this._props) this._props = {}
-                    this._props[name] = v
-                    this.connectedCallback()
-                }
+  // Keep DOM properties and Preact props in sync
+  propNames?.forEach(name => {
+    Object.defineProperty(PreactElement.prototype, name, {
+      get() {
+        return this._vdom.props[name]
+      },
+      set(v) {
+        if (this._vdom) {
+          this.attributeChangedCallback(name, null, v)
+        } else {
+          if (!this._props) this._props = {}
+          this._props[name] = v
+          this.connectedCallback()
+        }
 
-                // Reflect property changes to attributes if the value is a primitive
-                const type = typeof v
-                if (v == null || type === 'string' || type === 'boolean' || type === 'number') {
-                    this.setAttribute(name, v)
-                }
-            }
-        })
+        // Reflect property changes to attributes if the value is a primitive
+        const type = typeof v
+        if (
+          v == null ||
+          type === 'string' ||
+          type === 'boolean' ||
+          type === 'number'
+        ) {
+          this.setAttribute(name, v)
+        }
+      },
     })
+  })
 
-    return customElements.define(tagName || Component.tagName || Component.displayName || Component.name, PreactElement)
+  return customElements.define(
+    tagName || Component.tagName || Component.displayName || Component.name,
+    PreactElement,
+  )
 }
 
-function ContextProvider(props) {
-    this.getChildContext = () => props.context
-    // eslint-disable-next-line no-unused-vars
-    const {context, children, ...rest} = props
-    return cloneElement(children, rest)
+function ContextProvider(this: any, props: any) {
+  this.getChildContext = () => props.context
+  // eslint-disable-next-line no-unused-vars
+  const { context, children, ...rest } = props
+  return cloneElement(children, rest)
 }
 
-function connectedCallback() {
-    // Obtain a reference to the previous context by pinging the nearest
-    // higher up node that was rendered with Preact. If one Preact component
-    // higher up receives our ping, it will set the `detail` property of
-    // our custom event. This works because events are dispatched
-    // synchronously.
-    const event = new CustomEvent('_preact', {
-        detail: {},
-        bubbles: true,
-        cancelable: true
-    })
-    this.dispatchEvent(event)
-    const context = event.detail.context
+function connectedCallback(this: any) {
+  // Obtain a reference to the previous context by pinging the nearest
+  // higher up node that was rendered with Preact. If one Preact component
+  // higher up receives our ping, it will set the `detail` property of
+  // our custom event. This works because events are dispatched
+  // synchronously.
+  const event = new CustomEvent('_preact', {
+    detail: {
+      context: null,
+    },
+    bubbles: true,
+    cancelable: true,
+  })
+  this.dispatchEvent(event)
+  const context = event.detail.context
 
-    this._vdom = h(ContextProvider, {...this._props, context}, toVdom(this, this._vdomComponent))
-    ;(this.hasAttribute('hydrate') ? hydrate : render)(this._vdom, this._root)
+  this._vdom = h(
+    ContextProvider,
+    { ...this._props, context },
+    toVdom(this, this._vdomComponent),
+  )
+  ;(this.hasAttribute('hydrate') ? hydrate : render)(this._vdom, this._root)
 }
 
-function toCamelCase(str) {
-    return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''))
+function toCamelCase(str: string) {
+  return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''))
 }
 
-function attributeChangedCallback(name, oldValue, newValue) {
-    if (!this._vdom) return
-    // Attributes use `null` as an empty value whereas `undefined` is more
-    // common in pure JS components, especially with default parameters.
-    // When calling `node.removeAttribute()` we'll receive `null` as the new
-    // value. See issue #50.
-    newValue = newValue == null ? undefined : newValue
-    const props = {}
-    props[name] = newValue
-    props[toCamelCase(name)] = newValue
-    this._vdom = cloneElement(this._vdom, props)
-    render(this._vdom, this._root)
+function attributeChangedCallback(
+  this: any,
+  name: any,
+  oldValue: any,
+  newValue: any,
+) {
+  if (!this._vdom) return
+  // Attributes use `null` as an empty value whereas `undefined` is more
+  // common in pure JS components, especially with default parameters.
+  // When calling `node.removeAttribute()` we'll receive `null` as the new
+  // value. See issue #50.
+  newValue = newValue == null ? undefined : newValue
+  const props: any = {}
+  props[name] = newValue
+  props[toCamelCase(name)] = newValue
+  this._vdom = cloneElement(this._vdom, props)
+  render(this._vdom, this._root)
 }
 
-function disconnectedCallback() {
-    render((this._vdom = null), this._root)
+function disconnectedCallback(this: any) {
+  render((this._vdom = null), this._root)
 }
 
 /**
@@ -98,56 +127,56 @@ function disconnectedCallback() {
  * synchronously, the child can immediately pull of the value right
  * after having fired the event.
  */
-function Slot(props, context) {
-    const ref = r => {
-        if (!r) {
-            this.ref.removeEventListener('_preact', this._listener)
-        } else {
-            this.ref = r
-            if (!this._listener) {
-                this._listener = event => {
-                    event.stopPropagation()
-                    event.detail.context = context
-                }
-                r.addEventListener('_preact', this._listener)
-            }
+function Slot(this: any, props: any, context: any) {
+  const ref = (r: any) => {
+    if (!r) {
+      this.ref.removeEventListener('_preact', this._listener)
+    } else {
+      this.ref = r
+      if (!this._listener) {
+        this._listener = (event: any) => {
+          event.stopPropagation()
+          event.detail.context = context
         }
+        r.addEventListener('_preact', this._listener)
+      }
     }
-    return h('slot', {...props, ref})
+  }
+  return h('slot', { ...props, ref })
 }
 
-function toVdom(element, nodeName) {
-    if (element.nodeType === Node.TEXT_NODE) {
-        const data = element.data
-        element.data = ''
-        return data
+function toVdom(element: any, nodeName: any): any {
+  if (element.nodeType === Node.TEXT_NODE) {
+    const data = element.data
+    element.data = ''
+    return data
+  }
+  if (element.nodeType !== Node.ELEMENT_NODE) return null
+  const children = []
+  const props: any = {}
+  let i = 0
+  const a = element.attributes
+  const cn = element.childNodes
+  for (i = a.length; i--; ) {
+    if (a[i].name !== 'slot') {
+      props[a[i].name] = a[i].value
+      props[toCamelCase(a[i].name)] = a[i].value
     }
-    if (element.nodeType !== Node.ELEMENT_NODE) return null
-    const children = []
-    const props = {}
-    let i = 0
-    const a = element.attributes
-    const cn = element.childNodes
-    for (i = a.length; i--;) {
-        if (a[i].name !== 'slot') {
-            props[a[i].name] = a[i].value
-            props[toCamelCase(a[i].name)] = a[i].value
-        }
-    }
-    props.parent = element
+  }
+  props.parent = element
 
-    for (i = cn.length; i--;) {
-        const vnode = toVdom(cn[i], null)
-        // Move slots correctly
-        const name = cn[i].slot
-        if (name) {
-            props[name] = h(Slot, {name}, vnode)
-        } else {
-            children[i] = vnode
-        }
+  for (i = cn.length; i--; ) {
+    const vnode = toVdom(cn[i], null)
+    // Move slots correctly
+    const name = cn[i].slot
+    if (name) {
+      props[name] = h(Slot, { name }, vnode)
+    } else {
+      children[i] = vnode
     }
+  }
 
-    // Only wrap the topmost node with a slot
-    const wrappedChildren = nodeName ? h(Slot, null, children) : children
-    return h(nodeName || element.nodeName.toLowerCase(), props, wrappedChildren)
+  // Only wrap the topmost node with a slot
+  const wrappedChildren = nodeName ? h(Slot, null, children) : children
+  return h(nodeName || element.nodeName.toLowerCase(), props, wrappedChildren)
 }

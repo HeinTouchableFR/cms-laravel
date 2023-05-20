@@ -115,6 +115,7 @@ export default class TimeAgo {
         }
       }
     }
+
     customElements.define(name, TimeAgoElement)
   }
 }

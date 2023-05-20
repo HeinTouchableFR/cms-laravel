@@ -9,6 +9,7 @@ export default class TimeCountdown {
   static defineElement(name: string = 'time-countdown') {
     class TimeCountdownElement extends HTMLElement {
       timer: number | undefined
+
       connectedCallback() {
         const timestamp = parseInt(this.getAttribute('time') || '0', 10) * 1000
         const id = this.getAttribute('id') || ''
@@ -54,6 +55,7 @@ export default class TimeCountdown {
         }
       }
     }
+
     customElements.define(name, TimeCountdownElement)
   }
 }

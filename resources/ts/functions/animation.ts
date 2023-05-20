@@ -1,5 +1,5 @@
-import { offsetTop } from './dom'
-import { windowHeight } from './window'
+import {offsetTop} from './dom'
+import {windowHeight} from './window'
 
 /**
  * Masque un élément avec un effet de repli

@@ -7,16 +7,16 @@ export default class ModalDialog {
       private previouslyFocusedElement: Element | null
       private trapElements: any[]
 
-      static get observedAttributes() {
-        return ['hidden']
-      }
-
       constructor() {
         super()
         this.close = this.close.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
         this.previouslyFocusedElement = null
         this.trapElements = []
+      }
+
+      static get observedAttributes() {
+        return ['hidden']
       }
 
       connectedCallback() {

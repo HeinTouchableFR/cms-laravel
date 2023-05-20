@@ -1,4 +1,4 @@
-import { jsonFetch } from '@functions/api'
+import { jsonFetch } from '@/functions/api'
 
 type NotificationType = {
   id: number

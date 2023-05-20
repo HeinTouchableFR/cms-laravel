@@ -97,6 +97,7 @@ export default class Skeleton {
           </style><div>${spans}</div>`
       }
     }
+
     customElements.define(name, SkeletonElement)
   }
 }

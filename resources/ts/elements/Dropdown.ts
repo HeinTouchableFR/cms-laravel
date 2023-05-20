@@ -8,6 +8,7 @@ export default class Dropdown {
       button: HTMLButtonElement | null
       index: number
       isOpen: boolean
+
       constructor() {
         super()
         this.open = this.open.bind(this)
@@ -153,6 +154,7 @@ export default class Dropdown {
         this.index = index
       }
     }
+
     customElements.define(name, DropdownElement)
   }
 }
