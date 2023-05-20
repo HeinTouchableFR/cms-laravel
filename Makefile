@@ -58,8 +58,8 @@ vendor/autoload.php: composer.lock
 	touch vendor/autoload.php
 
 public/build/manifest.json: package.json
-	npm i
-	npm run build
+	pnpm i
+	pnpm run build
 
 
 .PHONY: build-docker
@@ -70,16 +70,16 @@ build-docker:
 	$(dc) build node
 	$(dc) build db
 	$(dc) start db
+	make post-build
 	sleep 5
 	make dumpimport
 	make dev
 	sleep 30
-	make post-build
 
 .PHONY: dev
 dev: vendor/autoload.php node_modules/time ## Lance le serveur de développement
 	$(dc) up
-	$(node) npm run dev
+	$(node) pnpm run dev
 
 .PHONY: rollback
 rollback:
@@ -105,10 +105,10 @@ doc: ## Génère le sommaire de la documentation
 post-build:
 	$(php) composer install
 	touch vendor/autoload.php
-	$(node) yarn
+	$(node) pnpm i
 	touch node_modules/time
-	$(node) yarn
-	$(node) npm run build --theme=$(theme)
+	$(node) pnpm i
+	$(node) pnpm run build
 
 
 .PHONY: helpers
