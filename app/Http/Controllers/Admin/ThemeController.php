@@ -26,7 +26,10 @@ class ThemeController extends Controller
         ]);
     }
 
-    public function upload(Request $request): RedirectResponse
+    /**
+     * @throws \Exception
+     */
+    public function upload(Request $request)
     {
         $zip = new ZipArchive();
         $status = $zip->open($request->file('zip')->getRealPath());
@@ -39,18 +42,19 @@ class ThemeController extends Controller
                 \File::makeDirectory($storageDestinationPath, 0755, true);
             }
             for ($i = 0; $i < $zip->numFiles; $i++) {
-                $OnlyFileName = $zip->getNameIndex($i);
                 $FullFileName = $zip->statIndex($i);
-                if ($FullFileName['name'][strlen($FullFileName['name']) - 1] == "/") {
-                    @mkdir($storageDestinationPath . "/" . $FullFileName['name'], 0700, true);
+                $name = str_replace('../', '', $FullFileName['name']);
+                if ($name[strlen($name) - 1] == "/") {
+                    @mkdir($storageDestinationPath . "/" . $name, 0700, true);
                 }
             }
             for ($i = 0; $i < $zip->numFiles; $i++) {
-                $OnlyFileName = $zip->getNameIndex($i);
+                $OnlyFileName = str_replace('../', '', $zip->getNameIndex($i));
                 $FullFileName = $zip->statIndex($i);
-                if (!($FullFileName['name'][strlen($FullFileName['name']) - 1] == "/")) {
+                $name = str_replace('../', '', $FullFileName['name']);
+                if (!($name[strlen($name) - 1] == "/")) {
                     if (preg_match('#\.(jpg|jpeg|gif|png|svg|css|scss|php|js|woff|ttf)$#i', $OnlyFileName)) {
-                        copy('zip://' . $request->file('zip')->getRealPath() . '#' . $OnlyFileName, $storageDestinationPath . "/" . $FullFileName['name']);
+                        copy('zip://' . $request->file('zip')->getRealPath() . '#' . $OnlyFileName, $storageDestinationPath . "/" . $name);
                     }
                 }
             }
