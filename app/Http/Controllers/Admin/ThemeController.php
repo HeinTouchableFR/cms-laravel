@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
 class ThemeController extends Controller
@@ -36,20 +37,11 @@ class ThemeController extends Controller
         if ($status !== true) {
             throw new \Exception($status);
         } else {
-            $storageDestinationPath = storage_path('app/public/themes');
-
+            $storageDestinationPath = storage_path('themes');
             if (!\File::exists($storageDestinationPath)) {
                 \File::makeDirectory($storageDestinationPath, 0755, true);
             }
-            for ($i = 0; $i < $zip->numFiles; $i++) {
-                $FullFileName = $zip->statIndex($i);
-                if ($FullFileName['name'][strlen($FullFileName['name']) - 1] == "/") {
-                    $dirname = pathinfo($FullFileName['name'], PATHINFO_DIRNAME);
-                    $basename = pathinfo($FullFileName['name'], PATHINFO_BASENAME);
-                    $name = $dirname . '/' . $basename . '/';
-                    @mkdir($storageDestinationPath . "/" . $name, 0700, true);
-                }
-            }
+
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $OnlyFileName = str_replace('../', '', $zip->getNameIndex($i));
                 $FullFileName = $zip->statIndex($i);
@@ -58,10 +50,12 @@ class ThemeController extends Controller
                         $dirname = pathinfo($FullFileName['name'], PATHINFO_DIRNAME);
                         $basename = pathinfo($FullFileName['name'], PATHINFO_BASENAME);
                         $name = $dirname . '/' . $basename;
-                        copy('zip://' . $request->file('zip')->getRealPath() . '#' . $OnlyFileName, $storageDestinationPath . "/" . $name);
+                        $file = $zip->getFromIndex($i);
+                        Storage::disk('public')->put("/themes/" . $name, $file);
                     }
                 }
             }
+
             $zip->close();
 
             return to_route('admin.theme.index')->with('success', 'Le thème a bien été envoyé');
