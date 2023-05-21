@@ -23,7 +23,7 @@ Route::get('/posts', [\App\Http\Controllers\Api\ContentController::class, 'index
 Route::post('/contact', [\App\Http\Controllers\Api\ContactController::class, 'index']);
 
 Route::get('/search', function (\App\Http\Requests\SearchRequest $request) {
-    $q = $request->validated('q');;
+    $q = htmlspecialchars($request->validated('q'), ENT_QUOTES, 'UTF-8');
 
     if ($q) {
         $results = \App\Models\Content::search($q,

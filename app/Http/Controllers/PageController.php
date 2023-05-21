@@ -53,7 +53,7 @@ class PageController extends Controller
      */
     public function search(SearchRequest $request): View
     {
-        $q = $request->validated('q');
+        $q = htmlspecialchars($request->validated('q'), ENT_QUOTES, 'UTF-8');
 
         if ($q) {
             $results = \App\Models\Content::search($q,
