@@ -22,8 +22,8 @@ Route::get('/posts', [\App\Http\Controllers\Api\ContentController::class, 'index
 
 Route::post('/contact', [\App\Http\Controllers\Api\ContactController::class, 'index']);
 
-Route::get('/search', function (Request $request) {
-    $q = $request->q;
+Route::get('/search', function (\App\Http\Requests\SearchRequest $request) {
+    $q = $request->validated('q');;
 
     if ($q) {
         $results = \App\Models\Content::search($q,
@@ -55,7 +55,7 @@ Route::get('/search', function (Request $request) {
 
         $items[] = [
             'title' => $item['_formatted']['title'],
-            'url' => route($item['type'].'.show', $item['slug']),
+            'url' => route($item['type'] . '.show', $item['slug']),
             'category' => $category,
         ];
     }

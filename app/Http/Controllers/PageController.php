@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Models\Content;
 use App\Models\Option;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
@@ -29,7 +29,7 @@ class PageController extends Controller
 
         foreach (Content::whereIn('type', ['blog', 'page'])->get() as $post) {
             $urls[] = [
-                'loc' => route($post->type.'.show', $post->slug),
+                'loc' => route($post->type . '.show', $post->slug),
                 'lastmod' => $post->updated_at,
             ];
         }
@@ -51,9 +51,9 @@ class PageController extends Controller
     /**
      * @throws \JsonException
      */
-    public function search(Request $request): View
+    public function search(SearchRequest $request): View
     {
-        $q = $request->get('q', '');
+        $q = $request->validated('q');
 
         if ($q) {
             $results = \App\Models\Content::search($q,
@@ -107,7 +107,7 @@ class PageController extends Controller
             $items[] = [
                 'title' => $item['_formatted']['title'],
                 'created_at' => new Carbon($item['created_at']),
-                'url' => route($item['type'].'.show', $item['slug']),
+                'url' => route($item['type'] . '.show', $item['slug']),
                 'excerpt' => $excerpt,
                 'type' => $type,
             ];
