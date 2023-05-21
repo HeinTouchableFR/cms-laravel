@@ -43,17 +43,21 @@ class ThemeController extends Controller
             }
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $FullFileName = $zip->statIndex($i);
-                $name = str_replace('../', '', $FullFileName['name']);
-                if ($name[strlen($name) - 1] == "/") {
+                if ($FullFileName['name'][strlen($FullFileName['name']) - 1] == "/") {
+                    $dirname = pathinfo($FullFileName['name'], PATHINFO_DIRNAME);
+                    $basename = pathinfo($FullFileName['name'], PATHINFO_BASENAME);
+                    $name = $dirname . '/' . $basename . '/';
                     @mkdir($storageDestinationPath . "/" . $name, 0700, true);
                 }
             }
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $OnlyFileName = str_replace('../', '', $zip->getNameIndex($i));
                 $FullFileName = $zip->statIndex($i);
-                $name = str_replace('../', '', $FullFileName['name']);
-                if (!($name[strlen($name) - 1] == "/")) {
+                if (!($FullFileName['name'][strlen($FullFileName['name']) - 1] == "/")) {
                     if (preg_match('#\.(jpg|jpeg|gif|png|svg|css|scss|php|js|woff|ttf)$#i', $OnlyFileName)) {
+                        $dirname = pathinfo($FullFileName['name'], PATHINFO_DIRNAME);
+                        $basename = pathinfo($FullFileName['name'], PATHINFO_BASENAME);
+                        $name = $dirname . '/' . $basename;
                         copy('zip://' . $request->file('zip')->getRealPath() . '#' . $OnlyFileName, $storageDestinationPath . "/" . $name);
                     }
                 }
