@@ -19,14 +19,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-require __DIR__.'/auth.php';
-require __DIR__.'/admin.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
 
-$extensions = Extension::where('active', 1)->get();
-foreach ($extensions as $item) {
-    $file = Storage::path("extensions/$item->name/routes/web.php");
-    if (File::exists($file)) {
-        require $file;
+if (Schema::hasTable('extensions')) {
+    $extensions = Extension::where('active', 1)->get();
+    foreach ($extensions as $item) {
+        $file = Storage::path("extensions/$item->name/routes/web.php");
+        if (File::exists($file)) {
+            require $file;
+        }
     }
 }
 

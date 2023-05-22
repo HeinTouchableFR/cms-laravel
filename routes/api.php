@@ -15,11 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$extensions = Extension::where('active', 1)->get();
-foreach ($extensions as $item) {
-    $file = Storage::path("extensions/$item->name/routes/api.php");
-    if (File::exists($file)) {
-        require $file;
+if (Schema::hasTable('extensions')) {
+    $extensions = Extension::where('active', 1)->get();
+    foreach ($extensions as $item) {
+        $file = Storage::path("extensions/$item->name/routes/api.php");
+        if (File::exists($file)) {
+            require $file;
+        }
     }
 }
 
@@ -64,7 +66,7 @@ Route::get('/search', function (App\Http\Requests\SearchRequest $request) {
 
         $items[] = [
             'title' => $item['_formatted']['title'],
-            'url' => route($item['type'].'.show', $item['slug']),
+            'url' => route($item['type'] . '.show', $item['slug']),
             'category' => $category,
         ];
     }

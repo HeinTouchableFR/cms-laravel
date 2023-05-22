@@ -67,11 +67,13 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/files', [AttachmentController::class, 'files']);
     });
 
-    $extensions = Extension::where('active', 1)->get();
-    foreach ($extensions as $item) {
-        $file = Storage::path("extensions/$item->name/routes/admin.php");
-        if (File::exists($file)) {
-            require $file;
+    if (Schema::hasTable('extensions')) {
+        $extensions = Extension::where('active', 1)->get();
+        foreach ($extensions as $item) {
+            $file = Storage::path("extensions/$item->name/routes/admin.php");
+            if (File::exists($file)) {
+                require $file;
+            }
         }
     }
 });
