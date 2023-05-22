@@ -39,6 +39,10 @@ class PermissionTableSeeder extends Seeder
             'theme-upload',
             'theme-delete',
             'access-administration',
+            'extension-list',
+            'extension-upload',
+            'extension-toggle',
+            'extension-delete',
         ];
 
         foreach ($permissions as $permission) {

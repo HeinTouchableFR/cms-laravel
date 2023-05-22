@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Extension;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+$extensions = Extension::where('active', 1)->get();
+foreach ($extensions as $item) {
+    $file = Storage::path("extensions/$item->name/routes/api.php");
+    if (File::exists($file)) {
+        require $file;
+    }
+}
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -22,7 +31,7 @@ Route::get('/posts', [\App\Http\Controllers\Api\ContentController::class, 'index
 
 Route::post('/contact', [\App\Http\Controllers\Api\ContactController::class, 'index']);
 
-Route::get('/search', function (\App\Http\Requests\SearchRequest $request) {
+Route::get('/search', function (App\Http\Requests\SearchRequest $request) {
     $q = htmlspecialchars($request->validated('q'), ENT_QUOTES, 'UTF-8');
 
     if ($q) {
@@ -55,7 +64,7 @@ Route::get('/search', function (\App\Http\Requests\SearchRequest $request) {
 
         $items[] = [
             'title' => $item['_formatted']['title'],
-            'url' => route($item['type'] . '.show', $item['slug']),
+            'url' => route($item['type'].'.show', $item['slug']),
             'category' => $category,
         ];
     }

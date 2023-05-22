@@ -5,7 +5,6 @@ import { PropsWithChildren } from 'preact/compat'
 
 type Props = PropsWithChildren<{
   type?: string
-  message?: string
   duration?: number
   isFloating?: boolean
   onClose?: () => void
@@ -14,7 +13,7 @@ type Props = PropsWithChildren<{
 
 export function Alert({
   type = 'success',
-  message = '',
+  children = '',
   duration = 3,
   isFloating = false,
 }: Props) {
@@ -59,7 +58,7 @@ export function Alert({
       ref={ref}
     >
       <Icon name={icon} />
-      <div>{message}</div>
+      <div>{children}</div>
       <button className='alert-close' onClick={close}>
         <Icon name={'cross'} />
       </button>

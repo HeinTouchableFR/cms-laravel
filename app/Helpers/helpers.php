@@ -3,6 +3,7 @@
 use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Content;
+use App\Models\Extension;
 use App\Models\Option;
 use Illuminate\Support\Facades\Storage;
 
@@ -203,5 +204,19 @@ if (! function_exists('count_spam')) {
     function count_spam(): int
     {
         return Comment::where('spam', '1')->count();
+    }
+}
+
+if (! function_exists('extensions')) {
+    function extensions(): Illuminate\Database\Eloquent\Collection
+    {
+        return Extension::where('active', 1)->get();
+    }
+}
+
+if (! function_exists('is_extension_active')) {
+    function is_extension_active(string $name): bool
+    {
+        return Extension::where('name', $name)->first()->active ?: 0;
     }
 }

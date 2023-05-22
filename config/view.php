@@ -16,6 +16,7 @@ return [
     'paths' => [
         resource_path('views'),
         public_path('themes'),
+        storage_path('app/extensions'),
     ],
 
     /*

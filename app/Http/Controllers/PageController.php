@@ -29,7 +29,7 @@ class PageController extends Controller
 
         foreach (Content::whereIn('type', ['blog', 'page'])->get() as $post) {
             $urls[] = [
-                'loc' => route($post->type . '.show', $post->slug),
+                'loc' => route($post->type.'.show', $post->slug),
                 'lastmod' => $post->updated_at,
             ];
         }
@@ -107,7 +107,7 @@ class PageController extends Controller
             $items[] = [
                 'title' => $item['_formatted']['title'],
                 'created_at' => new Carbon($item['created_at']),
-                'url' => route($item['type'] . '.show', $item['slug']),
+                'url' => route($item['type'].'.show', $item['slug']),
                 'excerpt' => $excerpt,
                 'type' => $type,
             ];

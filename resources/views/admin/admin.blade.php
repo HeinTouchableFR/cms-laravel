@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title') | {{ sitename() }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
     <link rel="apple-touch-icon" sizes="128x128" href="{{ favicon() }}">
-    <link rel="icon" type="image/webp" href="{{ favicon() }}"/>
+    <link rel="icon" type="image/webp" href="{{ favicon() }}" />
     <link rel="stylesheet" href="/themes/{{ theme() }}/css/style.css">
     <link rel="stylesheet" href="/Editor.css">
     <script src="/themes/{{ theme() }}/assets/app.js" type="module" defer=""></script>
-    <meta property='og:image' content="{{ openGraphLogo() }}"/>
+    <meta property='og:image' content="{{ openGraphLogo() }}" />
     <script src="/themes/{{ theme() }}/assets/admin.js" type="module" defer=""></script>
     @vite(['resources/css/app.scss', 'resources/css/admin.scss', 'resources/ts/app.ts', 'resources/ts/admin.ts'])
-    <meta name="turbolinks-cache-control" content="no-cache"/>
+    <meta name="turbolinks-cache-control" content="no-cache" />
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @yield('meta')
 </head>
@@ -56,13 +56,13 @@
                 </li>
             @endcan
             @can('user-list')
-            <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Utilisateurs</h4>
-            <li>
-                <a href="{{ route('admin.user.index') }}" {{ menu_active($menu, route('admin.user.index')) }}>
-                    {!! icon('user') !!}
-                    Utilisateurs
-                </a>
-            </li>
+                <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Utilisateurs</h4>
+                <li>
+                    <a href="{{ route('admin.user.index') }}" {{ menu_active($menu, route('admin.user.index')) }}>
+                        {!! icon('user') !!}
+                        Utilisateurs
+                    </a>
+                </li>
             @endcan
             @can('content-list')
                 <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Communauté</h4>
@@ -90,7 +90,8 @@
                                 <a href="{{ route('admin.tag.index') }}" {{ menu_active($menu, route('admin.tag.index')) }}>Tag</a>
                                 <ul>
                                     <li hidden="hidden">
-                                        <a href="{{ route('admin.tag.index') }}" {{ menu_active($menu, route('admin.tag.index')) }}>Ajouter un tag</a>
+                                        <a href="{{ route('admin.tag.index') }}" {{ menu_active($menu, route('admin.tag.index')) }}>Ajouter
+                                            un tag</a>
                                     </li>
                                 </ul>
                             </li>
@@ -122,6 +123,18 @@
                         Rôles
                     </a>
                 </li>
+            @endcan
+            <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Extensions</h4>
+            @can('extension-list')
+                <li>
+                    <a href="{{ route('admin.extension.index') }}" {{ menu_active($menu, route('admin.extension.index')) }}>
+                        {!! icon('edit') !!}
+                        Gérer les extensions
+                    </a>
+                </li>
+                @foreach(extensions() as $item)
+                    @includeIf("$item->name.views.admin.menu")
+                @endforeach
             @endcan
         </ul>
     </nav>
@@ -161,7 +174,7 @@
         ...(window.cms || {}),
         USER: {{ Auth::user() ? Auth::user()->id : 'null' }},
         NOTIFICATION: new Date({{ (\Illuminate\Support\Facades\Auth::user() and \Illuminate\Support\Facades\Auth::user()->notifications_read_at) ? \Illuminate\Support\Facades\Auth::user()->getNotificationsReadAtTimestamp() : 0 }} * 1000)
-    }
+    };
 </script>
 </body>
 </html>
