@@ -10,9 +10,9 @@
 
 @section('card-title')
     @if($tag->exists)
-        {!! icon('pen') !!} Editer le tag
+        {!! icon('tag') !!} Editer le tag
     @else
-        {!! icon('pen') !!} Créer le tag
+        {!! icon('tag') !!} Créer le tag
     @endif
 @endsection
 

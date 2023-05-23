@@ -6,37 +6,79 @@
 @endsection
 
 @section('body')
-    <div class="stack-large">
+    <div class="stack-large dashboard">
         <!--{% include 'admin/home/_jobs.html.twig' %}-->
 
-        <div class="grid2" style="--gap: 4">
+        <div class="grid two" style="--gap: 4">
             <!-- Commentaires -->
-            <!--{% include 'admin/home/_comments.html.twig' %}-->
+            <section class="stack" style="--gap:2">
+                <div class="flex">
+                    <h2 class="h2">
+                        {!! icon('comments') !!} Derniers commentaires
+                    </h2>
+                    {{ $comments->links() }}
+                </div>
+                <div class="dashboard-card stack-separated">
+                    @foreach($comments as $comment)
+                        <article class="dashboard-comment stack" style="--gap:2">
+                            <div class="flex">
+                                <h3>
+                                    <strong>
+                                        @if($comment->user)
+                                            {{ $comment->user->username }}
+                                        @else
+                                            {{ $comment->username }}
+                                        @endif
+                                    </strong>,
+                                    <a href="{{ route('blog.show', $comment->getContent()->slug) }}">
+                                        {{ $comment->getContent()->title }}
+                                    </a>
+                                </h3>
+                                <form
+                                    action="{{ route('admin.destroy', $comment->id) }}"
+                                    method="post"
+                                    onsubmit="{{ 'return confirm("Voulez vous vraiment supprimer le commentaire ?")' }}">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit">
+                                        {!! icon('trash') !!}
+                                    </button>
+                                </form>
+                            </div>
+                            <p>{!! $comment->content !!}</p>
+                        </article>
+                    @endforeach
+                </div>
+            </section>
             <div class="stack-large">
                 <!-- Actions -->
                 <section class="stack" style="--gap: 1">
                     <div class="flex">
-                        <h1 class="dashboard-title">{!! icon('start') !!} Actions</h1>
+                        <h2 class="h2">{!! icon('action') !!} Actions</h2>
                     </div>
                     <div class="dashboard-card">
                         <div class="flex">
-                            <form action="#" method="post">
+                            <form action="{{ route('admin.cache') }}" method="post">
                                 @csrf
-                                <button class="btn danger">{!! icon('trash') !!} Vider le cache</button>
+                                @method('delete')
+                                <button>{!! icon('cache') !!} Vider le cache</button>
                             </form>
                             <form action="{{ route('admin.spam.detect') }}" method="post">
                                 @csrf
-                                <button class="btn secondary">{!! icon('comment') !!} Détecter le spam</button>
+                                <button>{!! icon('comments') !!} Détecter le spam</button>
                             </form>
                         </div>
                     </div>
                 </section>
-                <section class="stack" style="--gap: 1">
+                <section class="stack m-top-2" style="--gap: 1">
                     <div class="flex">
-                        <h1 class="dashboard-title">{!! icon('edit') !!} <a href="https://www.mail-tester.com/" rel="noreferrer">Tester les emails</a></h1>
+                        <h2 class="h2">{!! icon('email') !!} <a href="https://www.mail-tester.com/"
+                                                                target="_blank"
+                                                                rel="noreferrer">Tester les emails</a></h2>
                     </div>
                     <div class="dashboard-card">
-                        <form action="#" method="post" class="flex stretch">
+                        <form action="{{ route('admin.mail') }}" method="post" class="flex stretch">
+                            @csrf
                             <div class="form-group" style="width: 88%">
                                 <input class="form-control" placeholder="Email" name="email">
                             </div>

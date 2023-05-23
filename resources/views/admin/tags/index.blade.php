@@ -5,7 +5,7 @@
 @endsection
 
 @section('card-title')
-    {!! icon('pen') !!} Gestion des tags
+    {!! icon('tag') !!} Gestion des tags
 @endsection
 
 @section('actions')

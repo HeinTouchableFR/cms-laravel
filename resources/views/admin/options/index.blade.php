@@ -5,7 +5,7 @@
 @endsection
 
 @section('card-title')
-    {!! icon('edit') !!} Gestion des options
+    {!! icon('option') !!} Gestion des options
 @endsection
 
 @section('content')
@@ -31,14 +31,14 @@
                                  style="grid-row-start:1;align-self:stretch;width: 250px">
                                 <input type="text" name="value" data-endpoint="{{ $dataEndpoint }}"
                                        preview='{{ image_url_raw($option->value) }}'
-                                       is="input-attachment" id="{{ $option->key }}" value="{{ $option->value }}"/>
+                                       is="input-attachment" id="{{ $option->key }}" value="{{ $option->value }}" />
                             </div>
                         @elseif($option->key === 'favicon')
                             <div class="form-attachment form-group"
                                  style="grid-row-start:1;align-self:stretch;width: 250px">
                                 <input type="text" name="value" data-endpoint="{{ $dataEndpoint }}"
                                        preview='{{ image_url_raw($option->value) }}'
-                                       is="input-attachment" id="{{ $option->key }}" value="{{ $option->value }}"/>
+                                       is="input-attachment" id="{{ $option->key }}" value="{{ $option->value }}" />
                             </div>
                         @elseif($option->key === 'homepage')
                             <div class="form-attachment form-group"

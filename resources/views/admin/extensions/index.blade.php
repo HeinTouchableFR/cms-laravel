@@ -5,7 +5,7 @@
 @endsection
 
 @section('card-title')
-    {!! icon('pen') !!} Gestion des extensions
+    {!! icon('extension') !!} Gestion des extensions
 @endsection
 
 @section('content')
@@ -65,8 +65,9 @@
                             <form action="{{ route('admin.extension.toggle', $item) }}" method="post"
                                   onsubmit="return confirm('Voulez-vous vraiment {{ $item->active ? 'désactiver' : 'activer' }} cette extension ?')">
                                 @csrf
-                                <button class="btn {{ $item->active ? 'danger' : 'primary' }}" type="submit">
-                                    {{ $item->active ? 'Désactiver' : 'Activer' }}
+                                <button style="color: {{ $item->active ? 'var(--red);' : 'var(--green);' }}"
+                                        type="submit">
+                                    {!! $item->active ? icon('ban') : icon('confirm') !!}
                                 </button>
                             </form>
                         @endcan
@@ -76,7 +77,7 @@
                                 @csrf
                                 @method('delete')
                                 <button type="submit">
-                                    {!! icon('delete') !!}
+                                    {!! icon('trash') !!}
                                 </button>
                             </form>
                         @endcan

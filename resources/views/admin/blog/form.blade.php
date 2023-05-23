@@ -10,9 +10,9 @@
 
 @section('card-title')
     @if($blog->exists)
-        {!! icon('pen') !!} Editer l'article
+        {!! icon('blog') !!} Editer l'article
     @else
-        {!! icon('pen') !!} Créer l'article
+        {!! icon('blog') !!} Créer l'article
     @endif
 @endsection
 

@@ -1,9 +1,10 @@
-@use "../../../../../resources/css/tools/functions";
-@use "../../../../../resources/css/tools/mixins";
+@use "../../../../../../../resources/css/tools/functions";
+@use "../../../../../../../resources/css/tools/mixins";
 
 .blog-post a:hover {
     color: var(--contrast);
 }
+
 .blog-post {
     display: grid;
     grid-template-columns: 1fr;
@@ -13,18 +14,22 @@
         grid-template-columns: 160px 1fr;
     }
 }
+
 .blog-post + .blog-post {
     margin-top: functions.space(10);
 }
+
 .blog-post__body > * + * {
     margin-top: functions.space(2);
 }
+
 .blog-post__image {
     margin-top: functions.space(1);
-    @include mixins.down(700){
+    @include mixins.down(700) {
         display: none;
     }
 }
+
 .blog-post__image img {
     // @extend %card;
     // @extend %card-hoverable;
@@ -32,10 +37,12 @@
     height: 160px;
     object-fit: cover;
 }
+
 .blog-post__title {
     // @extend %hero-title;
     font-size: 42px;
 }
+
 .blog-post__meta {
     display: flex;
     align-items: center;
@@ -91,6 +98,7 @@
             transition: 1s;
             filter: blur(0);
         }
+
         .countdown {
             display: none;
         }

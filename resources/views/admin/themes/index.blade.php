@@ -5,7 +5,7 @@
 @endsection
 
 @section('card-title')
-    {!! icon('pen') !!} Gestion des thèmes
+    {!! icon('theme') !!} Gestion des thèmes
 @endsection
 
 @section('content')
@@ -39,7 +39,9 @@
                             <form action="{{ route('admin.theme.define', Str::replace('themes/', '', $theme)) }}"
                                   method="post">
                                 @csrf
-                                <button type="submit" class="btn primary">Activer</button>
+                                <button type="submit" style="color: var(--green);">
+                                    {!! icon('confirm') !!}
+                                </button>
                             </form>
                         @endif
                         @if(Str::replace('themes/', '', $theme) !== 'default')
@@ -47,7 +49,9 @@
                                   method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn danger">Supprimer</button>
+                                <button type="submit">
+                                    {!! icon('trash') !!}
+                                </button>
                             </form>
                         @endif
                     </div>

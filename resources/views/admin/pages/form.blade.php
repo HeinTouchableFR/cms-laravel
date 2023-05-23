@@ -10,9 +10,9 @@
 
 @section('card-title')
     @if($page->exists)
-        {!! icon('pen') !!} Editer la page
+        {!! icon('page') !!} Editer la page
     @else
-        {!! icon('pen') !!} Créer la page
+        {!! icon('page') !!} Créer la page
     @endif
 @endsection
 

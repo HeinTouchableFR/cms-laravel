@@ -14,24 +14,24 @@
             <div class="flex">
                 <h3>
                     @if($comment->user_id)
-                    <strong>
-                        <a
-                            href="">{!! icon('user') !!} {{ $comment->user->username }}</a>
-                    </strong>,
+                        <strong>
+                            <a
+                                href="">{!! icon('user') !!} {{ $comment->user->username }}</a>
+                        </strong>,
                     @endif
                     <a href="{{ route('blog.show', $comment->getContent()->slug) }}" target="_blank">
                         {{ $comment->getContent()->title }}
                     </a>
                 </h3>
-                <div class="hstack" style="--gap:1;">
+                <div class="dashboard-actions" style="--gap:1;">
                     <form
                         action="{{ route('admin.spam.unspam', $comment->id) }}"
                         method="post"
-                        onsubmit="{{ 'return confirm("Voulez vous vraiment effectuer cette action ?")' }}">
+                        onsubmit="{{ 'return confirm("Voulez vous vraiment retirer le commentaire des spams ?")' }}">
                         @csrf
                         @method('delete')
-                        <button class="btn secondary" type="submit">
-                            {!! icon('check') !!} Non spam
+                        <button type="submit">
+                            {!! icon('confirm') !!}
                         </button>
                     </form>
                     @if($comment->user_id !== null)
@@ -40,8 +40,8 @@
                             method="post"
                             onsubmit="{{ 'return confirm("Voulez-vous vraiment bannir cet utilisateur ?")' }}">
                             @csrf
-                            <button class="btn danger" type="submit">
-                                {!! icon('delete') !!} Bannir l'utilisateur
+                            <button type="submit" style="color: var(--red);">
+                                {!! icon('ban') !!}
                             </button>
                         </form>
                     @endif

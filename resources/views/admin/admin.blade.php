@@ -33,7 +33,7 @@
                 <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Contenu</h4>
                 <li>
                     <a href="{{ route('admin.template.index') }}" {{ menu_active($menu, route('admin.template.index')) }}>
-                        {!! icon('pen') !!}
+                        {!! icon('template') !!}
                         Modèles
                     </a>
                     <ul>
@@ -44,7 +44,7 @@
                 </li>
                 <li>
                     <a href="{{ route('admin.page.index') }}" {{ menu_active($menu, route('admin.page.index')) }}>
-                        {!! icon('pen') !!}
+                        {!! icon('page') !!}
                         Pages
                     </a>
                     <ul>
@@ -59,7 +59,7 @@
                 <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Utilisateurs</h4>
                 <li>
                     <a href="{{ route('admin.user.index') }}" {{ menu_active($menu, route('admin.user.index')) }}>
-                        {!! icon('user') !!}
+                        {!! icon('users') !!}
                         Utilisateurs
                     </a>
                 </li>
@@ -68,7 +68,7 @@
                 <h4 class="h4 bold m-left-1 m-top-2 m-bottom-1">Communauté</h4>
                 <li>
                     <a href="{{ route('admin.blog.index') }}" {{ menu_active($menu, route('admin.blog.index')) }}>
-                        {!! icon('pen') !!}
+                        {!! icon('blog') !!}
                         Articles
                     </a>
                     <ul>
@@ -77,7 +77,10 @@
                         </li>
                         @can('category-list')
                             <li>
-                                <a href="{{ route('admin.category.index') }}" {{ menu_active($menu, route('admin.category.index')) }}>Catégories</a>
+                                <a href="{{ route('admin.category.index') }}" {{ menu_active($menu, route('admin.category.index')) }}>
+                                    {!! icon('category') !!}
+                                    Catégories
+                                </a>
                                 <ul>
                                     <li hidden="hidden">
                                         <a href="{{ route('admin.category.index') }}">Ajouter une catégorie</a>
@@ -87,7 +90,10 @@
                         @endcan
                         @can('tag-list')
                             <li>
-                                <a href="{{ route('admin.tag.index') }}" {{ menu_active($menu, route('admin.tag.index')) }}>Tag</a>
+                                <a href="{{ route('admin.tag.index') }}" {{ menu_active($menu, route('admin.tag.index')) }}>
+                                    {!! icon('tag') !!}
+                                    Tag
+                                </a>
                                 <ul>
                                     <li hidden="hidden">
                                         <a href="{{ route('admin.tag.index') }}" {{ menu_active($menu, route('admin.tag.index')) }}>Ajouter
@@ -103,7 +109,7 @@
             @can('option-list')
                 <li>
                     <a href="{{ route('admin.options.index') }}" {{ menu_active($menu, route('admin.options.index')) }}>
-                        {!! icon('edit') !!}
+                        {!! icon('option') !!}
                         Options
                     </a>
                 </li>
@@ -111,7 +117,7 @@
             @can('theme-list')
                 <li>
                     <a href="{{ route('admin.theme.index') }}" {{ menu_active($menu, route('admin.theme.index')) }}>
-                        {!! icon('edit') !!}
+                        {!! icon('theme') !!}
                         Thèmes
                     </a>
                 </li>
@@ -119,7 +125,7 @@
             @can('role-list')
                 <li>
                     <a href="{{ route('admin.role.index') }}" {{ menu_active($menu, route('admin.role.index')) }}>
-                        {!! icon('edit') !!}
+                        {!! icon('role') !!}
                         Rôles
                     </a>
                 </li>
@@ -128,8 +134,8 @@
             @can('extension-list')
                 <li>
                     <a href="{{ route('admin.extension.index') }}" {{ menu_active($menu, route('admin.extension.index')) }}>
-                        {!! icon('edit') !!}
-                        Gérer les extensions
+                        {!! icon('extension') !!}
+                        Extensions
                     </a>
                 </li>
                 @foreach(extensions() as $item)

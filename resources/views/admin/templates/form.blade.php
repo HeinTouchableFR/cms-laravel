@@ -10,9 +10,9 @@
 
 @section('card-title')
     @if($template->exists)
-        {!! icon('pen') !!} Editer le modèle
+        {!! icon('template') !!} Editer le modèle
     @else
-        {!! icon('pen') !!} Créer le modèle
+        {!! icon('template') !!} Créer le modèle
     @endif
 @endsection
 

@@ -10,9 +10,9 @@
 
 @section('card-title')
     @if($role->exists)
-        {!! icon('pen') !!} Editer le role
+        {!! icon('role') !!} Editer le role
     @else
-        {!! icon('pen') !!} Créer le role
+        {!! icon('role') !!} Créer le role
     @endif
 @endsection
 

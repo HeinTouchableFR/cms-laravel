@@ -10,9 +10,9 @@
 
 @section('card-title')
     @if($category->exists)
-        {!! icon('pen') !!} Editer la catégorie
+        {!! icon('category') !!} Editer la catégorie
     @else
-        {!! icon('pen') !!} Créer la catégorie
+        {!! icon('category') !!} Créer la catégorie
     @endif
 @endsection
 

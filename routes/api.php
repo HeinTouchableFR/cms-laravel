@@ -66,7 +66,7 @@ Route::get('/search', function (App\Http\Requests\SearchRequest $request) {
 
         $items[] = [
             'title' => $item['_formatted']['title'],
-            'url' => route($item['type'] . '.show', $item['slug']),
+            'url' => route($item['type'].'.show', $item['slug']),
             'category' => $category,
         ];
     }

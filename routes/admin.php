@@ -37,6 +37,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/user/{user:id}/confirm', [UserController::class, 'confirm'])->where(['user' => '[0-9]+'])->name('user.confirm');
 
     Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::post('/mail', [DashboardController::class, 'mail'])->name('mail');
+    Route::delete('/cache', [DashboardController::class, 'cache'])->name('cache');
+    Route::delete('/{comment}/destroy', [DashboardController::class, 'destroy'])->name('destroy');
 
     Route::post('/preview', [PreviewController::class, 'index'])->name('preview.index')->withoutMiddleware(VerifyCsrfToken::class);
     Route::post('/preview/template', [PreviewController::class, 'template'])->name('preview.template')->withoutMiddleware(VerifyCsrfToken::class);

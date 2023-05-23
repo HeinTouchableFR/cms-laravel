@@ -1,42 +1,42 @@
-@use "../../../../../resources/css/tools/functions";
+@use "../../../../../../../resources/css/tools/functions";
 
 .footer-columns {
-  .footer-columns__title {
-    display: block;
-  }
-
-  ul {
-    li {
-      margin-bottom: functions.space(0.5);
-
-      a {
-        align-items: center;
-        padding: 5px 0;
-
-        .icon {
-          margin-top: -2px;
-          width: 17px;
-          height: 17px;
-          margin-right: functions.space(0.5);
-        }
-
-        &:hover {
-          color: var(--contrast);
-        }
-
-        &[aria-current] {
-          color: var(--contrast);
-        }
-      }
+    .footer-columns__title {
+        display: block;
     }
-  }
+
+    ul {
+        li {
+            margin-bottom: functions.space(0.5);
+
+            a {
+                align-items: center;
+                padding: 5px 0;
+
+                .icon {
+                    margin-top: -2px;
+                    width: 17px;
+                    height: 17px;
+                    margin-right: functions.space(0.5);
+                }
+
+                &:hover {
+                    color: var(--contrast);
+                }
+
+                &[aria-current] {
+                    color: var(--contrast);
+                }
+            }
+        }
+    }
 }
 
 @media (min-width: 800px) {
-  .footer-columns .container {
-    justify-content: space-between;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: functions.space(4);
-  }
+    .footer-columns .container {
+        justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: functions.space(4);
+    }
 }

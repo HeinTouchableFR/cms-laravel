@@ -1,90 +1,95 @@
 // Font face
 // ==================
 @font-face {
-  font-family: "Marianne";
-  src: url("../assets/fonts/Marianne-Bold.woff");
-  font-weight: bold;
-  font-display: swap;
+    font-family: "Marianne";
+    src: url("../assets/fonts/Marianne-Bold.woff");
+    font-weight: bold;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: "Marianne";
-  src: url("../assets/fonts/Marianne-Regular.woff");
-  font-weight: 400;
-  font-display: swap;
+    font-family: "Marianne";
+    src: url("../assets/fonts/Marianne-Regular.woff");
+    font-weight: 400;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: "Marianne";
-  src: url("../assets/fonts/Marianne-Light.woff");
-  font-weight: 300;
-  font-display: swap;
+    font-family: "Marianne";
+    src: url("../assets/fonts/Marianne-Light.woff");
+    font-weight: 300;
+    font-display: swap;
 }
 
 // Font Weight
 // ==================
 %h1,
 .h1 {
-  font-family: var(--font);
-  font-weight: 700;
-  font-style: normal;
-  font-size: var(--step-3);
-  line-height: 1.2;
-  color: var(--contrast);
+    font-family: var(--font);
+    font-weight: 700;
+    font-style: normal;
+    font-size: var(--step-3);
+    line-height: 1.2;
+    color: var(--contrast);
 }
 
 %h2,
 .h2 {
-  font-weight: 700;
-  font-style: normal;
-  font-size: var(--step-2);
-  line-height: 1.2;
-  color: var(--contrast);
+    font-weight: 700;
+    font-style: normal;
+    font-size: var(--step-2);
+    line-height: 1.2;
+    color: var(--contrast);
 }
 
 %h3,
 .h3 {
-  font-style: normal;
-  font-weight: 700;
-  font-size: var(--step-1);
-  line-height: 1.3;
-  color: var(--contrast);
+    font-style: normal;
+    font-weight: 700;
+    font-size: var(--step-1);
+    line-height: 1.3;
+    color: var(--contrast);
 }
 
 %h4,
 .h4 {
-  font-family: var(--font);
-  font-size: var(--step-0);
-  font-weight: bold;
-  color: var(--contrast);
+    font-family: var(--font);
+    font-size: var(--step-0);
+    font-weight: bold;
+    color: var(--contrast);
 }
 
 %h5,
 .h5 {
-  font-family: var(--font);
-  font-weight: bold;
-  color: var(--contrast);
+    font-family: var(--font);
+    font-weight: bold;
+    color: var(--contrast);
 }
 
 // Alignements
 // ==================
 .text-left {
-  text-align: left!important;
+    text-align: left !important;
 }
+
 .text-right {
-  text-align: right !important;
+    text-align: right !important;
 }
+
 .text-center {
-  text-align: center !important;
+    text-align: center !important;
 }
+
 .text-justify {
-  text-align: justify !important;
+    text-align: justify !important;
 }
+
 // Font Weight
 // ==================
 .normal {
-  font-weight: normal;
+    font-weight: normal;
 }
+
 .bold, strong {
-  font-weight: bold;
+    font-weight: bold;
 }

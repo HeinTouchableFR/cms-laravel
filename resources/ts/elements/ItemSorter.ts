@@ -113,7 +113,7 @@ export default class ItemSorter {
     <a href="${item.url}">${item.name}</a>
     <button type="button" class="sortable-item__delete">
       <svg class="icon icon-add">
-        <use xlink:href="/sprite.svg#delete"></use>
+        <use xlink:href="/sprite.svg#trash"></use>
       </svg>
     </button>
   `

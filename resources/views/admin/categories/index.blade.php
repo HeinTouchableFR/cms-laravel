@@ -5,7 +5,7 @@
 @endsection
 
 @section('card-title')
-    {!! icon('pen') !!} Gestion des catégories
+    {!! icon('category') !!} Gestion des catégories
 @endsection
 
 @section('actions')
@@ -38,7 +38,7 @@
                             @csrf
                             @method('delete')
                             <button type="submit">
-                                {!! icon('delete') !!}
+                                {!! icon('trash') !!}
                             </button>
                         </form>
                     </div>

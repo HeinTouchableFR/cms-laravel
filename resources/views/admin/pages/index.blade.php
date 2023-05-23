@@ -5,7 +5,7 @@
 @endsection
 
 @section('card-title')
-    {!! icon('pen') !!} Gestion des pages
+    {!! icon('page') !!} Gestion des pages
 @endsection
 
 @section('actions')
@@ -35,11 +35,12 @@
                 <td>
                     <div class="dashboard-actions">
                         <a href="{{ route('admin.page.edit', $item) }}">{!! icon('edit') !!}</a>
-                        <form action="{{ route('admin.page.destroy', $item) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce contenu')">
+                        <form action="{{ route('admin.page.destroy', $item) }}" method="post"
+                              onsubmit="return confirm('Voulez-vous vraiment supprimer ce contenu')">
                             @csrf
                             @method('delete')
                             <button type="submit">
-                                {!! icon('delete') !!}
+                                {!! icon('trash') !!}
                             </button>
                         </form>
                     </div>

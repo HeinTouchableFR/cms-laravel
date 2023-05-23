@@ -10,9 +10,9 @@
 
 @section('card-title')
     @if($user->exists)
-        {!! icon('pen') !!} Editer l'utilisateur
+        {!! icon('users') !!} Editer l'utilisateur
     @else
-        {!! icon('pen') !!} Créer l'utilisateur
+        {!! icon('users') !!} Créer l'utilisateur
     @endif
 @endsection
 

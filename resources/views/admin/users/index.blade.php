@@ -5,7 +5,7 @@
 @endsection
 
 @section('card-title')
-    {!! icon('pen') !!} Gestion des utilisateurs
+    {!! icon('users') !!} Gestion des utilisateurs
 @endsection
 
 @section('actions')
@@ -54,13 +54,13 @@
                         @if(!$user->email_verified_at)
                             <form action="{{ route('admin.user.confirm', $user) }}" method="post">
                                 @csrf
-                                <button class="btn secondary" type="submit">
-                                    {!! icon('check') !!} Confirmer
+                                <button type="submit">
+                                    {!! icon('confirm') !!}
                                 </button>
                             </form>
                         @else
-                            <a href="/?_ninja={{ $user->email }}" class="btn">
-                                {!! icon('ninja') !!} Ninja
+                            <a href="/?_ninja={{ $user->email }}">
+                                {!! icon('ninja') !!}
                             </a>
                         @endif
                         <form
@@ -68,8 +68,9 @@
                             method="post"
                             onsubmit="{{ $user->status === 0 ? 'return confirm("Voulez-vous vraiment débannir cet utilisateur ?")' : 'return confirm("Voulez-vous vraiment bannir cet utilisateur ?")' }}">
                             @csrf
-                            <button class="btn danger" type="submit">
-                                {!! icon('delete') !!} {{ $user->status === 0 ? 'Débannir' : 'Bannir' }}
+                            <button style="color: {{ $user->status === 0 ? 'var(--green);' : 'var(--red);' }}"
+                                    type="submit">
+                                {!! icon('ban') !!}
                             </button>
                         </form>
                     </div>

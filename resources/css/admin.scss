@@ -68,8 +68,8 @@
                     }
 
                     svg {
-                        width: 18px;
-                        height: 18px;
+                        width: 25px;
+                        height: 25px;
                         margin-right: functions.space(1.5);
                     }
                 }
@@ -112,8 +112,8 @@
         }
 
         .icon {
-            width: 18px;
-            height: 18px;
+            width: 25px;
+            height: 25px;
             display: block;
             transition: .3s;
 
@@ -131,7 +131,7 @@
                 display: block;
                 margin-left: functions.space(2);
 
-                > a, > button {
+                > a, > button, form button {
                     display: flex;
                     align-items: center;
                 }
@@ -175,8 +175,8 @@
         grid-area: body;
 
         .icon {
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
         }
 
         .admin__body-card {
@@ -184,6 +184,12 @@
             border-radius: 5px;
             padding: calc(2 * var(--space));
             box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.5);
+
+            .dashboard-actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: functions.space(2);
+            }
 
             .bullet {
                 display: block;
@@ -195,6 +201,22 @@
 
                 &.bullet--danger {
                     background: var(--red);
+                }
+            }
+        }
+
+        .dashboard {
+            form {
+                button {
+                    display: flex;
+                    gap: functions.space(1);
+                    align-items: center;
+                    color: var(--color-dark);
+                    font-size: 1.3rem;
+
+                    &:hover {
+                        color: var(--contrast)
+                    }
                 }
             }
         }
@@ -218,6 +240,7 @@
 
             .footer {
                 width: 100%;
+                height: 45px;
                 display: flex;
                 position: absolute;
                 bottom: 0;
