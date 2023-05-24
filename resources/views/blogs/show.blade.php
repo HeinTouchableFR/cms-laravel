@@ -4,9 +4,9 @@
 
 @section('description')
     @if($content->description)
-        <meta property='og:description' content="{{ $content->description }}"/>
-        <meta name='twitter:description' content="{{ $content->description }}"/>
-        <meta name="description" content="{{ $content->description }}"/>
+        <meta property='og:description' content="{{ $content->description }}" />
+        <meta name='twitter:description' content="{{ $content->description }}" />
+        <meta name="description" content="{{ $content->description }}" />
     @else
         @parent
     @endif
@@ -57,9 +57,9 @@
 @overwrite
 
 @section('meta')
-    <meta property="og:image" content="{{ image_url_raw($content->attachment_id)}}"/>
-    <meta property="og:created_time" content="{{ $content->created_at }}"/>
-    <meta name="twitter:card" content="summary_large_image"/>
+    <meta property="og:image" content="{{ image_url_raw($content->attachment_id)}}" />
+    <meta property="og:created_time" content="{{ $content->created_at }}" />
+    <meta name="twitter:card" content="summary_large_image" />
 @endsection
 
 @section('stylesheets')

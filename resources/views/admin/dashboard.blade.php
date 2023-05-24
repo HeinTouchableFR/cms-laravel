@@ -7,8 +7,52 @@
 
 @section('body')
     <div class="stack-large dashboard">
-        <!--{% include 'admin/home/_jobs.html.twig' %}-->
-
+        @if(count($failed_jobs) > 0)
+            <section class="stack p-block-4" style="--gap:2">
+                <div class="flex">
+                    <h2 class="h2 m-botton-2" style="color: var(--red);">
+                        {!! icon('warning') !!} Tâches échouées
+                    </h2>
+                </div>
+                <div class="admin__body-card">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Message</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($failed_jobs as $job)
+                            <tr>
+                                <td style="white-space: nowrap" class="text-muted">
+                                    <small>{!! ago(new \Carbon\Carbon($job->failed_at)) !!}</small>
+                                </td>
+                                <td width="75%">
+                                    <h4 class="m-bottom-1 formatted"><strong>{{ $job->uuid }}</strong></h4>
+                                    <p style="color: var(--color); font-size: .6rem;">{{ $job->exception }}</p>
+                                </td>
+                                <td>
+                                    <div class="dashboard-actions">
+                                        <form action="{{ route('admin.retry_job', $job) }}" method="post">
+                                            @csrf
+                                            <button>{!! icon('sync') !!}</button>
+                                        </form>
+                                        <form action="{{ route('admin.destroy_job', $job) }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button>{!! icon('trash') !!}</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        @endif
         <div class="grid two" style="--gap: 4">
             <!-- Commentaires -->
             <section class="stack" style="--gap:2">

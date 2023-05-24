@@ -40,6 +40,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/mail', [DashboardController::class, 'mail'])->name('mail');
     Route::delete('/cache', [DashboardController::class, 'cache'])->name('cache');
     Route::delete('/{comment}/destroy', [DashboardController::class, 'destroy'])->name('destroy');
+    Route::post('/job/{job}/retry', [DashboardController::class, 'retry_job'])->name('retry_job');
+    Route::delete('/job/{job}/destroy', [DashboardController::class, 'destroy_job'])->name('destroy_job');
 
     Route::post('/preview', [PreviewController::class, 'index'])->name('preview.index')->withoutMiddleware(VerifyCsrfToken::class);
     Route::post('/preview/template', [PreviewController::class, 'template'])->name('preview.template')->withoutMiddleware(VerifyCsrfToken::class);
