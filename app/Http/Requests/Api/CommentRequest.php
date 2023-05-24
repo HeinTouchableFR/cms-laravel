@@ -23,8 +23,8 @@ class CommentRequest extends FormRequest
     {
         return [
             'content' => ['string', 'max:255'],
-            'comment_id' => ['nullable', 'exists:comments,id'],
-            'content_id' => ['required', 'exists:contents,id'],
+            'parent' => ['nullable', 'exists:comments,id'],
+            'target' => ['required', 'exists:contents,id'],
         ];
     }
 }

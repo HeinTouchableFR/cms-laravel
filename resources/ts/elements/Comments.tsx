@@ -56,13 +56,15 @@ export default function Comments({ target, parent }: CommentsProps) {
       return null
     }
     return state.comments
-      .filter(c => c.parent === 0)
+      .filter(c => c.parent === null)
       .sort((a, b) => b.created_at - a.created_at)
   }, [state.comments])
 
   // Trouve les commentaires enfant d'un commentaire
   function repliesFor(comment: Comment) {
-    return state.comments?.filter(c => c.parent === comment.id)
+    return state.comments?.filter(
+      c => c.parent?.toString() === comment.id.toString(),
+    )
   }
 
   // On commence l'édition d'un commentaire
@@ -164,7 +166,7 @@ export default function Comments({ target, parent }: CommentsProps) {
           </>
         )}
       </div>
-      <CommentForm onSubmit={handleCreate} parent={parent} />
+      <CommentForm onSubmit={handleCreate} parent={null} />
       <hr />
       <div className='comment-list'>
         {comments ? (
@@ -329,7 +331,7 @@ const Comment = memo(
               Répondre
             </a>
             {canEdit && (
-              <a href={anchor} onClick={handleEdit}>
+              <a onClick={handleEdit}>
                 <Icon name='edit' />
                 Editer
               </a>
@@ -352,7 +354,7 @@ const Comment = memo(
 type CommentFormProps = {
   onSubmit: (data: any, parent: string | undefined) => Promise<void>
   onCancel?: () => void
-  parent: number | undefined
+  parent: number | null
 }
 
 type Error = {

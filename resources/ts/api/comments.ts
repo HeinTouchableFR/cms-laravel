@@ -1,4 +1,4 @@
-import {jsonFetch} from '@/functions/api'
+import { jsonFetch } from "@/functions/api";
 
 /**
  * Trouve tous les commentaires de la cible
