@@ -1,15 +1,17 @@
 @extends('aymericlhomme.views.layout')
 
-@section('element')section
+@section('element')
+    section
 @overwrite
-@section('additionalClass')page-posts
+@section('additionalClass')
+    page-posts
 @overwrite
 
 @section('content')
     <div class="container">
         @forelse($posts as $post)
             @php
-                $link = route('blog.show', $post->slug);
+                $link = route($post->type . '.show', $post->slug);
             @endphp
             <article
                 class="blog-post {{ $animate}} {{ $post->isScheduled() ? 'blog-scheduled' : '' }}" {{ $post->isScheduled() ? "id=scheduled-" . $post->id : '' }}>

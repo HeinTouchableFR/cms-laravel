@@ -177,10 +177,10 @@ if (! function_exists('logoTag')) {
     }
 }
 
-if (! function_exists('lastBlogPosts')) {
-    function lastBlogPosts(): Illuminate\Database\Eloquent\Collection|Illuminate\Support\Collection
+if (! function_exists('lastContentPosts')) {
+    function lastContentPosts(string $type): Illuminate\Database\Eloquent\Collection|Illuminate\Support\Collection
     {
-        return Content::where('type', 'blog')->orderBy('created_at', 'desc')->limit(4)->get();
+        return Content::where('type', $type)->orderBy('created_at', 'desc')->limit(4)->get();
     }
 }
 

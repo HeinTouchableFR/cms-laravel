@@ -15,9 +15,9 @@
         @endif
         {!! $bloc['content'] !!}
         <div class="last-posts__items">
-            @foreach(lastBlogPosts() as $post)
+            @foreach(lastContentPosts('portfolio') as $post)
                 @php
-                    $link = route('blog.show', $post->slug)
+                    $link = route($post->type . '.show', $post->slug)
                 @endphp
                 <div class="last-posts__card {{ $animate }}">
                     <div class="last-posts__card-imageBox">

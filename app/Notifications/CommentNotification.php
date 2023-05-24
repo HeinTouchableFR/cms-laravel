@@ -40,12 +40,12 @@ class CommentNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->from(Option::where('key', 'noreply-email')->first()?->value, sitename())
-            ->subject('Vous avez une nouvelle notification | ' . sitename())
+            ->subject('Vous avez une nouvelle notification | '.sitename())
             ->markdown(
                 'mails.comment',
                 [
                     'message' => str_replace('<strong>', '**', str_replace('</strong>', '**', $this->message)),
-                    'url' => route('blog.show', $this->comment->getContent()->slug) . '#c' . $this->comment->id,
+                    'url' => route('blog.show', $this->comment->getContent()->slug).'#c'.$this->comment->id,
                     'title' => $this->title,
                 ]);
     }
