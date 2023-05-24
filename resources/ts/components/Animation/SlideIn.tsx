@@ -2,12 +2,12 @@ import { useEffect, useState } from 'preact/hooks'
 import { CSSProperties, PropsWithChildren } from 'preact/compat'
 
 type SlideInProps = PropsWithChildren<{
-  className?: string | null
+  className?: string
   show: boolean
   style?: CSSProperties | null
 }>
 
-export function SlideIn({ show, children, style }: SlideInProps) {
+export function SlideIn({ show, className, children, style }: SlideInProps) {
   const [shouldRender, setRender] = useState(show)
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export function SlideIn({ show, children, style }: SlideInProps) {
     <>
       {shouldRender && (
         <div
+          className={className}
           style={{
             animation: `${show ? 'slideIn' : 'slideOut'} .3s both`,
             ...style,
