@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
-import { useJsonFetchOrFlash } from '@/functions/hooks'
+import { useClickOutside, useJsonFetchOrFlash } from '@/functions/hooks'
 import { debounce } from '@/functions/timers'
 import { classNames } from '@/functions/dom'
 import Icon from '@/components/Icon'
 import Loader from '@/components/Loader'
+import { SlideIn } from '@/components/Animation/SlideIn'
 
 const SEARCH_URL = '/recherche'
 const SEARCH_API = '/api/search'
@@ -62,11 +63,13 @@ export function SearchInput({ defaultValue }: Props) {
 
   const suggest = useCallback(
     debounce(async e => {
-      const test = await hook.fetch(
-        `${SEARCH_API}?q=${encodeURI(e.target.value)}`,
-        '',
-      )
-      setSelectedItem(0)
+      if (e.target.value !== '') {
+        await hook.fetch(
+          `${SEARCH_API}?q=${encodeURI(e.target.value.toString())}`,
+          '',
+        )
+        setSelectedItem(0)
+      }
     }, 300),
     [],
   )
@@ -116,6 +119,16 @@ export function SearchInput({ defaultValue }: Props) {
     return () => window.removeEventListener('keydown', handler)
   }, [moveFocus])
 
+  const ref = useRef<HTMLUListElement>(null)
+
+  const close = () => {
+    if (document.activeElement != inputRef.current) {
+      setIsOpen('')
+    }
+  }
+
+  useClickOutside(ref, close)
+
   return (
     <div className={'search'}>
       <div className={`search-input ${isOpen}`}>
@@ -140,27 +153,29 @@ export function SearchInput({ defaultValue }: Props) {
             <Icon name={'search'} />
           )}
         </button>
-        {results.length > 0 && isOpen && (
-          <ul className={'search-input__suggestions'}>
-            {results.map((r: Item, index: number) => (
-              <li key={r.url}>
-                <a
-                  className={classNames(
-                    index === selectedItem ? 'focused' : '',
-                  )}
-                  href={r.url}
-                >
-                  {r.category && (
-                    <span className={'search-input__category'}>
-                      {r.category}
-                    </span>
-                  )}
-                  <span dangerouslySetInnerHTML={{ __html: r.title }} />
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
+        <SlideIn show={isOpen === 'open'}>
+          {results.length > 0 && isOpen && (
+            <ul ref={ref} className={'search-input__suggestions'}>
+              {results.map((r: Item, index: number) => (
+                <li key={r.url}>
+                  <a
+                    className={classNames(
+                      index === selectedItem ? 'focused' : '',
+                    )}
+                    href={r.url}
+                  >
+                    {r.category && (
+                      <span className={'search-input__category'}>
+                        {r.category}
+                      </span>
+                    )}
+                    <span dangerouslySetInnerHTML={{ __html: r.title }} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </SlideIn>
       </div>
     </div>
   )

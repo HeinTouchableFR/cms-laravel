@@ -42,9 +42,10 @@ Route::get('/search', function (App\Http\Requests\SearchRequest $request) {
                 $options['attributesToHighlight'] = ['title', 'content'];
                 $options['attributesToCrop'] = ['content'];
                 $options['cropLength'] = 35;
+                $options['filter'] = 'type NOT IN [\'template\', \'header\', \'footer\']';
 
                 return $meiliSearch->search($query, $options);
-            })->whereIn('type', ['blog', 'page'])->where('online', '1')->take(5)->raw();
+            })->where('online', '1')->take(5)->raw();
     } else {
         $results = [
             'hits' => [],
@@ -54,19 +55,17 @@ Route::get('/search', function (App\Http\Requests\SearchRequest $request) {
 
     $items = [];
     foreach ($results['hits'] as $item) {
-        $category = '';
-
         if ($item['type'] === 'blog') {
             $category = 'Article';
-        }
-
-        if ($item['type'] === 'page') {
+        } else if ($item['type'] === 'page') {
             $category = 'Page';
+        } else {
+            $category = ucfirst($item['type']);
         }
 
         $items[] = [
             'title' => $item['_formatted']['title'],
-            'url' => route($item['type'].'.show', $item['slug']),
+            'url' => route($item['type'] . '.show', $item['slug']),
             'category' => $category,
         ];
     }

@@ -46,18 +46,8 @@ services:
             DATABASE_URL: mysql://user:user@db:3306/cms
             MESSENGER_TRANSPORT_DSN: doctrine://default?queue_name=async
             SCOUT_DRIVER: meilisearch
-            MEILISEARCH_HOST: https://ms-633f85766c60-2346.nyc.meilisearch.io
-            MEILISEARCH_KEY: 93200fbddce261de90d120763ead41851889d516
-    node:
-        user: '${USER_ID}:${GROUP_ID}'
-        build:
-            context: ./tools/docker/node
-        command: 'pnpm run dev'
-        working_dir: /usr/src/app
-        volumes:
-            - .:/usr/src/app
-        ports:
-            - 5173:5173
+            MEILISEARCH_HOST: https://ms-fd5db35557c6-2346.lon.meilisearch.io
+            MEILISEARCH_KEY: f97b53b887601e5de1b8a54a46307150ecaafdb91a6437c73ef31dbd1ea8935f
 volumes:
     db-data:
         driver: local

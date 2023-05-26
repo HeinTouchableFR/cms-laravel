@@ -59,9 +59,10 @@ class PageController extends Controller
             $results = \App\Models\Content::search($q,
                 function ($meiliSearch, string $query, array $options) {
                     $options['attributesToHighlight'] = ['title', 'content'];
+                    $options['filter'] = 'type NOT IN [\'template\', \'header\', \'footer\']';
 
                     return $meiliSearch->search($query, $options);
-                })->whereIn('type', ['blog', 'page'])->where('online', '1')->raw();
+                })->where('online', '1')->raw();
         } else {
             $results = [
                 'hits' => [],
@@ -72,14 +73,12 @@ class PageController extends Controller
         $items = [];
 
         foreach ($results['hits'] as $item) {
-            $type = '';
-
             if ($item['type'] === 'blog') {
                 $type = 'Article';
-            }
-
-            if ($item['type'] === 'page') {
+            } else if ($item['type'] === 'page') {
                 $type = 'Page';
+            } else {
+                $type = ucfirst($item['type']);
             }
 
             $excerpt = '';

@@ -10,6 +10,6 @@ class ContentController extends Controller
 {
     public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        return ContentResource::collection(Content::whereIn('type', ['blog', 'page'])->get());
+        return ContentResource::collection(Content::whereNotIn('type', ['template', 'header', 'footer'])->get());
     }
 }
