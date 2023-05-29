@@ -808,6 +808,75 @@ if (visualEditor) {
     })
   }
 
+  const getTest = () => {
+    editor.registerComponent('test', {
+      title: 'Test',
+      category: 'Colonnes',
+      fields: [
+        Tabs(
+          {
+            label: 'Contenu',
+            fields: [
+              Row([
+                Text('title', {
+                  label: 'Titre',
+                  default: 'Lorem ipsum dolor sit amet',
+                  multiline: false,
+                }),
+                TextAlign('titleAlign', {
+                  label: 'Alignement',
+                  default: 'center',
+                }),
+              ]),
+              HTMLText('content', {
+                label: 'Contenu',
+                multiline: true,
+                allowHeadings: true,
+                colors: Object.values(colors),
+                default:
+                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
+              }),
+              Repeater('items', {
+                addLabel: 'Ajouter un item',
+                fields: [
+                  Text('title', {
+                    label: 'Titre',
+                    default: 'Lorem ipsum dolor sit amet',
+                    multiline: false,
+                  }),
+                  HTMLText('content', {
+                    label: 'Contenu',
+                    multiline: true,
+                    allowHeadings: true,
+                    colors: Object.values(colors),
+                    default:
+                      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
+                  }),
+                  Checkbox('isTest', {
+                    label: 'Test effectué',
+                    default: false,
+                  }),
+                  HTMLText('comment', {
+                    label: 'Commentaire',
+                    multiline: true,
+                    allowHeadings: true,
+                    colors: Object.values(colors),
+                    default:
+                      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
+                  }),
+                ],
+              }),
+            ],
+          },
+          {
+            label: 'Apparence',
+            fields: [...appearances(5)],
+          },
+        ),
+      ],
+    })
+  }
+
   if (mode === 'post') {
     getHero()
     getLastPosts()
@@ -817,6 +886,7 @@ if (visualEditor) {
     getServiceSection()
     getComments()
     getBlogLayout()
+    getTest()
 
     editor.registerTemplate({
       name: 'Template réalisation',
