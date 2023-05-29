@@ -837,32 +837,37 @@ if (visualEditor) {
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
               }),
               Repeater('items', {
-                addLabel: 'Ajouter un item',
+                addLabel: 'Ajouter une catégorie',
                 fields: [
                   Text('title', {
                     label: 'Titre',
                     default: 'Lorem ipsum dolor sit amet',
                     multiline: false,
                   }),
-                  HTMLText('content', {
-                    label: 'Contenu',
-                    multiline: true,
-                    allowHeadings: true,
-                    colors: Object.values(colors),
-                    default:
-                      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
-                  }),
-                  Checkbox('isTest', {
-                    label: 'Test effectué',
-                    default: false,
-                  }),
-                  HTMLText('comment', {
-                    label: 'Commentaire',
-                    multiline: true,
-                    allowHeadings: true,
-                    colors: Object.values(colors),
-                    default:
-                      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
+                  Repeater('sub_items', {
+                    addLabel: 'Ajouter un test',
+                    fields: [
+                      HTMLText('content', {
+                        label: 'Contenu',
+                        multiline: true,
+                        allowHeadings: true,
+                        colors: Object.values(colors),
+                        default:
+                          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
+                      }),
+                      Checkbox('isTest', {
+                        label: 'Test effectué',
+                        default: false,
+                      }),
+                      HTMLText('comment', {
+                        label: 'Commentaire',
+                        multiline: true,
+                        allowHeadings: true,
+                        colors: Object.values(colors),
+                        default:
+                          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
+                      }),
+                    ],
                   }),
                 ],
               }),

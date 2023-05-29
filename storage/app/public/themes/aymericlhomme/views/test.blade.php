@@ -19,13 +19,15 @@
                 <div class="p-block-2">
                     <h3 class="h3 bold text-left m-bottom-3"
                         style="color: {{ $bloc['titleColor'] ?: "var(--contrast)" }};">{{ $item['title'] }}</h3>
-                    <p>
-                        [{{ $item['isTest'] ? 'X' : '  ' }}]
-                        {!! $item['content'] !!}
-                    </p>
-                    <div class="m-top-2" style="color: var(--color); font-size: 0.8em;">
-                        {!! $item['comment'] !!}
-                    </div>
+                    @foreach($item['sub_items'] as $sub)
+                        <p>
+                            [{{ $sub['isTest'] ? 'X' : '  ' }}]
+                            {!! $sub['content'] !!}
+                        </p>
+                        <div class="m-top-2" style="color: var(--color); font-size: 0.8em;">
+                            {!! $sub['comment'] !!}
+                        </div>
+                    @endforeach
                 </div>
             @endforeach
         @endif
