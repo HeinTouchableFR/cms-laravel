@@ -24,7 +24,7 @@
                             [{{ $sub['isTest'] ? 'X' : '  ' }}]
                             {!! $sub['content'] !!}
                         </div>
-                        <div class="m-top-2" style="color: var(--color); font-size: 0.8em;">
+                        <div class="m-bottom-2" style="color: var(--color); font-size: 0.8em;">
                             {!! $sub['comment'] !!}
                         </div>
                     @endforeach
