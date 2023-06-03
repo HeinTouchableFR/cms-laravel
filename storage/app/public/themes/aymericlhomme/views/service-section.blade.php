@@ -3,9 +3,6 @@
 @section('element')
     section
 @overwrite
-@section('id')
-    services
-@overwrite
 @section('additionalClass')
     services
 @overwrite

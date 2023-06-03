@@ -72,7 +72,7 @@
     <div
         class="{{ $content->isScheduled() ? 'blog-scheduled' : '' }}" {{ $content->isScheduled() ? "id=scheduled-" . $content->id : '' }}>
         @foreach($content->getContent() as $bloc)
-            @includeIf(theme() . '.views.' . $bloc['_name'], ['bloc' => $bloc, 'animate' => 'animate'])
+            @includeIf(theme() . '.views.' . $bloc['_name'], ['bloc' => $bloc, 'animate' => $bloc['animate'] ? 'animate' : ''])
         @endforeach
         @if($content->isScheduled())
             <div class="countdown">

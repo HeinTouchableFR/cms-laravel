@@ -78,12 +78,20 @@ if (visualEditor) {
     ]
 
     return [
+      Text('id', {
+        label: 'ID',
+        multiline: false,
+      }),
       Range('padding', {
         label: 'Padding vertical',
         default: defaultPadding,
         min: 0,
-        max: 15,
+        max: 6,
         step: 1,
+      }),
+      Checkbox('animate', {
+        label: 'Element animé',
+        default: false,
       }),
       Row(background),
       Row([
@@ -97,6 +105,18 @@ if (visualEditor) {
           colors: Object.values(colors),
           default: colors.colorDark,
         }),
+        Range('titleFontSize', {
+          label: "Taille d'écriture des titres",
+          min: 1,
+          max: 8,
+          step: 1,
+        }),
+        Range('fontSize', {
+          label: "Taille d'écriture",
+          min: 1,
+          max: 8,
+          step: 1,
+        }),
       ]),
       Row([
         Select('backgroundSize', {
@@ -104,7 +124,7 @@ if (visualEditor) {
           default: '',
           options: [
             {
-              value: '',
+              value: 'cover',
               label: 'Remplir',
             },
             {
@@ -122,20 +142,20 @@ if (visualEditor) {
           default: '',
           options: [
             {
-              value: '',
+              value: 'no-repeat',
               label: 'Aucune',
             },
             {
-              value: 'X',
-              label: 'repeat-x',
+              label: 'X',
+              value: 'repeat-x',
             },
             {
-              value: 'Y',
-              label: 'repeat-y',
+              label: 'Y',
+              value: 'repeat-y',
             },
             {
-              value: 'X & Y',
-              label: 'repeat',
+              label: 'X & Y',
+              value: 'repeat',
             },
           ],
         }),
@@ -148,7 +168,7 @@ if (visualEditor) {
               label: 'Gauche',
             },
             {
-              value: '',
+              value: 'center',
               label: 'Centrer',
             },
             {
@@ -162,16 +182,16 @@ if (visualEditor) {
           default: '',
           options: [
             {
-              value: 'left',
-              label: 'Gauche',
+              value: 'top',
+              label: 'Haut',
             },
             {
-              value: '',
+              value: 'center',
               label: 'Centrer',
             },
             {
-              value: 'right',
-              label: 'Droite',
+              value: 'bottom',
+              label: 'Bas',
             },
           ],
         }),

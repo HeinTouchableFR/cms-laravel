@@ -3,18 +3,15 @@
 @section('element')
     nav
 @overwrite
-@section('id')
-    header
-@overwrite
 @section('additionalClass')
     header
 @overwrite
 
 @section('content')
     <div class="container">
-            <a class="header__logo h2" href="{{ route('home') }}" {{ menu_active($menu, 'home') }} title="Accueil">
-                {{ sitename() }}
-            </a>
+        <a class="header__logo h2" href="{{ route('home') }}" {{ menu_active($menu, 'home') }} title="Accueil">
+            {{ sitename() }}
+        </a>
         <div class="header__spacer"></div>
         <ul class="header__nav">
             @foreach($bloc['links'] as $link)
@@ -45,10 +42,10 @@
                                                 stroke-width: 2.04
                                             }</style>
                                     </defs>
-                                    <circle cx="12.02" cy="7.24" r="5.74" class="cls-1"/>
+                                    <circle cx="12.02" cy="7.24" r="5.74" class="cls-1" />
                                     <path
                                         d="M2.46 23.5v-1.91a9.55 9.55 0 0 1 7-9.21M16.8 14.89l-1 1.91H9.15l-1.91 1.92 1.91 1.91h6.7l1 1.91h2.87a2.86 2.86 0 0 0 2.87-2.87v-1.91a2.87 2.87 0 0 0-2.87-2.87ZM12.02 18.72v1.91M19.67 17.76v1.91"
-                                        class="cls-1"/>
+                                        class="cls-1" />
                                 </g>
                             </svg>
                             Se connecter
@@ -69,10 +66,10 @@
                                                 stroke-width: 2.04
                                             }</style>
                                     </defs>
-                                    <circle cx="12.02" cy="7.24" r="5.74" class="cls-1"/>
+                                    <circle cx="12.02" cy="7.24" r="5.74" class="cls-1" />
                                     <path
                                         d="M2.46 23.5v-1.91a9.55 9.55 0 0 1 7-9.21M16.8 14.89l-1 1.91H9.15l-1.91 1.92 1.91 1.91h6.7l1 1.91h2.87a2.86 2.86 0 0 0 2.87-2.87v-1.91a2.87 2.87 0 0 0-2.87-2.87ZM12.02 18.72v1.91M19.67 17.76v1.91"
-                                        class="cls-1"/>
+                                        class="cls-1" />
                                 </g>
                             </svg>
                             Mon compte

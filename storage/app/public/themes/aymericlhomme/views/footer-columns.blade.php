@@ -1,11 +1,11 @@
 @extends('aymericlhomme.views.layout')
 
 
-@section('element')div
+@section('element')
+    div
 @overwrite
-@section('id')footer_columns
-@overwrite
-@section('additionalClass')footer-columns
+@section('additionalClass')
+    footer-columns
 @overwrite
 
 @section('content')

@@ -1,10 +1,10 @@
 @extends('aymericlhomme.views.layout')
 
-@section('element')div
+@section('element')
+    div
 @overwrite
-@section('id')contact-form
-@overwrite
-@section('additionalClass')contact-form
+@section('additionalClass')
+    contact-form
 @overwrite
 
 @section('content')
