@@ -17,6 +17,10 @@ DirectoryIndex index.php
     Options -MultiViews
 </IfModule>
 
+<IfModule LiteSpeed>
+   CacheLookup on
+</IfModule>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
@@ -88,3 +92,5 @@ BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
 SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip
 #les proxies doivent donner le bon contenu
 Header append Vary User-Agent env=!dont-vary
+RewriteEngine On
+RewriteRule .* - [E=Cache-Vary:Authorization]

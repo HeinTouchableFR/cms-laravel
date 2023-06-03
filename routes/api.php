@@ -25,53 +25,55 @@ if (Schema::hasTable('extensions')) {
     }
 }
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('lscache:no-cache')->group(function () {
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
 
-Route::get('/posts', [\App\Http\Controllers\Api\ContentController::class, 'index']);
+    Route::get('/posts', [\App\Http\Controllers\Api\ContentController::class, 'index']);
 
-Route::post('/contact', [\App\Http\Controllers\Api\ContactController::class, 'index']);
+    Route::post('/contact', [\App\Http\Controllers\Api\ContactController::class, 'index']);
 
-Route::get('/search', function (App\Http\Requests\SearchRequest $request) {
-    $q = htmlspecialchars($request->validated('q'), ENT_QUOTES, 'UTF-8');
+    Route::get('/search', function (App\Http\Requests\SearchRequest $request) {
+        $q = htmlspecialchars($request->validated('q'), ENT_QUOTES, 'UTF-8');
 
-    if ($q) {
-        $results = \App\Models\Content::search($q,
-            function ($meiliSearch, string $query, array $options) {
-                $options['attributesToHighlight'] = ['title', 'content'];
-                $options['attributesToCrop'] = ['content'];
-                $options['cropLength'] = 35;
-                $options['filter'] = 'type NOT IN [\'template\', \'header\', \'footer\']';
+        if ($q) {
+            $results = \App\Models\Content::search($q,
+                function ($meiliSearch, string $query, array $options) {
+                    $options['attributesToHighlight'] = ['title', 'content'];
+                    $options['attributesToCrop'] = ['content'];
+                    $options['cropLength'] = 35;
+                    $options['filter'] = 'type NOT IN [\'template\', \'header\', \'footer\']';
 
-                return $meiliSearch->search($query, $options);
-            })->where('online', '1')->take(5)->raw();
-    } else {
-        $results = [
-            'hits' => [],
-            'totalHits' => 0,
-        ];
-    }
-
-    $items = [];
-    foreach ($results['hits'] as $item) {
-        if ($item['type'] === 'blog') {
-            $category = 'Article';
-        } else if ($item['type'] === 'page') {
-            $category = 'Page';
+                    return $meiliSearch->search($query, $options);
+                })->where('online', '1')->take(5)->raw();
         } else {
-            $category = ucfirst($item['type']);
+            $results = [
+                'hits' => [],
+                'totalHits' => 0,
+            ];
         }
 
-        $items[] = [
-            'title' => $item['_formatted']['title'],
-            'url' => route($item['type'] . '.show', $item['slug']),
-            'category' => $category,
-        ];
-    }
+        $items = [];
+        foreach ($results['hits'] as $item) {
+            if ($item['type'] === 'blog') {
+                $category = 'Article';
+            } else if ($item['type'] === 'page') {
+                $category = 'Page';
+            } else {
+                $category = ucfirst($item['type']);
+            }
 
-    return [
-        'items' => $items,
-        'hits' => $results['totalHits'],
-    ];
+            $items[] = [
+                'title' => $item['_formatted']['title'],
+                'url' => route($item['type'] . '.show', $item['slug']),
+                'category' => $category,
+            ];
+        }
+
+        return [
+            'items' => $items,
+            'hits' => $results['totalHits'],
+        ];
+    });
 });

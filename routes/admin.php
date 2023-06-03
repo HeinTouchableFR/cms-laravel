@@ -17,7 +17,7 @@ use App\Http\Middleware\VerifyCsrfToken;
 use App\Models\Extension;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'lscache:no-cache'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('blog', BlogContentController::class)->except(['show']);
     Route::resource('category', CategoryController::class)->except(['show']);
 
