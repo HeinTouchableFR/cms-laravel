@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
+use Litespeed\LSCache\LSCache;
 
 class DashboardController extends Controller
 {
@@ -34,6 +35,7 @@ class DashboardController extends Controller
     {
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
+        LSCache::purgeAll(false);
 
         return to_route('admin.index')->with('success', 'Le cache a bien été vidé');
     }
@@ -47,14 +49,14 @@ class DashboardController extends Controller
 
     public function retry_job(FailedJob $job): RedirectResponse
     {
-        Artisan::call('queue:retry '.$job->uuid);
+        Artisan::call('queue:retry ' . $job->uuid);
 
         return to_route('admin.index')->with('success', 'La tâche a bien été relancée');
     }
 
     public function destroy_job(FailedJob $job): RedirectResponse
     {
-        Artisan::call('queue:forget '.$job->uuid);
+        Artisan::call('queue:forget ' . $job->uuid);
 
         return to_route('admin.index')->with('success', 'La tâche a bien été supprimée');
     }
