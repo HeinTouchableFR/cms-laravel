@@ -1038,4 +1038,4 @@ if (visualEditor) {
 }
 
 // On enregistre le custom element
-editor.defineElement()
+//editor.defineElement()

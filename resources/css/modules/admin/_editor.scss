@@ -1,0 +1,176 @@
+.editor {
+    --sidebar: 600px;
+    --clampedSidebar: clamp(450px, var(--sidebar), calc(100vw - 375px));
+    box-sizing: border-box;
+    isolation: isolate;
+    font-size: var(--step-0);
+    color: var(--color);
+    transition: background-color .3s ease 0s;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: var(--clampedSidebar) 1fr;
+    animation: .7s cubic-bezier(0.19, 1, .22, 1) 0s 1 normal both running animateBackground;
+    z-index: 9999;
+
+    .editor__sidebar {
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        background-color: rgb(251, 251, 253);
+        z-index: 2;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+        transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+        animation: 0.7s cubic-bezier(0.19, 1, 0.22, 1) 0s 1 normal both running animateSidebar;
+
+        .editor__sidebar-header {
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            gap: 1em;
+            -webkit-box-pack: justify;
+            justify-content: space-between;
+            padding: 0 1em;
+            flex: 0 0 auto;
+            background-color: rgb(255, 255, 255);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: rgba(0, 0, 0, 0.05) 0 1px 2px 0;
+            height: 64px;
+
+
+            .editor__sidebar-header-icon-button {
+                width: 40px;
+                height: 40px;
+                border-radius: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: transparent;
+                transition: 0.3s;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                background: var(--background);
+
+                &:hover {
+                    background: var(--contrast);
+                    color: var(--color-light);
+                }
+            }
+
+            .editor__sidebar-header-actions {
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: start;
+                justify-content: flex-start;
+                gap: 1em;
+            }
+        }
+
+        .editor__sidebar-header-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1em;
+            padding: 1em;
+            overflow: auto;
+            scrollbar-gutter: stable;
+        }
+
+        .editor__sidebar-footer {
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            gap: 1em;
+            margin-top: auto;
+            background-color: rgb(255, 255, 255);
+            -webkit-box-pack: end;
+            justify-content: flex-end;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 0.5em 1em;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px -1px 2px 0px;
+
+            button {
+                margin: initial;
+            }
+        }
+    }
+
+    .editor__preview {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        animation: animatePreview 0.7s cubic-bezier(0.19, 1, 0.22, 1) both;
+
+        iframe {
+            transform-origin: 50% 50%;
+            border: none;
+            color: var(--contrast);
+            transition: width 0.3s, height 0.3s, opacity 0.5s;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+
+            &.loaded {
+                opacity: 1;
+            }
+        }
+    }
+
+    .editor__resize-bar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        left: var(--clampedSidebar);
+        width: 15px;
+        z-index: 1002;
+        cursor: ew-resize;
+        transition: .3s ease 0s;
+
+        &:hover {
+            background: var(--contrast);
+        }
+    }
+}
+
+
+@keyframes animateBackground {
+    0% {
+        background-color: rgba(255, 255, 255, 0);
+    }
+
+    100% {
+        background-color: var(--color);
+    }
+}
+
+@keyframes animatePreview {
+    0% {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes animateSidebar {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}

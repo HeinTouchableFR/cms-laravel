@@ -337,5 +337,52 @@
             </g>
         </g>
     </symbol>
-
+    <symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 682.667 682.667" id="plus">
+        <defs>
+            <clipPath id="a" clipPathUnits="userSpaceOnUse">
+                <path d="M0 512h512V0H0Z" fill="currentColor"/>
+            </clipPath>
+        </defs>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+              stroke-width="60" d="M0 0v-180"
+              style="stroke-width:40;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+              transform="matrix(1.33333 0 0 -1.33333 341.333 221.31)"/>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+              stroke-width="60" d="M0 0h180"
+              style="stroke-width:40;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+              transform="matrix(1.33333 0 0 -1.33333 221.333 341.31)"/>
+        <g clip-path="url(#a)" transform="matrix(1.33333 0 0 -1.33333 0 682.667)">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-miterlimit="10"
+                  stroke-width="60"
+                  d="M0 0c-35.623-21.578-77.411-34-122.1-34-130.339 0-236 105.661-236 236 0 130.34 105.661 236 236 236 130.34 0 236-105.66 236-236 0-48.467-14.943-93.521-40-131"
+                  style="stroke-width:40;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+                  transform="translate(378.1 54)"/>
+        </g>
+    </symbol>
+    <symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="copy">
+        <path
+            d="m1.293 12.707 4 4a1 1 0 1 0 1.414-1.414L3.414 12l3.293-3.293a1 1 0 1 0-1.414-1.414l-4 4a1 1 0 0 0 0 1.414zm17.414-5.414a1 1 0 1 0-1.414 1.414L20.586 12l-3.293 3.293a1 1 0 1 0 1.414 1.414l4-4a1 1 0 0 0 0-1.414zm-5.668-2.567-4 14a1 1 0 0 0 .686 1.236A1.053 1.053 0 0 0 10 20a1 1 0 0 0 .961-.726l4-14a1 1 0 1 0-1.922-.548z"
+            fill="currentColor"/>
+    </symbol>
+    <symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="responsive">
+        <path
+            stroke-width="5"
+            stroke="currentColor"
+            d="M476 184h-4v-76a28.031 28.031 0 0 0-28-28H68a28.031 28.031 0 0 0-28 28v124h-4a28.031 28.031 0 0 0-28 28v136a28.031 28.031 0 0 0 28 28h72a28.031 28.031 0 0 0 28-28v-28h69.75l-4 16H184a8 8 0 0 0-8 8v24a8 8 0 0 0 8 8h144a8 8 0 0 0 8-8v-24a8 8 0 0 0-8-8h-17.75l-4-16H344v28a28.031 28.031 0 0 0 28 28h104a28.031 28.031 0 0 0 28-28V212a28.031 28.031 0 0 0-28-28ZM120 396a12.01 12.01 0 0 1-12 12H36a12.01 12.01 0 0 1-12-12V260a12.01 12.01 0 0 1 12-12h6.23l6.18 18.53A8 8 0 0 0 56 272h32a8 8 0 0 0 7.59-5.47l6.18-18.53H108a12.01 12.01 0 0 1 12 12ZM59.1 248h25.8l-2.67 8H61.77ZM320 400v8H192v-8Zm-101.75-16 4-16h67.5l4 16ZM344 352H136v-32h208Zm0-140v92H136v-44a28.031 28.031 0 0 0-28-28H56V108a12.01 12.01 0 0 1 12-12h376a12.01 12.01 0 0 1 12 12v76h-84a28.031 28.031 0 0 0-28 28Zm92.9-12-2.67 8h-20.46l-2.67-8ZM488 396a12.01 12.01 0 0 1-12 12H372a12.01 12.01 0 0 1-12-12V212a12.01 12.01 0 0 1 12-12h22.23l6.18 18.53A8 8 0 0 0 408 224h32a8 8 0 0 0 7.59-5.47l6.18-18.53H476a12.01 12.01 0 0 1 12 12Z"
+            fill="currentColor"/>
+        <path
+            stroke-width="5"
+            stroke="currentColor"
+            d="M440 384h-32a8 8 0 0 0 0 16h32a8 8 0 0 0 0-16Zm-352 0H56a8 8 0 0 0 0 16h32a8 8 0 0 0 0-16Zm176-56h-16a8 8 0 0 0 0 16h16a8 8 0 0 0 0-16Z"
+            fill="currentColor"/>
+    </symbol>
+    <symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="save">
+        <path
+            d="M498.768 115.555 395.393 13.18C386.894 4.681 375.594 0 363.574 0H45C20.187 0 0 20.187 0 45v422c0 24.813 20.187 45 45 45h422c24.813 0 45-20.187 45-45V147.426c0-12.02-4.681-23.32-13.232-31.871zM241 30h30v60h-30V30zm-120 0h90v75c0 8.284 6.716 15 15 15h60c8.284 0 15-6.716 15-15V30h30v105c0 8.271-6.729 15-15 15H136c-8.271 0-15-6.729-15-15V30zm270 452H121V332h270v150zm0-180H121v-15c0-8.271 6.729-15 15-15h240c8.271 0 15 6.729 15 15v15zm91 165c0 8.271-6.729 15-15 15h-46V287c0-24.813-20.187-45-45-45H136c-24.813 0-45 20.187-45 45v195H45c-8.271 0-15-6.729-15-15V45c0-8.271 6.729-15 15-15h46v105c0 24.813 20.187 45 45 45h180c24.813 0 45-20.187 45-45V30h2.574c4.006 0 7.773 1.56 10.658 4.445L477.607 136.82A14.901 14.901 0 0 1 482 147.426V467z"
+            fill="currentColor"/>
+        <path
+            d="M346 362H166c-8.284 0-15 6.716-15 15s6.716 15 15 15h180c8.284 0 15-6.716 15-15s-6.716-15-15-15zm-30 60H196c-8.284 0-15 6.716-15 15s6.716 15 15 15h120c8.284 0 15-6.716 15-15s-6.716-15-15-15z"
+            fill="currentColor"/>
+    </symbol>
 </svg>

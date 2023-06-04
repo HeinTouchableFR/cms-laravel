@@ -8,6 +8,7 @@
 @use 'modules/admin/flatpickr';
 @use 'modules/admin/attachments';
 @use 'modules/admin/sortable';
+@use 'modules/admin/editor';
 
 .admin {
     display: grid;
