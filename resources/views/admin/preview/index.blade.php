@@ -7,7 +7,7 @@
     @foreach($storage as $style)
         <link rel="stylesheet" href="/themes/{{ theme() }}/css/modules/{{ $style->getFileName() }}">
     @endforeach
-    <link rel="stylesheet" href="/Editor.css">
+    @vite(['resources/css/admin.scss'])
 @overwrite
 
 @section('body')

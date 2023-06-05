@@ -10,7 +10,7 @@ export function PreviewAddFloating({ position }: PreviewAddFloatingProps) {
 
   return (
     <button
-      className={'addButtonFloating'}
+      className={'editor__preview-addButtonFloating'}
       // @ts-ignore
       onClick={prevent(() => setAddBlockIndex(position))}
     >

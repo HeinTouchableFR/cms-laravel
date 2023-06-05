@@ -33,13 +33,13 @@ export function PreviewItem({
 
   return (
     <div
-      className={`item' ${isFocused ? 'focused' : ''}`}
+      className={`editor__preview-item ${isFocused ? 'focused' : ''}`}
       id={`previewItem${data._id}`}
       ref={ref}
       onClick={() => setFocusIndex(data._id)}
     >
       {loading && <Loader width={15} dots={6} />}
-      <div className={`title ${isFocused ? 'focused' : ''}`}>{title}</div>
+      <div className={`editor__preview-item-title ${isFocused ? 'focused' : ''}`}>{title}</div>
       <div dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   )
