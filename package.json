@@ -41,7 +41,7 @@
         "@dnd-kit/sortable": "^7.0.2",
         "@grafikart/drop-files-element": "^1.0.9",
         "@heintouchable/filemanager": "^0.0.6",
-        "@prefresh/vite": "^2.3.0",
+        "@prefresh/vite": "^2.4.0",
         "body-scroll-lock": "^3.1.5",
         "favicon-badge": "^2.0.0",
         "flatpickr": "^4.6.9",
