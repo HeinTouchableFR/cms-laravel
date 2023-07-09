@@ -1,10 +1,15 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'preact/hooks'
+import {
+  PropsWithChildren,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { FieldTextarea } from './Textarea/Textarea'
 import { FieldCheckbox } from './Checkbox/Checkbox'
 import { FieldInput } from './Input/Input'
 import { FieldSelect } from './Select/Select'
 import { useAutofocus } from '@/functions/hooks'
-import { PropsWithChildren } from 'preact/compat'
 
 type FieldProps = PropsWithChildren<{
   name?: string

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useClickOutside, useJsonFetchOrFlash } from '@/functions/hooks'
 import { debounce } from '@/functions/timers'
 import { classNames } from '@/functions/dom'

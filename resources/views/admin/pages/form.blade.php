@@ -33,18 +33,13 @@
             @include('shared.attachment', ['label' => 'Image', 'name' => 'attachment_id', 'value' => $page->attachment?->id, 'preview' => $page->attachment?->filename])
             @include('shared.switch', ['label' => 'En ligne ?', 'name' => 'online', 'value' => $page->online, 'current' => true])
             @include('shared.input', ['label' => 'Date de publication', 'name' => 'created_at', 'value' => $page->created_at, 'type' => 'datepicker'])
-            <div x-data="{open: false}">
-                <button @click="open = true" type="button" class="btn primary">Éditer le contenu</button>
-                <editor-builder
-                    :hidden="open === false"
-                    @close="open = false"
-                    id="content"
-                    name="content"
-                    preview="{{ route('admin.preview.index') }}"
-                    iconsUrl="/themes/{{ theme() }}/assets/editor/[name].svg"
-                    value="{{ $page->content ?: '[]' }}"
-                ></editor-builder>
-            </div>
+            <editor-builder
+                id="content"
+                name="content"
+                preview="{{ route('admin.preview.index') }}"
+                iconsUrl="/themes/{{ theme() }}/assets/editor/[name].svg"
+                value="{{ $page->content ?: '[]' }}"
+            ></editor-builder>
             <div class="full m-top-2">
                 <button type="submit" class="btn primary">Sauvegarder</button>
             </div>

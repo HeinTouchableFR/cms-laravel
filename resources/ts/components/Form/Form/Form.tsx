@@ -1,12 +1,15 @@
-import { useState } from 'preact/hooks'
-import { createContext } from 'preact'
+import {
+  createContext,
+  PropsWithChildren,
+  TargetedEvent,
+  useState,
+} from 'react'
 import { Alert as AlertComponent } from '@/components/Alert'
 import Alert from '@/elements/Alert'
 
 import { FormButton } from './FormButton'
 import { FormField } from './FormField'
 import { ApiError, jsonFetch } from '@/functions/api'
-import { PropsWithChildren, TargetedEvent } from 'preact/compat'
 
 interface IError {
   [key: string]: string

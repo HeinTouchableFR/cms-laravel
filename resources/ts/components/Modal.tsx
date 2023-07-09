@@ -1,4 +1,4 @@
-import { createPortal, CSSProperties, PropsWithChildren } from 'preact/compat'
+import { createPortal, CSSProperties, PropsWithChildren } from 'react'
 import { classNames } from '@/functions/dom'
 
 type ModalProps = PropsWithChildren<{

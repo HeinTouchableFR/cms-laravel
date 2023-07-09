@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'preact/hooks'
+import { useEffect, useRef } from 'react'
 import { usePreview } from '@/components/Editor/hooks/usePreview'
 import { useFieldFocused, useSetFocusIndex } from '@/components/Editor/store'
 import { EditorComponentData } from '@/components/Editor/types'
@@ -39,7 +39,11 @@ export function PreviewItem({
       onClick={() => setFocusIndex(data._id)}
     >
       {loading && <Loader width={15} dots={6} />}
-      <div className={`editor__preview-item-title ${isFocused ? 'focused' : ''}`}>{title}</div>
+      <div
+        className={`editor__preview-item-title ${isFocused ? 'focused' : ''}`}
+      >
+        {title}
+      </div>
       <div dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   )

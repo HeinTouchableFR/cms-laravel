@@ -1,7 +1,6 @@
-import { useContext } from 'preact/hooks'
+import { PropsWithChildren, useContext } from 'react'
 import { Button } from '../../Button'
 import { FormContext } from './Form'
-import { PropsWithChildren } from 'preact/compat'
 
 export function FormButton({
   children,

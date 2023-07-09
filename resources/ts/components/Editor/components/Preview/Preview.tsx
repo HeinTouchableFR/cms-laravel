@@ -3,9 +3,10 @@ import { PreviewModes, usePreviewMode } from '@/components/Editor/store'
 import { EditorComponentData } from '@/components/Editor/types'
 import { PHONE_HEIGHT } from '@/components/Editor/constants'
 import { PreviewItems } from '@/components/Editor/components/Preview/PreviewItems'
-import { useRef, useState } from 'preact/hooks'
-import { createPortal } from 'preact/compat'
 import { useAsyncEffect } from '@/functions/hooks'
+import { useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useWindowSize } from 'react-use'
 
 type PreviewProps = {
   data: EditorComponentData[]
@@ -23,7 +24,7 @@ export function Preview({ data, previewUrl }: PreviewProps) {
   const showSpinner = !loaded
 
   const previewMode = usePreviewMode()
-  const windowHeight = 1080
+  const { height: windowHeight } = useWindowSize()
   let transform = undefined
 
   if (previewMode === PreviewModes.PHONE && windowHeight < 844) {
@@ -47,11 +48,11 @@ export function Preview({ data, previewUrl }: PreviewProps) {
 
     // On écrit le contenu dans l'iframe
     const iframeDocument = iframe.current!.contentDocument!
-    iframeDocument.open()
-    iframeDocument.write(await r.text())
-    iframeDocument.close()
-    const root = iframeDocument.querySelector('#ve-components') as HTMLElement
-    initialHTML.current = Array.from(root.children).reduce(
+    iframeDocument?.open()
+    iframeDocument?.write(await r.text())
+    iframeDocument?.close()
+    const root = iframeDocument?.querySelector('#ve-components') as HTMLElement
+    initialHTML.current = Array.from(root?.children).reduce(
       (acc, v, k) => ({ ...acc, [data[k]!._id]: v.outerHTML }),
       {},
     )

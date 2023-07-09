@@ -45,18 +45,13 @@
                        value="{{ $tags ?: '' }}"
                 >
             </div>
-            <div x-data="{open: false}">
-                <button @click="open = true" type="button" class="btn primary">Éditer le contenu</button>
-                <editor-builder
-                    :hidden="open === false"
-                    @close="open = false"
-                    id="content"
-                    name="content"
-                    preview="{{ route('admin.preview.index') }}"
-                    iconsUrl="/themes/{{ theme() }}/assets/editor/[name].svg"
-                    value="{{ $blog->content ?: '[]' }}"
-                ></editor-builder>
-            </div>
+            <editor-builder
+                id="content"
+                name="content"
+                preview="{{ route('admin.preview.index') }}"
+                iconsUrl="/themes/{{ theme() }}/assets/editor/[name].svg"
+                value="{{ $blog->content ?: '[]' }}"
+            ></editor-builder>
             <div class="full m-top-2">
                 <button type="submit" class="btn primary">Sauvegarder</button>
             </div>

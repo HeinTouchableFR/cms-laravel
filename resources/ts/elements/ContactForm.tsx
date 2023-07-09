@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useState } from 'react'
 import { Form } from '@/components/Form/Form/Form'
 
 type Props = {

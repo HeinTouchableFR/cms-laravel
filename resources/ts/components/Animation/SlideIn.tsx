@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
-import { CSSProperties, PropsWithChildren } from 'preact/compat'
+import { CSSProperties, PropsWithChildren, useEffect, useState } from 'react'
 
 type SlideInProps = PropsWithChildren<{
   className?: string

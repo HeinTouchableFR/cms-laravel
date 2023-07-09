@@ -1,6 +1,3 @@
-import preactCustomElement from '@/functions/preact'
-import Loader from '@/components/Loader'
-
 export default class LoaderOverlay {
   /**
    * Défini le custom élément
@@ -27,7 +24,7 @@ export default class LoaderOverlay {
         this.style.background = 'rgba(255,255,255,.8)'
         // On crée le loader
         if (!customElements.get('loader-element')) {
-          preactCustomElement('loader-element', Loader, null, null)
+          // preactCustomElement('loader-element', Loader, null, null)
         }
         const loader = document.createElement('loader-element')
         loader.style.width = '20px'

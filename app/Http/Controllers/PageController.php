@@ -29,7 +29,7 @@ class PageController extends Controller
 
         foreach (Content::whereNotIn('type', ['template', 'header', 'footer'])->get() as $post) {
             $urls[] = [
-                'loc' => route($post->type . '.show', $post->slug),
+                'loc' => route($post->type.'.show', $post->slug),
                 'lastmod' => $post->updated_at,
             ];
         }
@@ -75,7 +75,7 @@ class PageController extends Controller
         foreach ($results['hits'] as $item) {
             if ($item['type'] === 'blog') {
                 $type = 'Article';
-            } else if ($item['type'] === 'page') {
+            } elseif ($item['type'] === 'page') {
                 $type = 'Page';
             } else {
                 $type = ucfirst($item['type']);
@@ -106,7 +106,7 @@ class PageController extends Controller
             $items[] = [
                 'title' => $item['_formatted']['title'],
                 'created_at' => new Carbon($item['created_at']),
-                'url' => route($item['type'] . '.show', $item['slug']),
+                'url' => route($item['type'].'.show', $item['slug']),
                 'excerpt' => $excerpt,
                 'type' => $type,
             ];

@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import {
+  memo,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import {
   addComment,
   deleteComment,
@@ -11,7 +19,6 @@ import { canManage, isAuthenticated } from '@/functions/auth'
 import { catchViolations } from '@/functions/api'
 import Icon from '@/components/Icon'
 import { Field } from '@/components/Form/Field/Field'
-import { memo, PropsWithChildren } from 'preact/compat'
 import { Button } from '@/components/Button'
 
 type CommentsProps = {

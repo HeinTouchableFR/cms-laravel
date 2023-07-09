@@ -1,6 +1,6 @@
 import { useInsertData } from '@/components/Editor/store'
 import { indexify } from '@/functions/object'
-import { useEffect } from 'preact/hooks'
+import { useEffect } from 'react'
 
 export function useClipboardPaste(enabled: boolean) {
   const insertData = useInsertData()

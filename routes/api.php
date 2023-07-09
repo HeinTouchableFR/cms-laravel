@@ -58,7 +58,7 @@ Route::middleware('lscache:no-cache')->group(function () {
         foreach ($results['hits'] as $item) {
             if ($item['type'] === 'blog') {
                 $category = 'Article';
-            } else if ($item['type'] === 'page') {
+            } elseif ($item['type'] === 'page') {
                 $category = 'Page';
             } else {
                 $category = ucfirst($item['type']);
@@ -66,7 +66,7 @@ Route::middleware('lscache:no-cache')->group(function () {
 
             $items[] = [
                 'title' => $item['_formatted']['title'],
-                'url' => route($item['type'] . '.show', $item['slug']),
+                'url' => route($item['type'].'.show', $item['slug']),
                 'category' => $category,
             ];
         }

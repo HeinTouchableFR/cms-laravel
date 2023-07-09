@@ -1,24 +1,6 @@
-import { jsonFetchOrFlash } from 'https://unpkg.com/@heintouchable/functions@0.0.5/Functions.standalone.js'
-import {
-  Checkbox,
-  Color,
-  Editor,
-  FR,
-  HTMLText,
-  ImageUrl,
-  Number,
-  Range,
-  Repeater,
-  Row,
-  Select,
-  Tabs,
-  Text,
-  TextAlign,
-} from './Editor.standalone.js'
-
-let editor = new Editor({
-  lang: FR,
-})
+let editor = window.editor
+editor.toFrench()
+const fields = editor.fields()
 
 const visualEditor = document.querySelector('editor-builder')
 if (visualEditor) {
@@ -38,165 +20,147 @@ if (visualEditor) {
     background: 'var(--background)',
   }
 
-  const setAttachment = attachment => {
-    const changeEvent = document.createEvent('HTMLEvents')
-    changeEvent.initEvent('change', false, true)
-    return attachment.id
-  }
-
-  const onBrowse = async () => {
-    return new Promise(function (resolve, reject) {
-      const modal = document.createElement('modal-dialog')
-      modal.style.zIndex = 20000
-      modal.setAttribute('overlay-close', 'overlay-close')
-      const fm = document.createElement('file-manager')
-      fm.setAttribute('data-endpoint', '/admin/attachment')
-      modal.appendChild(fm)
-      fm.addEventListener('file', e => {
-        resolve(setAttachment(e.detail))
-        modal.close()
-      })
-      document.body.appendChild(modal)
-    })
-  }
-
   const appearances = (defaultPadding = 0) => {
     const background = [
-      Color('backgroundColor', {
+      fields.Color('backgroundColor', {
         label: 'Fond',
         colors: Object.values(colors),
       }),
-      ImageUrl('backgroundDesktop', {
+      fields.ImageUrl('backgroundDesktop', {
         label: 'Image de fond',
         default: '',
-        onBrowse: onBrowse,
+        onBrowse: editor.onBrowse,
       }),
-      ImageUrl('backgroundMobile', {
+      fields.ImageUrl('backgroundMobile', {
         label: 'Image de fond (Mobile)',
         default: '',
-        onBrowse: onBrowse,
+        onBrowse: editor.onBrowse,
       }),
     ]
 
     return [
-      Text('id', {
+      fields.Text('id', {
         label: 'ID',
         multiline: false,
       }),
-      Range('padding', {
+      fields.Range('padding', {
         label: 'Padding vertical',
         default: defaultPadding,
         min: 0,
         max: 6,
         step: 1,
       }),
-      Checkbox('animate', {
+      fields.Checkbox('animate', {
         label: 'Element animé',
         default: false,
       }),
-      Row(background),
-      Row([
-        Color('titleColor', {
+      fields.Row(background),
+      fields.Row([
+        fields.Color('titleColor', {
           label: 'Couleur des titres',
           colors: Object.values(colors),
           default: colors.contrast,
         }),
-        Color('textColor', {
+        fields.Color('textColor', {
           label: 'Couleur des textes',
           colors: Object.values(colors),
           default: colors.colorDark,
         }),
-        Range('titleFontSize', {
+      ]),
+      fields.Row([
+        fields.Range('titleFontSize', {
           label: "Taille d'écriture des titres",
           min: 1,
           max: 8,
           step: 1,
         }),
-        Range('fontSize', {
+        fields.Range('fontSize', {
           label: "Taille d'écriture",
           min: 1,
           max: 8,
           step: 1,
         }),
       ]),
-      Row([
-        Select('backgroundSize', {
-          label: "Taille de l'image",
-          default: '',
-          options: [
-            {
-              value: 'cover',
-              label: 'Remplir',
-            },
-            {
-              value: 'contain',
-              label: 'Contenir',
-            },
-            {
-              value: 'auto',
-              label: 'Original',
-            },
-          ],
-        }),
-        Select('backgroundRepeat', {
-          label: 'Répétition',
-          default: '',
-          options: [
-            {
-              value: 'no-repeat',
-              label: 'Aucune',
-            },
-            {
-              label: 'X',
-              value: 'repeat-x',
-            },
-            {
-              label: 'Y',
-              value: 'repeat-y',
-            },
-            {
-              label: 'X & Y',
-              value: 'repeat',
-            },
-          ],
-        }),
-        Select('backgroundXPosition', {
-          label: 'Position (X)',
-          default: '',
-          options: [
-            {
-              value: 'left',
-              label: 'Gauche',
-            },
-            {
-              value: 'center',
-              label: 'Centrer',
-            },
-            {
-              value: 'right',
-              label: 'Droite',
-            },
-          ],
-        }),
-        Select('backgroundYPosition', {
-          label: 'Position (Y)',
-          default: '',
-          options: [
-            {
-              value: 'top',
-              label: 'Haut',
-            },
-            {
-              value: 'center',
-              label: 'Centrer',
-            },
-            {
-              value: 'bottom',
-              label: 'Bas',
-            },
-          ],
-        }),
-      ]).when('backgroundDesktop', true),
+      fields
+        .Row([
+          fields.Select('backgroundSize', {
+            label: "Taille de l'image",
+            default: '',
+            options: [
+              {
+                value: 'cover',
+                label: 'Remplir',
+              },
+              {
+                value: 'contain',
+                label: 'Contenir',
+              },
+              {
+                value: 'auto',
+                label: 'Original',
+              },
+            ],
+          }),
+          fields.Select('backgroundRepeat', {
+            label: 'Répétition',
+            default: '',
+            options: [
+              {
+                value: 'no-repeat',
+                label: 'Aucune',
+              },
+              {
+                label: 'X',
+                value: 'repeat-x',
+              },
+              {
+                label: 'Y',
+                value: 'repeat-y',
+              },
+              {
+                label: 'X & Y',
+                value: 'repeat',
+              },
+            ],
+          }),
+          fields.Select('backgroundXPosition', {
+            label: 'Position (X)',
+            default: '',
+            options: [
+              {
+                value: 'left',
+                label: 'Gauche',
+              },
+              {
+                value: 'center',
+                label: 'Centrer',
+              },
+              {
+                value: 'right',
+                label: 'Droite',
+              },
+            ],
+          }),
+          fields.Select('backgroundYPosition', {
+            label: 'Position (Y)',
+            default: '',
+            options: [
+              {
+                value: 'top',
+                label: 'Haut',
+              },
+              {
+                value: 'center',
+                label: 'Centrer',
+              },
+              {
+                value: 'bottom',
+                label: 'Bas',
+              },
+            ],
+          }),
+        ])
+        .when('backgroundDesktop', true),
     ]
   }
 
@@ -205,22 +169,22 @@ if (visualEditor) {
       title: 'Hero',
       category: 'Colonnes',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Row([
-                Text('title', {
+              fields.Row([
+                fields.Text('title', {
                   label: 'Titre',
                   default: 'Lorem ipsum dolor sit amet',
                   multiline: false,
                 }),
-                TextAlign('titleAlign', {
+                fields.TextAlign('titleAlign', {
                   label: 'Alignement',
                   default: 'center',
                 }),
               ]),
-              HTMLText('content', {
+              fields.HTMLText('content', {
                 label: 'Contenu',
                 multiline: true,
                 allowHeadings: true,
@@ -228,16 +192,16 @@ if (visualEditor) {
                 default:
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
               }),
-              Repeater('buttons', {
+              fields.Repeater('buttons', {
                 addLabel: 'Ajouter un bouton',
                 fields: [
-                  Text('label', {
+                  fields.Text('label', {
                     label: 'Label',
                     default: 'Call to action',
                     multiline: false,
                   }),
-                  Text('url', { label: 'URL', multiline: false }),
-                  Select('style', {
+                  fields.Text('url', { label: 'URL', multiline: false }),
+                  fields.Select('style', {
                     label: 'Style de bouton',
                     default: 'primary',
                     options: [
@@ -269,16 +233,16 @@ if (visualEditor) {
       title: 'Derniers articles',
       category: '',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Text('title', {
+              fields.Text('title', {
                 label: 'Titre',
                 default: 'Lorem ipsum dolor sit amet',
                 multiline: false,
               }),
-              HTMLText('content', {
+              fields.HTMLText('content', {
                 label: 'Contenu',
                 multiline: true,
                 allowHeadings: true,
@@ -302,19 +266,19 @@ if (visualEditor) {
       title: 'Colonnes',
       category: 'Footer',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Repeater('columns', {
+              fields.Repeater('columns', {
                 addLabel: 'Ajouter une colonne',
                 fields: [
-                  Text('title', {
+                  fields.Text('title', {
                     label: 'Titre',
                     default: 'Lorem ipsum dolor sit amet',
                     multiline: false,
                   }),
-                  HTMLText('content', {
+                  fields.HTMLText('content', {
                     label: 'Contenu',
                     multiline: true,
                     allowHeadings: true,
@@ -322,15 +286,15 @@ if (visualEditor) {
                     default:
                       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad iure necessitatibus nulla! Aperiam culpa deserunt iste mollitia nobis obcaecati reiciendis sapiente sunt tempora. Architecto aut consectetur est fugiat ipsum saepe.',
                   }),
-                  Repeater('links', {
+                  fields.Repeater('links', {
                     addLabel: 'Ajouter un lien',
                     fields: [
-                      Text('label', {
+                      fields.Text('label', {
                         label: 'Label',
                         help: 'Laisser vide pour garder le nom de la page',
                         multiline: false,
                       }),
-                      Select('url', {
+                      fields.Select('url', {
                         label: 'Page ou article',
                         options: [
                           {
@@ -363,11 +327,11 @@ if (visualEditor) {
                       }),
                     ],
                   }),
-                  Checkbox('social', {
+                  fields.Checkbox('social', {
                     label: 'Réseaux sociaux',
                     default: true,
                   }),
-                  Checkbox('themeswitcher', {
+                  fields.Checkbox('themeswitcher', {
                     label: 'Thème',
                     default: false,
                   }),
@@ -386,11 +350,11 @@ if (visualEditor) {
       title: 'Crédit',
       category: 'Footer',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              HTMLText('credit', {
+              fields.HTMLText('credit', {
                 label: 'Crédit',
                 multiline: true,
                 allowHeadings: true,
@@ -398,15 +362,15 @@ if (visualEditor) {
                 default:
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
               }),
-              Repeater('links', {
+              fields.Repeater('links', {
                 addLabel: 'Ajouter un lien',
                 fields: [
-                  Text('label', {
+                  fields.Text('label', {
                     label: 'Label',
                     help: 'Laisser vide pour garder le nom de la page',
                     multiline: false,
                   }),
-                  Select('url', {
+                  fields.Select('url', {
                     label: 'Page ou article',
                     options: [
                       {
@@ -455,31 +419,31 @@ if (visualEditor) {
       title: 'Header',
       category: 'Template',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Checkbox('logo', {
+              fields.Checkbox('logo', {
                 label: 'Logo',
                 default: false,
               }),
-              Checkbox('searchbar', {
+              fields.Checkbox('searchbar', {
                 label: 'Barre de recherche',
                 default: false,
               }),
-              Checkbox('auth', {
+              fields.Checkbox('auth', {
                 label: 'Authentification',
                 default: false,
               }),
-              Repeater('links', {
+              fields.Repeater('links', {
                 addLabel: 'Ajouter un lien',
                 fields: [
-                  Text('label', {
+                  fields.Text('label', {
                     label: 'Label',
                     help: 'Laisser vide pour garder le nom de la page',
                     multiline: false,
                   }),
-                  Select('url', {
+                  fields.Select('url', {
                     label: 'Page ou article',
                     options: [
                       {
@@ -518,11 +482,11 @@ if (visualEditor) {
             label: 'Apparence',
             fields: [
               ...appearances(0),
-              Number('logoWidth', {
+              fields.Number('logoWidth', {
                 label: 'Largeur du logo',
                 default: 120,
               }),
-              Number('logoHeight', {
+              fields.Number('logoHeight', {
                 label: 'Hauteur du logo',
                 default: 120,
               }),
@@ -534,15 +498,15 @@ if (visualEditor) {
   }
 
   const getHeaderDocumentation = options => {
-    let linkComponent = Repeater('links', {
+    let linkComponent = fields.Repeater('links', {
       addLabel: 'Ajouter un lien',
       fields: [
-        Text('label', {
+        fields.Text('label', {
           label: 'Label',
           help: 'Laisser vide pour garder le nom de la page',
           multiline: false,
         }),
-        Select('url', {
+        fields.Select('url', {
           label: 'Documentation',
           options: [
             {
@@ -552,7 +516,7 @@ if (visualEditor) {
             ...options,
           ],
         }),
-        Select('icon', {
+        fields.Select('icon', {
           label: 'Icône',
           options: [
             {
@@ -578,11 +542,11 @@ if (visualEditor) {
       title: 'Header Documentation',
       category: 'Template',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Text('title', {
+              fields.Text('title', {
                 label: 'Titre',
                 help: 'Laisser vide pour ne pas mettre de titre',
                 multiline: false,
@@ -604,11 +568,11 @@ if (visualEditor) {
       title: 'Titre de la page',
       category: 'Page',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              HTMLText('title', {
+              fields.HTMLText('title', {
                 label: 'Titre',
                 multiline: false,
                 allowHeadings: true,
@@ -631,7 +595,7 @@ if (visualEditor) {
       title: 'Blog header',
       category: 'Template',
       fields: [
-        Tabs({
+        fields.Tabs({
           label: 'Apparence',
           fields: [...appearances(0)],
         }),
@@ -644,7 +608,7 @@ if (visualEditor) {
       title: 'Article header',
       category: 'Article',
       fields: [
-        Tabs({
+        fields.Tabs({
           label: 'Apparence',
           fields: [...appearances(0)],
         }),
@@ -657,7 +621,7 @@ if (visualEditor) {
       title: 'Liste de tous les articles',
       category: 'Template',
       fields: [
-        Tabs({
+        fields.Tabs({
           label: 'Apparence',
           fields: [...appearances(0)],
         }),
@@ -670,22 +634,22 @@ if (visualEditor) {
       title: 'Formulaire de contact',
       category: 'Formulaire',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Repeater('fields', {
+              fields.Repeater('fields', {
                 addLabel: 'Ajouter un champ',
                 fields: [
-                  Text('label', {
+                  fields.Text('label', {
                     label: 'Label',
                     multiline: false,
                   }),
-                  Text('name', {
+                  fields.Text('name', {
                     label: 'Nom',
                     multiline: false,
                   }),
-                  Select('type', {
+                  fields.Select('type', {
                     label: 'Type de champ',
                     default: 'input',
                     options: [
@@ -698,16 +662,16 @@ if (visualEditor) {
                         label: 'TextArea',
                       },
                       {
-                        value: 'checkbox',
-                        label: 'Checkbox',
+                        value: 'fields.checkbox',
+                        label: 'fields.Checkbox',
                       },
                     ],
                   }),
-                  Checkbox('required', {
+                  fields.Checkbox('required', {
                     label: 'Requis',
                     default: false,
                   }),
-                  Checkbox('full', {
+                  fields.Checkbox('full', {
                     label: 'Pleine largeur',
                     default: false,
                   }),
@@ -729,21 +693,21 @@ if (visualEditor) {
       title: 'Section des services',
       category: 'Page',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Repeater('blocs', {
+              fields.Repeater('blocs', {
                 label: 'Contenu',
                 addLabel: 'Ajouter un contenu',
                 fields: [
-                  Text('title', { label: 'Titre', multiline: false }),
-                  ImageUrl('image', {
+                  fields.Text('title', { label: 'Titre', multiline: false }),
+                  fields.ImageUrl('image', {
                     label: 'Image',
                     default: '',
-                    onBrowse: onBrowse,
+                    onBrowse: editor.onBrowse,
                   }),
-                  HTMLText('content', {
+                  fields.HTMLText('content', {
                     label: 'Contenu',
                     multiline: true,
                     allowHeadings: true,
@@ -769,7 +733,7 @@ if (visualEditor) {
       title: 'Commentaires',
       category: 'Article',
       fields: [
-        Tabs({
+        fields.Tabs({
           label: 'Apparence',
           fields: [...appearances(0)],
         }),
@@ -782,26 +746,26 @@ if (visualEditor) {
       title: 'Présentation Blog',
       category: 'Article',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              ImageUrl('mainImage', {
+              fields.ImageUrl('mainImage', {
                 label: 'Image principale',
                 default: '',
-                onBrowse: onBrowse,
+                onBrowse: editor.onBrowse,
               }),
-              ImageUrl('secondaryImage', {
+              fields.ImageUrl('secondaryImage', {
                 label: 'Image secondaire',
                 default: '',
-                onBrowse: onBrowse,
+                onBrowse: editor.onBrowse,
               }),
-              Checkbox('invertingImages', {
+              fields.Checkbox('invertingImages', {
                 label: 'Inverser les images',
                 default: false,
               }),
-              Text('title', { label: 'Titre', multiline: false }),
-              HTMLText('textAtLeft', {
+              fields.Text('title', { label: 'Titre', multiline: false }),
+              fields.HTMLText('textAtLeft', {
                 label: 'Texte à gauche',
                 multiline: true,
                 allowHeadings: true,
@@ -809,7 +773,7 @@ if (visualEditor) {
                 default:
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
               }),
-              HTMLText('textAtRight', {
+              fields.HTMLText('textAtRight', {
                 label: 'Texte à droite',
                 multiline: true,
                 allowHeadings: true,
@@ -833,22 +797,22 @@ if (visualEditor) {
       title: 'Test',
       category: 'Colonnes',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Row([
-                Text('title', {
+              fields.Row([
+                fields.Text('title', {
                   label: 'Titre',
                   default: 'Lorem ipsum dolor sit amet',
                   multiline: false,
                 }),
-                TextAlign('titleAlign', {
+                fields.TextAlign('titleAlign', {
                   label: 'Alignement',
                   default: 'center',
                 }),
               ]),
-              HTMLText('content', {
+              fields.HTMLText('content', {
                 label: 'Contenu',
                 multiline: true,
                 allowHeadings: true,
@@ -856,18 +820,18 @@ if (visualEditor) {
                 default:
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
               }),
-              Repeater('items', {
+              fields.Repeater('items', {
                 addLabel: 'Ajouter une catégorie',
                 fields: [
-                  Text('title', {
+                  fields.Text('title', {
                     label: 'Titre',
                     default: 'Lorem ipsum dolor sit amet',
                     multiline: false,
                   }),
-                  Repeater('sub_items', {
+                  fields.Repeater('sub_items', {
                     addLabel: 'Ajouter un test',
                     fields: [
-                      HTMLText('content', {
+                      fields.HTMLText('content', {
                         label: 'Contenu',
                         multiline: true,
                         allowHeadings: true,
@@ -875,11 +839,11 @@ if (visualEditor) {
                         default:
                           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
                       }),
-                      Checkbox('isTest', {
+                      fields.Checkbox('isTest', {
                         label: 'Test effectué',
                         default: false,
                       }),
-                      HTMLText('comment', {
+                      fields.HTMLText('comment', {
                         label: 'Commentaire',
                         multiline: true,
                         allowHeadings: true,
@@ -997,9 +961,10 @@ if (visualEditor) {
   }
 
   if (mode === 'template') {
-    jsonFetchOrFlash('/api/posts', {
-      method: 'GET',
-    })
+    editor
+      .jsonFetchOrFlash('/api/posts', {
+        method: 'GET',
+      })
       .then(data => {
         const options = []
         const documentations = []
@@ -1038,4 +1003,4 @@ if (visualEditor) {
 }
 
 // On enregistre le custom element
-//editor.defineElement()
+editor.defineElement()

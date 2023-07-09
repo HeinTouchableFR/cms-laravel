@@ -1,12 +1,8 @@
-import prefresh from '@prefresh/vite'
-import { defineConfig } from 'vite'
 import laravel from 'laravel-vite-plugin'
 
-export default defineConfig({
-  emitManifest: true,
-  cors: true,
+const config = {
   optimizeDeps: {
-    include: ['preact/hooks', 'preact/compat', 'htm/mini'],
+    include: ['htm/mini'],
   },
   server: {
     host: '0.0.0.0',
@@ -44,6 +40,7 @@ export default defineConfig({
       ],
       refresh: true,
     }),
-    prefresh(),
   ],
-})
+}
+
+module.exports = config

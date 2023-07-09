@@ -1,4 +1,3 @@
-import 'preact/debug'
 import {
   EditorComponentData,
   EditorComponentDefinition,
@@ -7,21 +6,70 @@ import {
   Translation,
 } from '@/components/Editor/types'
 import { Translations as EN } from '@/components/Editor/langs/en'
+import { Translations as FR } from '@/components/Editor/langs/fr'
 import { indexify } from '@/functions/object'
 import { fillDefaults } from '@/components/Editor/functions/fields'
 import { EditorComponent } from '@/components/Editor/editor'
-import React, { render } from 'preact/compat'
+import React from 'react'
 import { StoreProvider } from '@/components/Editor/store'
 import { InsertPosition } from '@/components/Editor/enum'
+import { createRoot } from 'react-dom/client'
+import { jsonFetchOrFlash } from '@/functions/api'
+// Components
+import { Text } from '@/components/Editor/fields/Text'
+import { Field } from '@/components/Editor/components/ui'
+import { Checkbox } from '@/components/Editor/fields/Checkbox'
+import { Repeater } from '@/components/Editor/fields/Repeater'
+import { ImageUrl } from '@/components/Editor/fields/ImageUrl'
+import { HTMLText } from '@/components/Editor/fields/HTMLText'
+import { Color } from '@/components/Editor/fields/Color'
+import { Row } from '@/components/Editor/fields/Row'
+import { Alignment } from '@/components/Editor/fields/Alignment'
+import { Select } from '@/components/Editor/fields/Select'
+import { Number } from '@/components/Editor/fields/Number'
+import { Range } from '@/components/Editor/fields/Range'
+import { Tabs } from '@/components/Editor/fields/Tabs'
+import { DatePicker } from '@/components/Editor/fields/DatePicker'
+import { TextAlign } from '@/components/Editor/fields/TextAlign'
 
 const components: EditorComponentDefinitions = {}
 const templates: EditorComponentTemplate[] = []
 
-export default class Editor {
+export class Editor {
   static i18n: Translation = EN
+  jsonFetchOrFlash = jsonFetchOrFlash
 
   constructor(options: { lang?: Translation } = {}) {
     Editor.i18n = options.lang || EN
+  }
+
+  toFrench() {
+    Editor.i18n = FR
+  }
+
+  toEnglish() {
+    Editor.i18n = EN
+  }
+
+  onBrowse = async () => {
+    function setAttachment(attachment: any) {
+      const changeEvent = document.createEvent('HTMLEvents')
+      changeEvent.initEvent('change', false, true)
+      return attachment.id
+    }
+
+    return new Promise(function (resolve) {
+      const modal = document.createElement('modal-dialog')
+      modal.style.zIndex = '20000'
+      modal.setAttribute('overlay-close', 'overlay-close')
+      const fm = document.createElement('file-manager')
+      fm.setAttribute('data-endpoint', '/admin/attachment')
+      modal.appendChild(fm)
+      fm.addEventListener('file', (e: any) => {
+        resolve(setAttachment(e.detail))
+      })
+      document.body.appendChild(modal)
+    })
   }
 
   defineElement(elementName: string = 'editor-builder') {
@@ -99,9 +147,9 @@ export default class Editor {
         const data = this.parseValue(this._value)
         const hiddenCategories =
           this.getAttribute('hidden-categories')?.split(';') ?? []
-        render(
+        createRoot(this).render(
           <StoreProvider
-            defaultData={data}
+            data={data}
             definitions={components}
             templates={templates}
             hiddenCategories={hiddenCategories}
@@ -131,7 +179,6 @@ export default class Editor {
               }}
             />
           </StoreProvider>,
-          this,
         )
       }
     }
@@ -145,5 +192,25 @@ export default class Editor {
 
   registerTemplate(template: EditorComponentTemplate) {
     templates.push(template)
+  }
+
+  fields() {
+    return {
+      Text,
+      Field,
+      Checkbox,
+      Repeater,
+      ImageUrl,
+      HTMLText,
+      Color,
+      Row,
+      Alignment,
+      Select,
+      Number,
+      Range,
+      Tabs,
+      DatePicker,
+      TextAlign,
+    }
   }
 }

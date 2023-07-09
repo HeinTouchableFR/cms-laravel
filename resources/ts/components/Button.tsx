@@ -1,13 +1,13 @@
 import { classNames } from '@/functions/dom'
 import Loader from '@/components/Loader'
-import { PropsWithChildren } from 'preact/compat'
+import { PropsWithChildren } from 'react'
 
 type Props = PropsWithChildren<{
   className?: string
   size?: string
   loading?: boolean
   disabled?: boolean
-  onClick?: () => void
+  onClick?: (e?: any) => void | undefined
   type?: 'button' | 'submit' | 'reset' | undefined
 }>
 

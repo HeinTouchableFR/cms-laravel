@@ -1,16 +1,27 @@
-import { Button } from '@/components/Button'
-import Icon from '@/components/Icon'
 import { Preview } from '@/components/Editor/components/Preview/Preview'
 import { EditorComponentData } from '@/components/Editor/types'
-import { useData, useUpdateData } from '@/components/Editor/store'
 import {
-  useStateDelayed,
+  useData,
+  useSetSidebarWidth,
+  useSidebarWidth,
+  useUpdateData,
+} from '@/components/Editor/store'
+import {
   useStopPropagation,
+  useToggle,
   useUpdateEffect,
 } from '@/functions/hooks'
 import { stringifyFields } from '@/functions/object'
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import React, {
+  SyntheticEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { useClipboardPaste } from '@/components/Editor/hooks/useClipboardPaste'
+import { Sidebar } from '@/components/Editor/components/Sidebar/Sidebar'
+import { BlocSelector } from '@/components/Editor/components/Blocs/BlocSelector'
 
 type Props = {
   value: EditorComponentData[]
@@ -35,9 +46,10 @@ export function EditorComponent({
   const updateData = useUpdateData()
   const data = useData()
 
-  const visible = useStateDelayed(visibleProps)
+  //const visible = useStateDelayed(visibleProps)
+  const [visible, toggleVisible] = useToggle(false)
   const handleClose = () => {
-    element.dispatchEvent(new Event('close'))
+    toggleVisible()
   }
   const doNothing = () => null // React wants handler :(
   // JSON nettoyé
@@ -60,63 +72,76 @@ export function EditorComponent({
   const div = useRef<HTMLDivElement>(null)
   useStopPropagation(div, ['change', 'close'])
 
-  if (!visible) {
-    return (
-      <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
+  const sidebarWidth = useSidebarWidth()
+  const [sidebarCollapsed, toggleSidebar] = useToggle(false)
+  const showResizeControl = !sidebarCollapsed
+  const [drag, setDrag] = useState(false)
+  const setSidebarWidth = useSetSidebarWidth()
+  const handleMouseDown = (e: SyntheticEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setDrag(true)
+    const listener = (e: MouseEvent) => {
+      setSidebarWidth(Math.round((100 * e.clientX) / window.innerWidth))
+    }
+    document.documentElement.addEventListener('mousemove', listener)
+    document.documentElement.addEventListener(
+      'mouseup',
+      () => {
+        setDrag(false)
+        document.documentElement.removeEventListener('mousemove', listener)
+      },
+      { once: true },
     )
   }
 
   return (
     <div>
-      <div className={`editor`}>
-        <div className='editor__sidebar'>
-          <div className='editor__sidebar-header'>
-            <button
-              className='editor__sidebar-header-icon-button'
-              type={'button'}
-            >
-              <Icon name={'cross'} />
-            </button>
-            <div className='editor__sidebar-header-actions'>
-              <button
-                className='editor__sidebar-header-icon-button'
-                type={'button'}
-                aria-label='Utilisez un template'
-              >
-                <Icon name={'template'} />
-              </button>
-              <button
-                className='editor__sidebar-header-icon-button'
-                type={'button'}
-                aria-label='Copier le contenu de la page'
-              >
-                <Icon name={'copy'} />
-              </button>
-              <button
-                className='editor__sidebar-header-icon-button'
-                type={'button'}
-                aria-label='Vue responsive'
-              >
-                <Icon name={'responsive'} />
-              </button>
-              <Button type={'button'}>
-                <Icon additionalClass={`m-right-1`} name={'plus'} size={20} />
-                Ajouter un bloc
-              </Button>
+      <button
+        className={'btn primary-outlined m-top-3'}
+        type={'button'}
+        onClick={toggleVisible}
+      >
+        Éditer le contenu
+      </button>
+      {visible && (
+        <div
+          className={`editor`}
+          style={{ '--sidebar': `${sidebarWidth}vw` } as React.CSSProperties}
+        >
+          <Sidebar data={data} onClose={handleClose} />
+          {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
+          {showResizeControl && (
+            <div className='editor__resize-bar' onMouseDown={handleMouseDown}>
+              {drag && <div className='editor__resize-bar-overlay'></div>}
             </div>
-          </div>
-          <div className='editor__sidebar-header-content'></div>
-          <div className='editor__sidebar-footer'>
-            <Button type={'submit'}>
-              <Icon additionalClass={`m-right-1`} name={'save'} size={20} />
-              Sauvegarder
-            </Button>
-          </div>
+          )}
+          <BlocSelector iconsUrl={iconsUrl} />
         </div>
-        {previewUrl && <Preview data={data} previewUrl={previewUrl} />}
-        <div className='editor__resize-bar'></div>
-      </div>
-      <textarea hidden name={name}></textarea>
+      )}
+      <textarea hidden name={name} value={cleanedData} onChange={doNothing} />
     </div>
   )
 }
+
+// Exporte les champs
+export { Text } from '@/components/Editor/fields/Text'
+export { Field } from '@/components/Editor/components/ui'
+export { Checkbox } from '@/components/Editor/fields/Checkbox'
+export { Repeater } from '@/components/Editor/fields/Repeater'
+export { ImageUrl } from '@/components/Editor/fields/ImageUrl'
+export { HTMLText } from '@/components/Editor/fields/HTMLText'
+export { Color } from '@/components/Editor/fields/Color'
+export { Row } from '@/components/Editor/fields/Row'
+export { Alignment } from '@/components/Editor/fields/Alignment'
+export { Select } from '@/components/Editor/fields/Select'
+export { Number } from '@/components/Editor/fields/Number'
+export { Range } from '@/components/Editor/fields/Range'
+export { Tabs } from '@/components/Editor/fields/Tabs'
+export { DatePicker } from '@/components/Editor/fields/DatePicker'
+export { TextAlign } from '@/components/Editor/fields/TextAlign'
+export { Translations as FR } from '@/components/Editor/langs/fr'
+export { Translations as EN } from '@/components/Editor/langs/en'
+export { defineField, defineFieldGroup } from '@/components/Editor/fields/utils'
+export { FieldsRenderer } from '@/components/Editor/components/Sidebar/FieldsRenderer'
+export { React }

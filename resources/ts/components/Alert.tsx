@@ -1,7 +1,6 @@
 import Icon from '@/components/Icon'
 import { slideUp } from '@/functions/animation'
-import { useEffect, useRef, useState } from 'preact/hooks'
-import { PropsWithChildren } from 'preact/compat'
+import { PropsWithChildren, useEffect, useRef, useState } from 'react'
 
 type Props = PropsWithChildren<{
   type?: string

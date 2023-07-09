@@ -49,14 +49,14 @@ class DashboardController extends Controller
 
     public function retry_job(FailedJob $job): RedirectResponse
     {
-        Artisan::call('queue:retry ' . $job->uuid);
+        Artisan::call('queue:retry '.$job->uuid);
 
         return to_route('admin.index')->with('success', 'La tâche a bien été relancée');
     }
 
     public function destroy_job(FailedJob $job): RedirectResponse
     {
-        Artisan::call('queue:forget ' . $job->uuid);
+        Artisan::call('queue:forget '.$job->uuid);
 
         return to_route('admin.index')->with('success', 'La tâche a bien été supprimée');
     }

@@ -1,7 +1,6 @@
-import { useContext } from 'preact/hooks'
+import { PropsWithChildren, useContext } from 'react'
 import { Field } from '../Field/Field'
 import { FormContext } from './Form'
-import { PropsWithChildren } from 'preact/compat'
 
 type Props = PropsWithChildren<{
   name: string

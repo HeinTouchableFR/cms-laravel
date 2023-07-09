@@ -1,4 +1,4 @@
-import { useRef, useState } from 'preact/hooks'
+import { useRef, useState } from 'react'
 import { SlideIn } from '@/components/Animation/SlideIn'
 import { loadNotifications } from '@/api/notifications'
 import { isAuthenticated, lastNotificationRead } from '@/functions/auth'

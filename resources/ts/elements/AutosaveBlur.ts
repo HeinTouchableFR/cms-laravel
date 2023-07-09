@@ -1,6 +1,4 @@
 import { jsonFetchOrFlash } from '@/functions/api'
-import preactCustomElement from '@/functions/preact'
-import Loader from '@/components/Loader'
 
 export default class AutosaveBlur {
   /**
@@ -23,7 +21,7 @@ export default class AutosaveBlur {
 
       save() {
         if (!customElements.get('loader-element')) {
-          preactCustomElement('loader-element', Loader, null, null)
+          //preactCustomElement('loader-element', Loader, null, null)
         }
         const loader = document.createElement('loader-element')
         this.style.position = 'relative'

@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-require __DIR__ . '/auth.php';
-require __DIR__ . '/admin.php';
+require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';
 
 if (Schema::hasTable('extensions')) {
     $extensions = Extension::where('active', 1)->get();
@@ -38,6 +38,7 @@ Route::get('/sitemap.xml', [PageController::class, 'sitemap'])->name('sitemap')-
 Route::get('/robots.txt', [PageController::class, 'robots'])->name('robots')->middleware('lscache:no-cache');
 Route::get('/csrf', function () {
     $response = csrf_token();
+
     return response($response, 200);
 })->middleware('lscache:private;max-age=900');
 

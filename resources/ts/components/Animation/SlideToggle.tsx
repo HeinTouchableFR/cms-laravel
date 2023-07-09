@@ -1,6 +1,5 @@
-import { useRef, useState } from 'preact/hooks'
 import { useAsyncEffect } from '@/functions/hooks'
-import { CSSProperties, PropsWithChildren } from 'preact/compat'
+import { CSSProperties, PropsWithChildren, useRef, useState } from 'react'
 
 type SlideToggleProps = PropsWithChildren<{
   visible: boolean

@@ -15,19 +15,7 @@ declare global {
     plausible: any
     cms: any
     hljs: any
-  }
-}
-
-declare module 'preact' {
-  namespace JSX {
-    interface IntrinsicElements {
-      'alert-message': any
-      'time-countdown': any
-      'time-ago': any
-      'skeleton-box': any
-      'drop-down': any
-      'modal-dialog': any
-    }
+    editor: any
   }
 }
 

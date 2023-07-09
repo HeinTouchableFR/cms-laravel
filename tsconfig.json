@@ -26,7 +26,6 @@
         "noEmit": true,
         "baseUrl": ".",
         "jsx": "react-jsx",
-        "jsxImportSource": "preact",
         "paths": {
             "@/components/*": [
                 "resources/ts/components/*"

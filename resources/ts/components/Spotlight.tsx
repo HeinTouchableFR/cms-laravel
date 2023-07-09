@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useState } from 'react'
 import '@css/modules/admin/_spotlight.scss'
 import { useToggle } from '@/functions/hooks'
 import { classNames } from '@/functions/dom'

@@ -34,19 +34,14 @@
             @include('shared.switch', ['label' => 'En ligne ?', 'name' => 'online', 'value' => $template->online, 'current' => true])
             @include('shared.input', ['label' => 'Date de publication', 'name' => 'created_at', 'value' => $template->created_at, 'type' => 'datepicker'])
             @include('shared.select', ['label' => 'Type de modèle', 'name' => 'type', 'value' => $template->type, 'options' => array((object) ['key' => 'header','label' => 'En-tête'],(object) ['key' => 'footer','label' => 'Pied de page'],(object) ['key' => 'template','label' => 'Modèle'])])
-            <div x-data="{open: false}">
-                <button @click="open = true" type="button" class="btn primary">Éditer le contenu</button>
-                <editor-builder
-                    :hidden="open === false"
-                    @close="open = false"
-                    id="content"
-                    name="content"
-                    preview="{{ route('admin.preview.template') }}"
-                    mode="template"
-                    iconsUrl="/themes/{{ theme() }}/assets/editor/[name].svg"
-                    value="{{ $template->content ?: '[]' }}"
-                ></editor-builder>
-            </div>
+            <editor-builder
+                id="content"
+                name="content"
+                preview="{{ route('admin.preview.template') }}"
+                mode="template"
+                iconsUrl="/themes/{{ theme() }}/assets/editor/[name].svg"
+                value="{{ $template->content ?: '[]' }}"
+            ></editor-builder>
             <div class="full m-top-2">
                 <button type="submit" class="btn primary">Sauvegarder</button>
             </div>

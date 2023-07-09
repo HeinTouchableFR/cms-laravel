@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ApiError, jsonFetch } from "./api";
 import { strToDom } from "./dom";
 import { debounce } from "./timers";
 import { uniqId } from "./string";
 import Alert from "@/elements/Alert";
-import { RefObject } from "preact/compat";
 
 /**
  * Alterne une valeur

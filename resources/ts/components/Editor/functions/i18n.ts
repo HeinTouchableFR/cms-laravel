@@ -1,7 +1,7 @@
 import { TranslationKey } from '@/components/Editor/types'
-import { EditorComponent } from '@/components/Editor/editor'
+import { Editor } from '@/elements/Editor'
 
 export function t(key: TranslationKey): string {
   //@ts-ignore
-  return EditorComponent.i18n[key]
+  return Editor.i18n[key]
 }
