@@ -1,8 +1,8 @@
 @use '../../tools/_functions.scss';
 
 .editor {
-    --sidebar: 600px;
-    --clampedSidebar: clamp(450px, var(--sidebar), calc(100vw - 375px));
+    --sidebar: 620px;
+    --clampedSidebar: clamp(470px, var(--sidebar), calc(100vw - 375px));
     box-sizing: border-box;
     isolation: isolate;
     font-size: var(--step-0);
@@ -121,7 +121,7 @@
 
                 strong {
                     display: block;
-                    color: var(--color-dark);
+                    color: var(--contrast);
                     font-weight: bold;
                     font-size: 1.1em;
                 }
@@ -1858,10 +1858,10 @@
 
         .editor__modal-content-title {
             font-size: 1.5rem;
-            font-weight: 500;
+            font-weight: bold;
             margin: 0;
             padding: 0;
-            color: var(--color-dark);
+            color: var(--contrast);
         }
 
         .editor__modal-content-close {
