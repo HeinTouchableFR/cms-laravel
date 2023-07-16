@@ -8,6 +8,7 @@ use App\Models\Attachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class AttachmentController extends Controller
 {
@@ -20,8 +21,8 @@ class AttachmentController extends Controller
             ->orderBy('year', 'DESC')
             ->get();
 
-        return array_map(fn (array $row) => [
-            'path' => $row['year'].'/'.str_pad((string) $row['month'], 2, '0', STR_PAD_LEFT),
+        return array_map(fn(array $row) => [
+            'path' => $row['year'] . '/' . str_pad((string)$row['month'], 2, '0', STR_PAD_LEFT),
             'count' => $row['count'],
         ], json_decode($data->toJson(), true));
     }
@@ -42,7 +43,7 @@ class AttachmentController extends Controller
 
     public function search(string $q): \Illuminate\Support\Collection
     {
-        return Attachment::where('filename', 'LIKE', '%'.$q.'%')
+        return Attachment::where('filename', 'LIKE', '%' . $q . '%')
             ->orderBy('created_at', 'DESC')
             ->limit(25)
             ->get();
@@ -67,36 +68,6 @@ class AttachmentController extends Controller
             ->get();
     }
 
-    public function update(?Attachment $attachment, UploadAttachmentRequest $request): array
-    {
-        $validated = $request->validated();
-
-        if (! $validated) {
-            return [];
-        }
-
-        if (null === $attachment) {
-            $attachment = new Attachment();
-        }
-
-        $file = $request->file('file');
-        $path = $file?->store('attachments', 'public');
-
-        $attachment->filename = (string) $path;
-        $attachment->filesize = (int) $file?->getSize();
-
-        $attachment->id ? $attachment->syncChanges() : $attachment->save();
-
-        return $this->normalize($attachment);
-    }
-
-    public function destroy(Attachment $attachment): \Illuminate\Http\JsonResponse
-    {
-        $attachment->delete();
-
-        return response()->json([]);
-    }
-
     public function normalize(Attachment $attachment): array
     {
         $info = pathinfo($attachment->filename);
@@ -112,5 +83,37 @@ class AttachmentController extends Controller
             'url' => $disk->url($attachment->filename),
             'thumbnail' => $attachment->resize(250, 100),
         ];
+    }
+
+    public function update(?Attachment $attachment, UploadAttachmentRequest $request): array
+    {
+        $validated = $request->validated();
+
+        if (!$validated) {
+            return [];
+        }
+
+        if (null === $attachment) {
+            $attachment = new Attachment();
+        }
+
+        $file = $request->file('file');
+        //$path = $file?->store('attachments', ['disk' => 'public', 'filename' => 'json']);
+        $path = $file?->storeAs('public/attachments', Str::random(40) . '.' . $file->getClientOriginalExtension());
+        $path = str_replace('public/', '', $path);
+
+        $attachment->filename = (string)$path;
+        $attachment->filesize = (int)$file?->getSize();
+
+        $attachment->id ? $attachment->syncChanges() : $attachment->save();
+
+        return $this->normalize($attachment);
+    }
+
+    public function destroy(Attachment $attachment): \Illuminate\Http\JsonResponse
+    {
+        $attachment->delete();
+
+        return response()->json([]);
     }
 }

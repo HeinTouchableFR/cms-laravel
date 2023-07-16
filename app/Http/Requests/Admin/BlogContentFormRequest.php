@@ -27,9 +27,9 @@ class BlogContentFormRequest extends FormRequest
             'description' => [''],
             'content' => [''],
             'online' => ['boolean'],
-            'tags' => [''],
             'attachment_id' => [''],
             'category_id' => ['required', 'exists:categories,id'],
+            'tags' => [''],
             'created_at' => ['required'],
         ];
     }

@@ -28,6 +28,8 @@ class PortfolioFormRequest extends FormRequest
             'content' => [''],
             'online' => ['boolean'],
             'attachment_id' => [''],
+            'category_id' => ['required', 'exists:categories,id'],
+            'tags' => [''],
             'created_at' => ['required'],
         ];
     }

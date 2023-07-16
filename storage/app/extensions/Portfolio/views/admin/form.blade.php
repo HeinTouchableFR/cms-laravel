@@ -33,6 +33,19 @@
             @include('shared.attachment', ['label' => 'Image', 'name' => 'attachment_id', 'value' => $portfolio->attachment?->id, 'preview' => $portfolio->attachment?->filename])
             @include('shared.switch', ['label' => 'En ligne ?', 'name' => 'online', 'value' => $portfolio->online, 'current' => true])
             @include('shared.input', ['label' => 'Date de publication', 'name' => 'created_at', 'value' => $portfolio->created_at, 'type' => 'datepicker'])
+            @include('shared.select', ['label' => 'Catégorie', 'name' => 'category_id', 'value' => $portfolio->category_id, 'options' => $categories->map(fn($c) => (object)['key' => $c->id,'label' => $c->name])])
+            <div class="form-group">
+                <label for="tags" id="post_form_tags-ts-label">Tags</label>
+                <input type="text"
+                       id="tags"
+                       name="tags"
+                       is="input-choices"
+                       data-remote="{{route('admin.tag.search')}}"
+                       data-value="name"
+                       data-label="name"
+                       value="{{ $tags ?: '' }}"
+                >
+            </div>
             <editor-builder
                 id="content"
                 name="content"

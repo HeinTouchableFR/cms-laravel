@@ -571,7 +571,7 @@
 
                 &:checked + label::after {
                     background: var(--color-light);
-                    transform: translateX(17px);
+                    transform: translateX(17px) translateY(-50%);
                 }
             }
 
@@ -596,13 +596,14 @@
                 &::after {
                     position: absolute;
                     content: '';
-                    top: 2px;
+                    top: 50%;
                     left: 2px;
                     border-radius: 16px;
                     width: 16px;
                     height: 16px;
                     background: var(--color);
                     transition: .3s;
+                    transform: translateY(-50%);
                 }
             }
         }

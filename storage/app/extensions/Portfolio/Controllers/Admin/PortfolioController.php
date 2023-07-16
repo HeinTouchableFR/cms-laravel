@@ -3,7 +3,9 @@
 namespace Extensions\Portfolio\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Content;
+use App\Models\Tag;
 use Extensions\Portfolio\Requests\Admin\PortfolioFormRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -32,6 +34,8 @@ class PortfolioController extends Controller
 
         return view('Portfolio.views.admin.form', [
             'portfolio' => $portfolio,
+            'categories' => Category::all(),
+            'tags' => '',
             'menu' => route('admin.portfolio.index'),
         ]);
     }
@@ -46,8 +50,29 @@ class PortfolioController extends Controller
         $portfolio->type = 'portfolio';
         $portfolio->fill($request->validated());
         $portfolio->save();
+        $portfolio->tags()->sync($this->reverseTagTransform($request->validated('tags')));
 
         return to_route('admin.portfolio.index')->with('success', 'Le contenu a bien été créé');
+    }
+
+    public function reverseTagTransform(?string $value): \Illuminate\Support\Collection|array
+    {
+        if (empty($value)) {
+            return [];
+        }
+
+        // On construit un tableau contenant les noms des tags en clef et la version en valeur
+        $versions = [];
+        $tags = explode(',', $value);
+        foreach ($tags as $tag) {
+            $parts = explode(':', trim($tag));
+            if (!empty($parts[0])) {
+                $versions[$parts[0]] = $parts[1] ?? null;
+            }
+        }
+
+        // On trouve les tags depuis la base de données
+        return Tag::whereIn('name', array_keys($versions))->get();
     }
 
     /**
@@ -57,8 +82,19 @@ class PortfolioController extends Controller
     {
         return view('Portfolio.views.admin.form', [
             'portfolio' => $portfolio,
+            'categories' => Category::all(),
+            'tags' => $this->tagTransform($portfolio->tags()->get()->toArray()),
             'menu' => route('admin.portfolio.index'),
         ]);
+    }
+
+    public function tagTransform(array $array): ?string
+    {
+        if (!is_array($array)) {
+            return null;
+        }
+
+        return implode(',', array_map(fn($tag): ?string => $tag['name'], $array));
     }
 
     /**
@@ -67,6 +103,7 @@ class PortfolioController extends Controller
     public function update(PortfolioFormRequest $request, Content $portfolio): RedirectResponse
     {
         $portfolio->update($request->validated());
+        $portfolio->tags()->sync($this->reverseTagTransform($request->validated('tags')));
 
         return to_route('admin.portfolio.index')->with('success', 'Le contenu a bien été modifié');
     }

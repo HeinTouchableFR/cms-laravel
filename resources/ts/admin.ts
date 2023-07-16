@@ -1,5 +1,5 @@
 import '../css/admin.scss'
-import FileManager from '@heintouchable/filemanager'
+import FileManager from '@/elements/FileManager'
 import '@grafikart/drop-files-element'
 import DatePickerElement from '@/elements/DatePicker'
 import AutosaveBlurElement from '@/elements/AutosaveBlur'
