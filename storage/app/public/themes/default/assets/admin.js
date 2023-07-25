@@ -1,23 +1,6 @@
-import { jsonFetchOrFlash } from 'https://unpkg.com/@heintouchable/functions@0.0.5/Functions.standalone.js'
-import {
-  Checkbox,
-  Color,
-  Editor,
-  FR,
-  HTMLText,
-  ImageUrl,
-  Range,
-  Repeater,
-  Row,
-  Select,
-  Tabs,
-  Text,
-  TextAlign,
-} from './Editor.standalone.js'
-
-let editor = new Editor({
-  lang: FR,
-})
+let editor = window.editor
+editor.toFrench()
+const fields = editor.fields()
 
 const visualEditor = document.querySelector('editor-builder')
 if (visualEditor) {
@@ -37,165 +20,245 @@ if (visualEditor) {
     background: 'var(--background)',
   }
 
-  const setAttachment = attachment => {
-    const changeEvent = document.createEvent('HTMLEvents')
-    changeEvent.initEvent('change', false, true)
-    return attachment.id
-  }
-
-  const onBrowse = async () => {
-    return new Promise(function (resolve, reject) {
-      const modal = document.createElement('modal-dialog')
-      modal.style.zIndex = 20000
-      modal.setAttribute('overlay-close', 'overlay-close')
-      const fm = document.createElement('file-manager')
-      fm.setAttribute('data-endpoint', '/admin/attachment')
-      modal.appendChild(fm)
-      fm.addEventListener('file', e => {
-        resolve(setAttachment(e.detail))
-        modal.close()
-      })
-      document.body.appendChild(modal)
-    })
-  }
-
   const appearances = (defaultPadding = 0) => {
     const background = [
-      Color('backgroundColor', {
+      fields.Color('backgroundColor', {
         label: 'Fond',
         colors: Object.values(colors),
       }),
-      ImageUrl('backgroundDesktop', {
+      fields.ImageUrl('backgroundDesktop', {
         label: 'Image de fond',
         default: '',
-        onBrowse: onBrowse,
+        onBrowse: editor.onBrowse,
       }),
-      ImageUrl('backgroundMobile', {
+      fields.ImageUrl('backgroundMobile', {
         label: 'Image de fond (Mobile)',
         default: '',
-        onBrowse: onBrowse,
+        onBrowse: editor.onBrowse,
       }),
     ]
 
     return [
-      Text('id', {
+      fields.Text('id', {
         label: 'ID',
         multiline: false,
       }),
-      Range('padding', {
+      fields.Range('padding', {
         label: 'Padding vertical',
         default: defaultPadding,
         min: 0,
         max: 6,
         step: 1,
       }),
-      Checkbox('animate', {
+      fields.Checkbox('animate', {
         label: 'Element animé',
         default: false,
       }),
-      Row(background),
-      Row([
-        Color('titleColor', {
+      fields.Row(background),
+      fields.Row([
+        fields.Color('titleColor', {
           label: 'Couleur des titres',
           colors: Object.values(colors),
           default: colors.contrast,
         }),
-        Color('textColor', {
+        fields.Color('textColor', {
           label: 'Couleur des textes',
           colors: Object.values(colors),
           default: colors.colorDark,
         }),
-        Range('titleFontSize', {
+      ]),
+      fields.Row([
+        fields.Range('titleFontSize', {
           label: "Taille d'écriture des titres",
           min: 1,
           max: 8,
           step: 1,
+          default: 2,
         }),
-        Range('fontSize', {
+        fields.Range('fontSize', {
           label: "Taille d'écriture",
           min: 1,
           max: 8,
           step: 1,
+          default: 1,
         }),
       ]),
-      Row([
-        Select('backgroundSize', {
-          label: "Taille de l'image",
-          default: '',
+      fields
+        .Row([
+          fields.Select('backgroundSize', {
+            label: "Taille de l'image",
+            default: '',
+            options: [
+              {
+                value: 'cover',
+                label: 'Remplir',
+              },
+              {
+                value: 'contain',
+                label: 'Contenir',
+              },
+              {
+                value: 'auto',
+                label: 'Original',
+              },
+            ],
+          }),
+          fields.Select('backgroundRepeat', {
+            label: 'Répétition',
+            default: '',
+            options: [
+              {
+                value: 'no-repeat',
+                label: 'Aucune',
+              },
+              {
+                label: 'X',
+                value: 'repeat-x',
+              },
+              {
+                label: 'Y',
+                value: 'repeat-y',
+              },
+              {
+                label: 'X & Y',
+                value: 'repeat',
+              },
+            ],
+          }),
+          fields.Select('backgroundXPosition', {
+            label: 'Position (X)',
+            default: '',
+            options: [
+              {
+                value: 'left',
+                label: 'Gauche',
+              },
+              {
+                value: 'center',
+                label: 'Centrer',
+              },
+              {
+                value: 'right',
+                label: 'Droite',
+              },
+            ],
+          }),
+          fields.Select('backgroundYPosition', {
+            label: 'Position (Y)',
+            default: '',
+            options: [
+              {
+                value: 'top',
+                label: 'Haut',
+              },
+              {
+                value: 'center',
+                label: 'Centrer',
+              },
+              {
+                value: 'bottom',
+                label: 'Bas',
+              },
+            ],
+          }),
+        ])
+        .when('backgroundDesktop', true),
+    ]
+  }
+
+  const link = (options = {}) => {
+    return [
+      fields.Text('label', {
+        label: 'Label',
+        help: 'Laisser vide pour garder le nom de la page',
+        multiline: false,
+      }),
+      fields.Select('type', {
+        label: 'Type de lien',
+        default: 'internal',
+        options: [
+          {
+            label: 'Lien interne',
+            value: 'internal',
+          },
+          {
+            label: 'Lien externe',
+            value: 'external',
+          },
+        ],
+      }),
+      fields
+        .Select('url', {
+          label: 'Page ou article',
           options: [
             {
-              value: 'cover',
-              label: 'Remplir',
+              value: '',
+              label: '',
             },
             {
-              value: 'contain',
-              label: 'Contenir',
+              value: JSON.stringify({
+                path: 'home',
+                label: 'Accueil',
+              }),
+              label: 'Accueil',
             },
             {
-              value: 'auto',
-              label: 'Original',
+              value: JSON.stringify({
+                path: 'blog.index',
+                label: 'Blog',
+              }),
+              label: 'Blog',
             },
+            {
+              value: JSON.stringify({
+                path: 'portfolio.index',
+                label: 'Portfolio',
+              }),
+              label: 'Portfolio',
+            },
+            ...options,
           ],
+        })
+        .when('type', 'internal'),
+      fields
+        .Text('url', {
+          label: 'URL',
+          multiline: false,
+        })
+        .when('type', 'external'),
+    ]
+  }
+
+  const shape = (suffix = '') => {
+    return [
+      fields.Row([
+        fields.Checkbox(`enableShape${suffix}`, {
+          label: 'Vague',
         }),
-        Select('backgroundRepeat', {
-          label: 'Répétition',
-          default: '',
-          options: [
-            {
-              value: 'no-repeat',
-              label: 'Aucune',
-            },
-            {
-              label: 'X',
-              value: 'repeat-x',
-            },
-            {
-              label: 'Y',
-              value: 'repeat-y',
-            },
-            {
-              label: 'X & Y',
-              value: 'repeat',
-            },
-          ],
-        }),
-        Select('backgroundXPosition', {
-          label: 'Position (X)',
-          default: '',
-          options: [
-            {
-              value: 'left',
-              label: 'Gauche',
-            },
-            {
-              value: 'center',
-              label: 'Centrer',
-            },
-            {
-              value: 'right',
-              label: 'Droite',
-            },
-          ],
-        }),
-        Select('backgroundYPosition', {
-          label: 'Position (Y)',
-          default: '',
-          options: [
-            {
-              value: 'top',
-              label: 'Haut',
-            },
-            {
-              value: 'center',
-              label: 'Centrer',
-            },
-            {
-              value: 'bottom',
-              label: 'Bas',
-            },
-          ],
-        }),
-      ]).when('backgroundDesktop', true),
+        fields
+          .Color(`colorShape${suffix}`, {
+            label: 'Couleur',
+            colors: Object.values(colors),
+            default: 'var(--color)',
+          })
+          .when(`enableShape${suffix}`, true),
+        fields
+          .Select(`directionShape${suffix}`, {
+            label: 'Direction',
+            default: 'top',
+            options: [
+              {
+                label: 'Haut',
+                value: 'top',
+              },
+              {
+                label: 'Bas',
+                value: 'bottom',
+              },
+            ],
+          })
+          .when(`enableShape${suffix}`, true),
+      ]),
     ]
   }
 
@@ -204,22 +267,22 @@ if (visualEditor) {
       title: 'Hero',
       category: 'Colonnes',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Row([
-                Text('title', {
+              fields.Row([
+                fields.Text('title', {
                   label: 'Titre',
                   default: 'Lorem ipsum dolor sit amet',
                   multiline: false,
                 }),
-                TextAlign('titleAlign', {
+                fields.TextAlign('titleAlign', {
                   label: 'Alignement',
                   default: 'center',
                 }),
               ]),
-              HTMLText('content', {
+              fields.HTMLText('content', {
                 label: 'Contenu',
                 multiline: true,
                 allowHeadings: true,
@@ -227,16 +290,16 @@ if (visualEditor) {
                 default:
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
               }),
-              Repeater('buttons', {
+              fields.Repeater('buttons', {
                 addLabel: 'Ajouter un bouton',
                 fields: [
-                  Text('label', {
+                  fields.Text('label', {
                     label: 'Label',
                     default: 'Call to action',
                     multiline: false,
                   }),
-                  Text('url', { label: 'URL', multiline: false }),
-                  Select('style', {
+                  fields.Text('url', { label: 'URL', multiline: false }),
+                  fields.Select('style', {
                     label: 'Style de bouton',
                     default: 'primary',
                     options: [
@@ -268,11 +331,11 @@ if (visualEditor) {
       title: 'Crédit',
       category: 'Footer',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              HTMLText('credit', {
+              fields.HTMLText('credit', {
                 label: 'Crédit',
                 multiline: true,
                 allowHeadings: true,
@@ -280,39 +343,9 @@ if (visualEditor) {
                 default:
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
               }),
-              Repeater('links', {
+              fields.Repeater('links', {
                 addLabel: 'Ajouter un lien',
-                fields: [
-                  Text('label', {
-                    label: 'Label',
-                    help: 'Laisser vide pour garder le nom de la page',
-                    multiline: false,
-                  }),
-                  Select('url', {
-                    label: 'Page ou article',
-                    options: [
-                      {
-                        value: '',
-                        label: '',
-                      },
-                      {
-                        value: JSON.stringify({
-                          path: 'home',
-                          label: 'Accueil',
-                        }),
-                        label: 'Accueil',
-                      },
-                      {
-                        value: JSON.stringify({
-                          path: 'blog.index',
-                          label: 'Blog',
-                        }),
-                        label: 'Blog',
-                      },
-                      ...options,
-                    ],
-                  }),
-                ],
+                fields: [...link(options)],
               }),
             ],
           },
@@ -330,47 +363,17 @@ if (visualEditor) {
       title: 'Header',
       category: 'Template',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Checkbox('auth', {
+              fields.Checkbox('auth', {
                 label: 'Authentification',
                 default: false,
               }),
-              Repeater('links', {
+              fields.Repeater('links', {
                 addLabel: 'Ajouter un lien',
-                fields: [
-                  Text('label', {
-                    label: 'Label',
-                    help: 'Laisser vide pour garder le nom de la page',
-                    multiline: false,
-                  }),
-                  Select('url', {
-                    label: 'Page ou article',
-                    options: [
-                      {
-                        value: '',
-                        label: '',
-                      },
-                      {
-                        value: JSON.stringify({
-                          path: 'home',
-                          label: 'Accueil',
-                        }),
-                        label: 'Accueil',
-                      },
-                      {
-                        value: JSON.stringify({
-                          path: 'blog.index',
-                          label: 'Blog',
-                        }),
-                        label: 'Blog',
-                      },
-                      ...options,
-                    ],
-                  }),
-                ],
+                fields: [...link(options)],
               }),
             ],
           },
@@ -388,7 +391,7 @@ if (visualEditor) {
       title: 'Blog header',
       category: 'Template',
       fields: [
-        Tabs({
+        fields.Tabs({
           label: 'Apparence',
           fields: [...appearances(0)],
         }),
@@ -401,7 +404,7 @@ if (visualEditor) {
       title: 'Liste de tous les articles',
       category: 'Template',
       fields: [
-        Tabs({
+        fields.Tabs({
           label: 'Apparence',
           fields: [...appearances(0)],
         }),
@@ -414,22 +417,22 @@ if (visualEditor) {
       title: 'Test',
       category: 'Colonnes',
       fields: [
-        Tabs(
+        fields.Tabs(
           {
             label: 'Contenu',
             fields: [
-              Row([
-                Text('title', {
+              fields.Row([
+                fields.Text('title', {
                   label: 'Titre',
                   default: 'Lorem ipsum dolor sit amet',
                   multiline: false,
                 }),
-                TextAlign('titleAlign', {
+                fields.TextAlign('titleAlign', {
                   label: 'Alignement',
                   default: 'center',
                 }),
               ]),
-              HTMLText('content', {
+              fields.HTMLText('content', {
                 label: 'Contenu',
                 multiline: true,
                 allowHeadings: true,
@@ -437,7 +440,7 @@ if (visualEditor) {
                 default:
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
               }),
-              Repeater('items', {
+              fields.Repeater('items', {
                 addLabel: 'Ajouter une catégorie',
                 fields: [
                   Text('title', {
@@ -445,10 +448,10 @@ if (visualEditor) {
                     default: 'Lorem ipsum dolor sit amet',
                     multiline: false,
                   }),
-                  Repeater('sub_items', {
+                  fields.Repeater('sub_items', {
                     addLabel: 'Ajouter un test',
                     fields: [
-                      HTMLText('content', {
+                      fields.HTMLText('content', {
                         label: 'Contenu',
                         multiline: true,
                         allowHeadings: true,
@@ -456,11 +459,11 @@ if (visualEditor) {
                         default:
                           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum impedit laborum mollitia similique suscipit voluptatum.',
                       }),
-                      Checkbox('isTest', {
+                      fields.Checkbox('isTest', {
                         label: 'Test effectué',
                         default: false,
                       }),
-                      HTMLText('comment', {
+                      fields.HTMLText('comment', {
                         label: 'Commentaire',
                         multiline: true,
                         allowHeadings: true,
@@ -489,9 +492,10 @@ if (visualEditor) {
   }
 
   if (mode === 'template') {
-    jsonFetchOrFlash('/api/posts', {
-      method: 'GET',
-    })
+    editor
+      .jsonFetchOrFlash('/api/posts', {
+        method: 'GET',
+      })
       .then(data => {
         const options = []
         data['data'].map(post => {

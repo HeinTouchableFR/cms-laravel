@@ -9,7 +9,8 @@
 
 @section('content')
     <div class="container">
-        <a class="header__logo h2" href="{{ route('home') }}" {{ menu_active($menu, 'home') }} title="Accueil">
+        <a class="header__logo h2" style="color: {{ $bloc['titleColor'] }}" href="{{ route('home') }}"
+           {{ menu_active($menu, 'home') }} title="Accueil">
             {{ sitename() }}
         </a>
         <div class="header__spacer"></div>
@@ -17,9 +18,15 @@
             @foreach($bloc['links'] as $link)
                 @if($link['url'] !== '')
                     @php
-                        $json = json_decode($link['url'], true);
-                        $path = key_exists('slug', $json) ? route($json['path'], $json['slug']) : route($json['path']);
-                        $label = $link['label'] !== '' ? $link['label'] :  $json['label'];
+                        if($link['type'] == 'internal') {
+                            $json = json_decode($link['url'], true);
+                            $path = key_exists('slug', $json) ? route($json['path'], $json['slug']) : route($json['path']);
+                            $label = $link['label'] !== '' ? $link['label'] :  $json['label'];
+                        } else {
+                            $path = $link['url'];
+                            $label = $link['label'];
+                        }
+
                     @endphp
                     <li><a href="{{ $path }}" {{ menu_active($menu, $path) }}>{{ $label }}</a></li>
                 @endif
@@ -27,7 +34,7 @@
         </ul>
         <div class="header__spacer"></div>
         <ul class="header__actions">
-            @if($bloc['auth'])
+            @if(key_exists('auth', $bloc) && $bloc['auth'])
                 @guest
                     <li class="header__actions-auth">
                         <a href="{{ route('login') }}" {{ menu_active($menu, route('login')) }}>

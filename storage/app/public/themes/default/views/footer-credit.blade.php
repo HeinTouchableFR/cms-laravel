@@ -22,9 +22,15 @@
                     @foreach($bloc['links'] as $link)
                         @if($link['url'] !== '')
                             @php
-                                $json = json_decode($link['url'], true);
-                                $path = key_exists('slug', $json) ? route($json['path'], $json['slug']) : route($json['path']);
-                                $label = $link['label'] !== '' ? $link['label'] :  $json['label'];
+                                if($link['type'] == 'internal') {
+                                    $json = json_decode($link['url'], true);
+                                    $path = key_exists('slug', $json) ? route($json['path'], $json['slug']) : route($json['path']);
+                                    $label = $link['label'] !== '' ? $link['label'] :  $json['label'];
+                                } else {
+                                    $path = $link['url'];
+                                    $label = $link['label'];
+                                }
+
                             @endphp
                             <li><a href="{{ $path }}" {{ menu_active($menu, $path) }}>{{ $label }}</a></li>
                         @endif
