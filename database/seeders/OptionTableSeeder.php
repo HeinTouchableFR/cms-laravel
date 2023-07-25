@@ -19,7 +19,7 @@ class OptionTableSeeder extends Seeder
         Option::create(['key' => 'header', 'value' => '1']);
         Option::create(['key' => 'footer', 'value' => '2']);
         Option::create(['key' => 'homepage', 'value' => '3']);
-        Option::create(['key' => 'blog', 'value' => '4']);
+        Option::create(['key' => 'blog', 'value' => '']);
         Option::create(['key' => 'contact-email', 'value' => '']);
         Option::create(['key' => 'noreply-email', 'value' => '']);
         Option::create(['key' => 'sav-email', 'value' => '']);

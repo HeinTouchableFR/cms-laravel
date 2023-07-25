@@ -443,7 +443,7 @@ if (visualEditor) {
               fields.Repeater('items', {
                 addLabel: 'Ajouter une catégorie',
                 fields: [
-                  Text('title', {
+                  fields.Text('title', {
                     label: 'Titre',
                     default: 'Lorem ipsum dolor sit amet',
                     multiline: false,
