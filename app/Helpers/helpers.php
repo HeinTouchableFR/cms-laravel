@@ -156,7 +156,7 @@ if (!function_exists('menu_active')) {
 }
 
 if (!function_exists('imageTag')) {
-    function imageTag(string $entity, ?int $width = null, ?int $height = null, ?string $class = null): ?string
+    function imageTag(string $entity, ?string $alt = null, ?int $width = null, ?int $height = null, ?string $class = null): ?string
     {
         if (is_string($entity)) {
             $entity = Attachment::find($entity);
@@ -172,7 +172,41 @@ if (!function_exists('imageTag')) {
             $height = $height ?: '100%';
             $width = $width ?: '100%';
 
-            return "<img loading=\"lazy\" class=\"{$class}\" src=\"{$url}\" width=\"{$width}\" height=\"{$height}\" alt=\"{$entity->filename}\"/>";
+            if (!$alt) {
+                $alt = $entity->filename;
+            }
+
+            return "<img loading=\"lazy\" class=\"$class\" src=\"$url\" width=\"$width\" height=\"$height\" alt=\"$alt\"/>";
+        }
+
+        return null;
+    }
+}
+
+if (!function_exists('svg')) {
+    function svg(string $entity, ?string $alt = null, ?int $width = null, ?int $height = null, ?string $class = null, ?string $scale = null): ?string
+    {
+        if (is_string($entity)) {
+            $entity = Attachment::find($entity);
+        }
+
+        if ($entity === null) {
+            return null;
+        }
+
+        $url = image_url_raw((string)$entity->id);
+
+        if ('' !== $url) {
+            $height = $height ?: '100%';
+            $width = $width ?: '100%';
+
+            if (!$alt) {
+                $alt = $entity->filename;
+            }
+
+            return "<object data=\"$url\" class=\"$class\" width=\"$width\" height=\"$height\" style=\"transform: scale($scale)\">
+                      $alt
+                    </object>";
         }
 
         return null;
@@ -241,5 +275,13 @@ if (!function_exists('is_extension_active')) {
         } else {
             return 0;
         }
+    }
+}
+
+if (!function_exists('format_date')) {
+    function format_date(string $date, ?string $format = "d F Y"): string
+    {
+        $date = new \Carbon\Carbon($date);
+        return $date->translatedFormat($format);
     }
 }

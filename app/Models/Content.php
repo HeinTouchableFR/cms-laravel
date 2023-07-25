@@ -27,6 +27,7 @@ class Content extends Model
         'category_id',
         'user_id',
         'attachment_id',
+        'created_at'
     ];
 
     public function category(): BelongsTo

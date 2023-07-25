@@ -19,11 +19,6 @@ declare global {
   }
 }
 
-// Blocs
-registerCarousel()
-registerSlider()
-Lightbox.init('.gallery')
-
 registerWindowHeightCSS()
 let isFirstRender = true
 
@@ -46,6 +41,11 @@ document.addEventListener('turbolinks:load', () => {
 })
 
 document.addEventListener('turbolinks:load', () => {
+  // Blocs
+  registerCarousel()
+  registerSlider()
+  Lightbox.init('.gallery')
+
   const header = $('#header')
   if (header) {
     const burgerButton = $('#js-burger')

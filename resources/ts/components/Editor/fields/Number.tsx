@@ -7,6 +7,7 @@ type FieldArgs = {
   label?: string
   multiline?: boolean
   help?: string
+  step?: number
   default?: string
 }
 
@@ -24,6 +25,7 @@ const Component: FieldComponent<FieldArgs, string> = ({
       value={value}
       onInput={e => onChange((e.target as HTMLTextAreaElement).value)}
       help={options.help}
+      step={options.step}
     />
   )
 }
