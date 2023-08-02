@@ -17,7 +17,6 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { Flex } from '@/components/Editor/components/ui'
 import { prevent } from '@/functions/functions'
 import { TiptapToolbarHeadings } from '@/components/Editor/components/Editor/TiptapEditor/TiptapToolbarHeadings'
 import { TiptapToolbarAlign } from '@/components/Editor/components/Editor/TiptapEditor/TiptapToolbarAlign'
@@ -98,6 +97,7 @@ function ToolbarLink({
 
   const handleSubmit: FormEventHandler = e => {
     const data = new FormData(e.target as HTMLFormElement)
+    console.log(data)
     const link = data.get('link')
     if (link) {
       onSubmit(link.toString())
@@ -107,7 +107,7 @@ function ToolbarLink({
   }
 
   return (
-    <Flex as='form' onKeyDown={handleKeyDown} onSubmit={prevent(handleSubmit)}>
+    <form onKeyDown={handleKeyDown} onSubmit={prevent(handleSubmit)}>
       <input
         className={'link-input'}
         name='link'
@@ -115,8 +115,8 @@ function ToolbarLink({
         placeholder='https://...'
         autoFocus
       />
-      <Button>Ok</Button>
-    </Flex>
+      <Button type='submit'>Ok</Button>
+    </form>
   )
 }
 

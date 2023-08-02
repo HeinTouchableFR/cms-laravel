@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react'
 
 export const UnstyledButton = ({
-  type = 'button',
+  type,
   title,
   onClick,
   additionalClass,
