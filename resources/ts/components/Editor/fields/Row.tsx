@@ -9,7 +9,6 @@ type RowArgs = {
 }
 
 const RowComponent: FieldGroupComponent<RowArgs> = ({ options, children }) => {
-  console.log(options.columns)
   return (
     <Field label={options.label}>
       <Flex

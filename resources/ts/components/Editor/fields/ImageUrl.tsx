@@ -7,6 +7,8 @@ import {
 } from '@/components/Editor/components/ui'
 import { prevent } from '@/functions/functions'
 import { defineField } from '@/components/Editor/fields/utils'
+import { ReactElement, useEffect, useState } from 'react'
+import { jsonFetch } from '@/functions/api'
 
 type FieldArgs = {
   label?: string
@@ -29,17 +31,34 @@ const Component: FieldComponent<FieldArgs, string> = ({
       .catch(e => {})
   }
 
+  const [preview, setPreview] = useState('')
+  // @ts-ignore
+  useEffect(() => {
+    async function fetchData() {
+      const data = await jsonFetch(`/admin/attachment/files/${value}`)
+      setPreview(data.url)
+    }
+
+    fetchData()
+  }, [value])
+
+  const renderPreview = () => {
+    if (preview.includes('.json')) {
+      return 'Prévisualisation impossible'
+    } else {
+      return (
+        <img className={`editor__field image-url`} src={preview} alt='' />
+      ) as ReactElement
+    }
+  }
+
   return (
     <Field
       id={id}
       label={options.label}
       help={options.help}
       value={value}
-      tooltip={
-        value ? (
-          <img className={`editor__field image-url`} src={value} alt='' />
-        ) : undefined
-      }
+      tooltip={value ? renderPreview() : undefined}
       onChange={e => onChange((e.target as HTMLInputElement).value)}
       icon={
         options.onBrowse ? (

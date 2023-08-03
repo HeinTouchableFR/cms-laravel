@@ -67,6 +67,7 @@ export class Editor {
       modal.appendChild(fm)
       fm.addEventListener('file', (e: any) => {
         resolve(setAttachment(e.detail))
+        modal.close()
       })
       document.body.appendChild(modal)
     })

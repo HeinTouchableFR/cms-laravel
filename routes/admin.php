@@ -70,6 +70,7 @@ Route::middleware(['auth', 'lscache:no-cache'])->prefix('admin')->name('admin.')
 
         Route::get('/folders', [AttachmentController::class, 'folders']);
         Route::get('/files', [AttachmentController::class, 'files']);
+        Route::get('/files/{attachment}', [AttachmentController::class, 'normalize']);
     });
 
     if (Schema::hasTable('extensions')) {

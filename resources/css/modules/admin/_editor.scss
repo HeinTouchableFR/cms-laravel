@@ -461,7 +461,8 @@
             color: var(--contrast);
 
             &:hover, &:focus {
-                background-color: var(--color-dark);
+                background-color: var(--contrast);
+                color: var(--color-light);
             }
         }
 
