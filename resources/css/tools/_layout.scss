@@ -1,35 +1,51 @@
-// Conteneur
+@use "functions";
+@use "mixins";
+@use "sass:string";
+
+// Padding and Margin
 // ==================
-:root {
-    --container-padding: 20px;
-    --container-width: 1350px;
-}
+$sizes: (
+    "size-0": functions.space(0),
+    "size-1": functions.space(1),
+    "size-2": functions.space(2),
+    "size-3": functions.space(3),
+    "size-4": functions.space(4),
+    "size-5": functions.space(5),
+    "size-6": functions.space(6),
+);
 
-@media only screen and (min-width: 900px) {
-    :root {
-        --container-padding: 32px;
+$sides: top, left, bottom, right, inline, inline-start, inline-end, block, block-start, block-end;
+
+@each $size-number, $size-value in $sizes {
+    $number: string.slice($size-number, 6);
+
+    .p {
+        &-#{$number} {
+            padding: $size-value;
+        }
+
+        @each $side in $sides {
+            &-#{$side}-#{$number} {
+                padding-#{$side}: $size-value;
+            }
+        }
+    }
+
+    .m {
+        &-#{$number} {
+            margin: $size-value;
+        }
+
+        @each $side in $sides {
+            &-#{$side}-#{$number} {
+                margin-#{$side}: $size-value;
+            }
+        }
     }
 }
 
-@media only screen and (min-width: 1370px) {
-    :root {
-        --container-padding: 20px;
-        --container-width: 1330px;
-    }
-}
-
-.waves {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    z-index: -1;
-
-    &.left {
-        transform: scaleX(-1);
-    }
+.m-auto {
+    margin: auto;
 }
 
 .relative {
@@ -66,41 +82,19 @@
     margin: auto;
 }
 
-%container-margin, .container-margin {
-    margin-left: auto;
-    margin-right: auto;
-    width: calc(100% - var(--container-padding) * 2);
-    max-width: var(--container-width);
+.bloc {
+    background-color: var(--backgroundColor);
+    background-image: var(--backgroundDesktop);
+    background-position: var(--backgroundXPosition, center) var(--backgroundYPosition, center);
+    background-repeat: var(--backgroundRepeat, no-repeat);
+    background-size: var(--backgroundSize, cover);
+    color: var(--textColor, currentColor);
 }
 
-.container-narrow {
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-// Ratios
-// ==================
-.ratio {
-    height: 0;
-    padding-bottom: 56.25%;
-    position: relative;
-
-    & > * {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
+@include mixins.down(1000) {
+    .bloc {
+        background-image: var(--backgroundMobile);
     }
-}
-
-// Block
-// =============
-.inline {
-    display: inline;
 }
 
 // Horizontal
@@ -115,98 +109,26 @@
     }
 }
 
-.end {
-    justify-content: flex-end;
-}
-
 .stretch {
     align-items: stretch;
-}
-
-.flex-md {
-    @include up(500) {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-}
-
-.flex-start {
-    justify-content: flex-start;
-}
-
-.flex-end {
-    justify-content: flex-end;
-}
-
-.center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.inline-1 {
-    display: flex;
-
-    & > * + * {
-        margin-left: space(1);
-    }
-}
-
-.hidden {
-    display: none;
-}
-
-// Largeur
-// =============
-.w100 {
-    width: 100%;
 }
 
 // Grille
 // ==================
 .grid {
     width: 100%;
-    display: grid !important;
-    grid-gap: space(2);
-    grid-template-columns: repeat(auto-fill, minmax(var(--col, 275px), 1fr));
-}
-
-.grid2 {
-    width: 100%;
-    display: grid !important;
+    display: grid;
     --gap: 2;
-    grid-gap: calc(var(--gap) * var(--space));
+    gap: calc(var(--gap) * var(--space));
     grid-template-columns: 1fr;
 
-    @include up(730) {
+    &.two {
         grid-template-columns: repeat(2, 1fr);
     }
-}
 
-.grid3 {
-    width: 100%;
-    display: grid !important;
-    --gap: 2;
-    grid-gap: calc(var(--gap) * var(--space));
-    grid-template-columns: 1fr;
-
-    @include up(730) {
-        grid-template-columns: repeat(3, 1fr);
+    .full {
+        grid-column: 1/-1;
     }
-}
-
-.grid.fit {
-    grid-template-columns: repeat(auto-fit, minmax(var(--col, 275px), 1fr));
-}
-
-.grid .full,
-.grid2 .full {
-    grid-column: 1 / -1;
-}
-
-.grid .end {
-    justify-content: flex-end;
 }
 
 // Stacks
@@ -251,122 +173,16 @@
     top: calc(var(--gap-separated) * var(--space) * -1);
 }
 
-.hstack {
-    display: flex;
-    flex-wrap: wrap;
-    --gap: 2;
-    margin: calc(var(--gap) * var(--space) * -0.5);
-    margin-bottom: calc(var(--gap) * var(--space) * -1);
-    margin-top: 0;
-}
-
 .nowrap {
     flex-wrap: nowrap;
 }
 
-.hstack > * {
-    margin-left: calc(var(--gap) * var(--space) * 0.5);
-    margin-right: calc(var(--gap) * var(--space) * 0.5);
-    margin-bottom: calc(var(--gap) * var(--space));
-}
-
-.hstack-large > * + * {
-    margin-left: space(4);
-}
-
-// Layout
-// ==================
-.layout-sidebar {
-    @extend %container;
-    --gap: 5;
-    display: grid;
-    grid-gap: calc(var(--gap) * var(--space));
-    grid-template-columns: 1fr;
-
-    & > * {
-        min-width: 0;
-    }
-
-    @include up(1100) {
-        grid-template-columns: 1fr 300px;
-    }
-}
-
-.sticky {
-    position: sticky;
-    top: space(3);
-}
-
-// Spaces
-// =============
-.mla {
-    margin-left: auto;
-}
-
-@for $i from 0 through 5 {
-    body {
-        .p#{$i} {
-            padding: space($i);
-        }
-
-        .pt#{$i} {
-            padding-top: space($i);
-        }
-
-        .pb#{$i} {
-            padding-bottom: space($i);
-        }
-
-        .px#{$i} {
-            padding-left: space($i);
-            padding-right: space($i);
-        }
-
-        .py#{$i} {
-            padding-top: space($i);
-            padding-bottom: space($i);
-        }
-
-        .my#{$i} {
-            margin-top: space($i);
-            margin-bottom: space($i);
-        }
-
-        .m#{$i} {
-            margin: space($i);
-        }
-
-        .mx#{$i} {
-            margin-left: space($i);
-            margin-right: space($i);
-        }
-
-        .mt#{$i} {
-            margin-top: space($i);
-        }
-
-        .mb#{$i} {
-            margin-bottom: space($i);
-        }
-
-        .mr#{$i} {
-            margin-right: space($i);
-        }
-
-        .ml#{$i} {
-            margin-left: space($i);
-        }
-    }
-}
-
-.mobile-only {
-    @include up(700) {
-        display: none;
-    }
-}
-
 .mobile-hidden {
-    @include down(700) {
+    @include mixins.down(700) {
         display: none;
     }
+}
+
+.reader-only {
+    display: none;
 }

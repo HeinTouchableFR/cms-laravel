@@ -1,8 +1,9 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 html,
 div,
 span,
@@ -82,32 +83,37 @@ time,
 mark,
 audio,
 video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
+
 button {
-  color: inherit;
-  padding: 0;
-  border: none;
-  cursor: pointer;
-  background: transparent;
-  font-size: inherit;
+    color: inherit;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    font-size: inherit;
 }
+
 form {
-  display: block;
+    display: block;
 }
+
 select,
 input {
-  font-size: inherit;
-  font-family: inherit;
+    font-size: inherit;
+    font-family: inherit;
 }
+
 pre {
-  font-family: monospace;
+    font-family: monospace;
 }
+
 // HTML5 display-role reset for older browsers
 article,
 aside,
@@ -120,48 +126,65 @@ hgroup,
 menu,
 nav,
 section {
-  display: block;
+    display: block;
 }
+
 ol,
 ul {
-  list-style: none;
+    list-style: none;
 }
+
 blockquote,
 q {
-  quotes: none;
+    quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
-  content: none;
+    content: '';
+    content: none;
 }
+
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
+
 img {
-  max-width: 100%;
+    max-width: 100%;
 }
+
 a {
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.3s;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
 }
+
 textarea {
-  font-size: inherit;
-  font-family: inherit;
-  line-height: inherit;
-  resize: none;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    resize: none;
 }
+
 hr {
-  height: 1px;
-  background: var(--border);
-  margin: 0;
-  padding: 0;
-  border: none;
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+    padding: 0;
+    border: none;
 }
+
 *:focus:not(:focus-visible) {
-  outline: none;
+    outline: none;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
 }

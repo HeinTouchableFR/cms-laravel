@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title>@yield('title') | {{ siteName() }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/themes/{{ theme() }}/css/style.css">
     <link rel="stylesheet" type="text/css" href="{{asset("vendor/cookie-consent/css/cookie-consent.css")}}">
     <script src="/themes/{{ theme() }}/assets/app.js" type="module" defer=""></script>
     @vite(['resources/css/app.scss', 'resources/ts/app.ts'])
+    <link rel="stylesheet" href="/themes/{{ theme() }}/css/style.css">
     @yield('stylesheets')
     <meta name="turbolinks-cache-control" content="no-cache" />
     <link rel="apple-touch-icon" sizes="128x128" href="{{ favicon() }}">
@@ -64,6 +64,8 @@
                 "{{ social('github') }}"
               ]
             }
+
+
 
         @show
     </script>

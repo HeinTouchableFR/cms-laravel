@@ -15,7 +15,7 @@ input:disabled {
     textarea,
     select {
         border: 1px solid var(--border);
-        background: var(--background);
+        background: var(--background-light);
         border-radius: 0.25em;
         color: var(--color-dark);
         padding: calc(1.5 * var(--space, 8px)) calc(1 * var(--space, 8px));
@@ -98,7 +98,7 @@ input:disabled {
             margin-top: -3px;
             border: 1px solid var(--border);
             border-radius: 5px;
-            background: var(--background);
+            background: var(--background-light);
             margin-right: calc(1 * var(--space, 8px));
         }
 

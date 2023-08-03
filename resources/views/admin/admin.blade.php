@@ -38,7 +38,7 @@
                     </a>
                     <ul>
                         <li hidden="hidden">
-                            <a href="{{ route('admin.template.index') }}">Ajouter un modèle</a>
+                            <a href="{{ route('admin.template.create') }}">Ajouter un modèle</a>
                         </li>
                     </ul>
                 </li>
@@ -49,8 +49,7 @@
                     </a>
                     <ul>
                         <li hidden="hidden">
-                            <a href="{{ route('admin.page.index') }}" {{ menu_active($menu, route('admin.page.index')) }}>Ajouter
-                                une page</a>
+                            <a href="{{ route('admin.page.create') }}">Ajouter une page</a>
                         </li>
                     </ul>
                 </li>
@@ -73,7 +72,7 @@
                     </a>
                     <ul>
                         <li hidden="hidden">
-                            <a href="{{ route('admin.blog.index') }}">Ajouter un article</a>
+                            <a href="{{ route('admin.blog.create') }}">Ajouter un article</a>
                         </li>
                         @can('category-list')
                             <li>
@@ -83,7 +82,7 @@
                                 </a>
                                 <ul>
                                     <li hidden="hidden">
-                                        <a href="{{ route('admin.category.index') }}">Ajouter une catégorie</a>
+                                        <a href="{{ route('admin.category.create') }}">Ajouter une catégorie</a>
                                     </li>
                                 </ul>
                             </li>
@@ -96,8 +95,7 @@
                                 </a>
                                 <ul>
                                     <li hidden="hidden">
-                                        <a href="{{ route('admin.tag.index') }}" {{ menu_active($menu, route('admin.tag.index')) }}>Ajouter
-                                            un tag</a>
+                                        <a href="{{ route('admin.tag.create') }}">Ajouter un tag</a>
                                     </li>
                                 </ul>
                             </li>

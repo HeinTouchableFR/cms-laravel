@@ -53,15 +53,13 @@ export function Spotlight({}) {
 
   useEffect(() => {
     setLinks(
-      Array.from(document.querySelectorAll('.dashboard-sidebar__main a')).map(
-        a => {
-          const text = (a as HTMLElement).innerText.trim()
-          return {
-            link: a.getAttribute('href'),
-            name: text === '' ? 'Dashboard' : text,
-          }
-        },
-      ),
+      Array.from(document.querySelectorAll('.admin nav a')).map(a => {
+        const text = (a as HTMLElement).innerText.trim()
+        return {
+          link: a.getAttribute('href'),
+          name: text === '' ? 'Dashboard' : text,
+        }
+      }),
     )
   }, [])
 

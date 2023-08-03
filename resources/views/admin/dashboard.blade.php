@@ -14,7 +14,7 @@
                         {!! icon('warning') !!} Tâches échouées
                     </h2>
                 </div>
-                <div class="admin__body-card">
+                <div class="card p-3">
                     <table class="table">
                         <thead>
                         <tr>
@@ -62,7 +62,7 @@
                     </h2>
                     {{ $comments->links() }}
                 </div>
-                <div class="dashboard-card stack-separated">
+                <div class="card p-3 stack-separated">
                     @foreach($comments as $comment)
                         <article class="dashboard-comment stack" style="--gap:2">
                             <div class="flex">
@@ -100,16 +100,16 @@
                     <div class="flex">
                         <h2 class="h2">{!! icon('action') !!} Actions</h2>
                     </div>
-                    <div class="dashboard-card">
+                    <div class="card p-3">
                         <div class="flex">
                             <form action="{{ route('admin.cache') }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button>{!! icon('cache') !!} Vider le cache</button>
+                                <button class="btn primary">{!! icon('cache') !!} Vider le cache</button>
                             </form>
                             <form action="{{ route('admin.spam.detect') }}" method="post">
                                 @csrf
-                                <button>{!! icon('comments') !!} Détecter le spam</button>
+                                <button class="btn secondary">{!! icon('comments') !!} Détecter le spam</button>
                             </form>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                                                                 target="_blank"
                                                                 rel="noreferrer">Tester les emails</a></h2>
                     </div>
-                    <div class="dashboard-card">
+                    <div class="card p-3">
                         <form action="{{ route('admin.mail') }}" method="post" class="flex stretch">
                             @csrf
                             <div class="form-group" style="width: 88%">

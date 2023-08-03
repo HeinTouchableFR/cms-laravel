@@ -81,12 +81,13 @@
 
     header {
         padding: 0 calc(3 * var(--space));
-        background: var(--color-light);
         color: var(--color-dark);
+        background: var(--background-light);
         display: flex;
         justify-content: center;
         align-items: center;
         grid-area: header;
+        border-bottom: solid 2px var(--color);
 
         site-notifications {
             position: relative;
@@ -174,6 +175,7 @@
         position: relative;
         padding: calc(3 * var(--space)) calc(4 * var(--space));
         grid-area: body;
+        background: var(--background-light);
 
         .icon {
             width: 25px;
@@ -212,12 +214,7 @@
                     display: flex;
                     gap: functions.space(1);
                     align-items: center;
-                    color: var(--color-dark);
-                    font-size: 1.3rem;
-
-                    &:hover {
-                        color: var(--contrast)
-                    }
+                    font-size: 1rem;
                 }
             }
         }
@@ -276,5 +273,4 @@
             }
         }
     }
-
 }

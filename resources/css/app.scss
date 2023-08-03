@@ -2,7 +2,6 @@
 // ==================
 @use 'modules/themeswitcher';
 @use 'modules/card';
-@use 'modules/blur';
 @use 'modules/tabs';
 @use 'modules/user';
 @use 'modules/pagination';
@@ -28,6 +27,7 @@
 // ==================
 @use 'tools/reset';
 @use 'tools/mixins';
+@use 'tools/layout';
 
 // Dark mode
 // =============
@@ -62,9 +62,8 @@ body::after {
 
 ::selection {
     background: var(--contrast);
-    color: #fff;
+    color: var(--color-light);
 }
-
 
 //ScrollBar
 ::-webkit-scrollbar {
@@ -130,13 +129,4 @@ body::after {
             margin-left: 0;
         }
     }
-}
-
-strong {
-    font-weight: bold;
-}
-
-
-em {
-    font-style: italic;
 }

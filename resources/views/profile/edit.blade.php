@@ -24,11 +24,11 @@
             </alert-message>
         @endif
         <div class="profil-sidebar p-block-3" style="--gap:5;">
-            <main class="stack-large">
+            <main class="s">
                 <form id="send-verification" method="post" action="{{ route('verification.send') }}">
                     @csrf
                 </form>
-                <form method="post" action="{{ route('profile.update') }}" class="stack-large">
+                <form method="post" action="{{ route('profile.update') }}" class="stack m-bottom-4">
                     @csrf
                     @method('patch')
                     <div class="stack">
@@ -62,9 +62,7 @@
                         </div>
                     </div>
                 </form>
-
-
-                <form method="post" class="stack-large" action="{{ route('password.update') }}">
+                <form method="post" class="stack m-bottom-4" action="{{ route('password.update') }}">
                     @csrf
                     @method('put')
                     <h3 class="h3 m-bottom-2">
@@ -77,36 +75,35 @@
                         @include('shared.input', ['label' => 'Confirmer le mot de passe', 'name' => 'password_confirmation', 'type' => 'password', 'errorLocation' => 'updatePassword'])
                     </div>
                     <div class="text-right">
-                        <button type="submit" class="btn primary m-top-2" name="action" value="password">Modifier mon
-                            mot de
-                            passe
+                        <button type="submit" class="btn primary m-top-2" name="action" value="password">
+                            Modifier mon mot de passe
                         </button>
                     </div>
                 </form>
-
-
                 <div class="stack">
                     <h3 class="text-danger h3 m-bottom-2">
                         {!!  icon('trash') !!}
                         <strong>Zone de danger</strong>
                     </h3>
-                    <form method="post" action="{{ route('profile.destroy') }}">
-                        @csrf
-                        @method('delete')
-                        <p style="font-size: 1.2rem;" class="m-bottom-2">
-                            Êtes-vous sûr de vouloir supprimer votre compte ?<br>
-                            Une fois votre compte supprimé, toutes ses ressources et données seront définitivement
-                            effacées.<br>
-                            Veuillez saisir votre mot de passe pour confirmer que vous souhaitez supprimer
-                            définitivement
-                            votre compte.
-                        </p>
-                        @include('shared.input', ['label' => 'Mot de passe actuel', 'name' => 'password', 'type' => 'password', 'errorLocation' => 'userDeletion'])
-                        <button class="btn danger m-top-2">
-                            {!! icon('trash') !!}
-                            Supprimer le compte
-                        </button>
-                    </form>
+                    <div class="card p-3 grid2">
+                        <form method="post" action="{{ route('profile.destroy') }}">
+                            @csrf
+                            @method('delete')
+                            <p style="font-size: 1.2rem;" class="m-bottom-2">
+                                Êtes-vous sûr de vouloir supprimer votre compte ?<br>
+                                Une fois votre compte supprimé, toutes ses ressources et données seront définitivement
+                                effacées.<br>
+                                Veuillez saisir votre mot de passe pour confirmer que vous souhaitez supprimer
+                                définitivement
+                                votre compte.
+                            </p>
+                            @include('shared.input', ['label' => 'Mot de passe actuel', 'name' => 'password', 'type' => 'password', 'errorLocation' => 'userDeletion'])
+                            <button class="btn danger m-top-2">
+                                {!! icon('trash') !!}
+                                Supprimer le compte
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </main>
             <aside class="stack">

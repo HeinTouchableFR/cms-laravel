@@ -1,39 +1,44 @@
 .spotlight {
-  padding: calc(1 * var(--space, 8px));
+    padding: calc(1 * var(--space, 8px));
 }
 
 .spotlight input {
-  position: relative;
-  z-index: 4;
+    position: relative;
+    z-index: 4;
 }
 
 .spotlight-suggestions {
-  position: absolute;
-  z-index: 3;
-  top: calc(100% - 8px);
-  padding: calc(1 * var(--space, 8px)) 0;
-  left: -1px;
-  right: -1px;
-  background: var(--background);
-  border: 1px solid var(--border);
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-  color: var(--color-dark);
+    position: absolute;
+    z-index: 3;
+    top: calc(100% - 8px);
+    padding: calc(1 * var(--space, 8px)) 0;
+    left: -1px;
+    right: -1px;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    color: var(--color-dark);
 }
 
 .spotlight-suggestions mark {
-  background-color: var(--contrast);
-  color: var(--color-light);
-  font-weight: bold;
+    background-color: var(--contrast);
+    color: var(--color-light);
+    font-weight: bold;
 }
 
 .spotlight-suggestions a {
-  display: block;
-  padding: 5px calc(2 * var(--space, 8px));
+    display: block;
+    padding: 5px calc(2 * var(--space, 8px));
 }
 
 .spotlight-suggestions a:hover,
 .spotlight-suggestions a.active {
-  background-color: var(--border-light);
-  color: var(--color-light);
+    background-color: var(--accent);
+    color: var(--color-light);
+
+    mark {
+        background-color: var(--color-light);
+        color: var(--contrast);
+    }
 }
