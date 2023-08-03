@@ -99,6 +99,7 @@ export default class InputAttachment {
         modal.appendChild(fm)
         fm.addEventListener('file', (e: any) => {
           this.setAttachment(e.detail)
+          modal.close()
         })
         document.body.appendChild(modal)
       }
