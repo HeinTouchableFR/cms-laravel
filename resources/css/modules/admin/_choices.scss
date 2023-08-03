@@ -6,6 +6,14 @@
 
 .ts-control {
     position: relative;
+    border: 1px solid var(--border);
+    background: var(--background-light);
+    border-radius: 0.25em;
+    color: var(--color-dark);
+    display: block;
+    width: 100%;
+    outline: none;
+    min-height: 48px;
 }
 
 .ts-input {
@@ -160,7 +168,6 @@
     background: var(--background);
     border-radius: 0.3rem;
     padding: .5rem;
-    margin-bottom: 5px;
 
     a {
         display: block;

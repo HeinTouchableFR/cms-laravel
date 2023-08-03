@@ -8,12 +8,10 @@
     <link rel="icon" type="image/webp" href="{{ favicon() }}" />
     @vite(['resources/css/app.scss', 'resources/css/admin.scss', 'resources/ts/app.ts', 'resources/ts/admin.ts'])
     <link rel="stylesheet" href="/themes/{{ theme() }}/css/style.css">
-    <link rel="stylesheet" href="/Editor.css">
     <script src="/themes/{{ theme() }}/assets/app.js" type="module" defer=""></script>
     <meta property='og:image' content="{{ openGraphLogo() }}" />
     <script src="/themes/{{ theme() }}/assets/admin.js" type="module" defer=""></script>
     <meta name="turbolinks-cache-control" content="no-cache" />
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @yield('meta')
 </head>
 <body class="">
