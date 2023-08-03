@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Form } from '@/components/Form/Form/Form'
+import { createRoot } from 'react-dom/client'
 
 type Props = {
   content: string
   buttonClass: string
 }
 
-export function ContactForm({ content, buttonClass }: Props) {
+function ContactFormComponent({ content, buttonClass }: Props) {
   const [success, setSuccess] = useState(false)
   const [fields] = useState(JSON.parse(content))
 
@@ -41,4 +42,18 @@ export function ContactForm({ content, buttonClass }: Props) {
       </div>
     </Form.FetchForm>
   )
+}
+
+export default class ContactForm extends HTMLElement {
+  constructor() {
+    super()
+  }
+
+  connectedCallback() {
+    const content = this.getAttribute('content') || ''
+    const buttonClass = this.getAttribute('buttonClass') || ''
+    createRoot(this).render(
+      <ContactFormComponent content={content} buttonClass={buttonClass} />,
+    )
+  }
 }

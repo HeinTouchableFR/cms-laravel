@@ -1,4 +1,5 @@
 import {
+  CSSProperties,
   memo,
   PropsWithChildren,
   useCallback,
@@ -20,6 +21,7 @@ import { catchViolations } from '@/functions/api'
 import Icon from '@/components/Icon'
 import { Field } from '@/components/Form/Field/Field'
 import { Button } from '@/components/Button'
+import { createRoot } from 'react-dom/client'
 
 type CommentsProps = {
   target: number
@@ -48,7 +50,7 @@ type StateProps = {
  *
  * @param {{target: number}} param0
  */
-export default function Comments({ target, parent }: CommentsProps) {
+function CommentsComponent({ target, parent }: CommentsProps) {
   const element = useRef(null)
   const [state, setState] = useState<StateProps>({
     editing: null, // ID du commentaire en cours d'édition
@@ -221,7 +223,7 @@ export default function Comments({ target, parent }: CommentsProps) {
 
 const FakeComment = memo(() => {
   return (
-    <div class='comment'>
+    <div className='comment'>
       <skeleton-box
         className='comment__avatar'
         width='40'
@@ -413,7 +415,7 @@ function CommentForm({ onSubmit, parent, onCancel }: CommentFormProps) {
   return (
     <form
       className='grid'
-      style={{ '--gap': 2 }}
+      style={{ '--gap': 2 } as CSSProperties}
       onSubmit={handleSubmit}
       ref={ref}
     >
@@ -443,4 +445,19 @@ function CommentForm({ onSubmit, parent, onCancel }: CommentFormProps) {
       </Flex>
     </form>
   )
+}
+
+export default class Comments extends HTMLElement {
+  private target: string | null | undefined
+
+  constructor() {
+    super()
+  }
+
+  connectedCallback() {
+    this.target = this.getAttribute('target')
+    createRoot(this).render(
+      <CommentsComponent target={this.target} parent={this} />,
+    )
+  }
 }

@@ -11,6 +11,13 @@ import AjaxDeleteElement from "@/elements/AjaxDelete";
 import ModalDialogElement from "@/elements/ModalDialog";
 import NavTabsElement from "@/elements/NavTabs";
 import TextareaAutogrowElement from "@/elements/TextareaAutogrow";
+import Alert from "@/elements/Alert";
+import Comments from "@/elements/Comments";
+import Search from "@/elements/Search";
+import Loader from "@/elements/Loader";
+import Form from "@/elements/Form";
+import Notification from "@/elements/Notification";
+import ContactForm from "@/elements/ContactForm";
 
 // Custom Elements
 SkeletonElement.defineElement()
@@ -32,12 +39,12 @@ customElements.define('select-choices', SelectChoicesElement, {
 })
 
 //CMS
-//preactCustomElement("alert-message", Alert, null, null);
-//preactCustomElement("search-input", SearchInput, null, null);
-//preactCustomElement("loader-element", Loader, null, null);
-//preactCustomElement("form-field", FormField, null, null);
-//preactCustomElement("delete-account", DeleteAccount, null, null);
-//preactCustomElement("site-notifications", Notifications, null, null);
-//preactCustomElement("comments-area", Comments, null, null);
-//preactCustomElement("contact-form", ContactForm, null, null);
+Alert.defineElement()
+Search.defineElement()
+Loader.defineElement()
+Form.defineElement()
+// @ts-ignore
+customElements.define('comments-area', Comments)
+customElements.define('site-notifications', Notification)
+customElements.define('contact-form', ContactForm)
 customElements.define('theme-switcher', ThemeSwitcher)

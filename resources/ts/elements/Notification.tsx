@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react'
 import { SlideIn } from '@/components/Animation/SlideIn'
 import { loadNotifications } from '@/api/notifications'
 import { isAuthenticated, lastNotificationRead } from '@/functions/auth'
@@ -11,8 +10,10 @@ import {
 import { jsonFetch } from '@/functions/api'
 import Loader from '@/components/Loader'
 import Icon from '@/components/Icon'
+import { useRef, useState } from 'react'
+import { createRoot } from 'react-dom/client'
 
-type Notification = {
+type NotificationProps = {
   id: number
   message: string
   url: string
@@ -21,11 +22,11 @@ type Notification = {
 
 const OPEN = 0
 const CLOSE = 1
-let notificationsCache: Notification[] = []
+let notificationsCache: NotificationProps[] = []
 let notificationsLoaded = false
 
 function countUnread(
-  notifications: Notification[],
+  notifications: NotificationProps[],
   notificationReadAt: number,
 ) {
   return notifications.filter(({ created_at }) => {
@@ -39,7 +40,7 @@ function countUnread(
  * @return {*}
  * @constructor
  */
-export default function Notifications() {
+export function Notifications() {
   // Hooks
   const [state, setState] = useState(CLOSE)
   const [notifications, pushNotification] = usePrepend(notificationsCache)
@@ -115,7 +116,7 @@ function Badge({ count }: BadgeProps) {
 }
 
 type PopupProps = {
-  notifications: Notification[]
+  notifications: NotificationProps[]
   onClickOutside: () => void
   loading: boolean
   notificationReadAt: number
@@ -193,4 +194,14 @@ function NotificationComponent({
       </small>
     </a>
   )
+}
+
+export default class Notification extends HTMLElement {
+  constructor() {
+    super()
+  }
+
+  connectedCallback() {
+    createRoot(this).render(<Notifications />)
+  }
 }
