@@ -18,7 +18,7 @@ export function Modal({
 }: ModalProps) {
   const bodyClassName = classNames(
     'modal-box',
-    padding && `p${padding}`,
+    padding && `p-${padding}`,
     className,
   )
 

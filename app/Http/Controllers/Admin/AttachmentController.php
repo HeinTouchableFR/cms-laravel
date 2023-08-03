@@ -64,7 +64,6 @@ class AttachmentController extends Controller
     public function findLatest(): \Illuminate\Support\Collection
     {
         return Attachment::orderBy('created_at', 'DESC')
-            ->limit(25)
             ->get();
     }
 
