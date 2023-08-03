@@ -31,7 +31,7 @@
             @include('shared.input', ['label' => 'Email', 'name' => 'email', 'value' => old('email'), 'displayError' => false])
             @include('shared.input', ['label' => 'Mot de passe', 'name' => 'password', 'type' => 'password', 'displayError' => false])
             <div class="auth-actions flex">
-                @include('shared.switch', ['label' => 'Se souvenir de moi', 'name' => 'remember', 'displayError' => false])
+                @include('shared.switch', ['label' => 'Se souvenir de moi', 'name' => 'checkbox-remember', 'displayError' => false])
                 <a href="{{ route('password.request') }}" class="auth-password-forgot">Mot de passe oublié ?</a>
             </div>
             <button type="submit" class="btn primary">Se connecter</button>
