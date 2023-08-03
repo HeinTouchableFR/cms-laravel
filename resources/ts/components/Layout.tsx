@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react'
+import { CSSProperties, PropsWithChildren } from 'react'
 
 type StyleType = {
   '--gap'?: number
@@ -16,7 +16,7 @@ export function Stack({ children, gap }: StackProps) {
     style['--gap'] = gap
   }
   return (
-    <div className='stack' style={style}>
+    <div className='stack' style={{ ...style } as CSSProperties}>
       {children}
     </div>
   )
@@ -41,7 +41,7 @@ export function Flex({ children, gap, center, nowrap }: FlexProps) {
     style['flexWrap'] = 'nowrap'
   }
   return (
-    <div className='hstack' style={style}>
+    <div className='hstack' style={{ ...style } as CSSProperties}>
       {children}
     </div>
   )

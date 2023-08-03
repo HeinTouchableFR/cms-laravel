@@ -4,6 +4,7 @@ import { PropsWithChildren, useEffect, useRef, useState } from 'react'
 
 type Props = PropsWithChildren<{
   type?: string
+  message?: string
   duration?: number
   isFloating?: boolean
   onClose?: () => void

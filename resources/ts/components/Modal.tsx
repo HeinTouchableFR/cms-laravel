@@ -1,5 +1,6 @@
-import { createPortal, CSSProperties, PropsWithChildren } from 'react'
+import { CSSProperties, PropsWithChildren } from 'react'
 import { classNames } from '@/functions/dom'
+import { createPortal } from 'react-dom'
 
 type ModalProps = PropsWithChildren<{
   onClose: () => void
@@ -22,7 +23,7 @@ export function Modal({
   )
 
   return createPortal(
-    <modal-dialog overlay-close='true' onClose={onClose}>
+    <modal-dialog overlay-close={true} onClose={onClose}>
       <section className={bodyClassName} style={{ ...style }}>
         {children}
       </section>

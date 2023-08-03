@@ -1,9 +1,4 @@
-import {
-  createContext,
-  PropsWithChildren,
-  TargetedEvent,
-  useState,
-} from 'react'
+import { createContext, PropsWithChildren, useState } from 'react'
 import { Alert as AlertComponent } from '@/components/Alert'
 import Alert from '@/elements/Alert'
 
@@ -64,7 +59,7 @@ function FetchForm({
   }
 
   // On soumet le formulaire au travers d'une requête Ajax
-  const handleSubmit = async (e: TargetedEvent<HTMLFormElement, Event>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     setState({ loading: true, errors: {} })
     const form = e.target as HTMLFormElement

@@ -25,7 +25,7 @@ import { createRoot } from 'react-dom/client'
 
 type CommentsProps = {
   target: number
-  parent?: number
+  parent?: HTMLElement
 }
 
 type Comment = {
@@ -228,7 +228,7 @@ const FakeComment = memo(() => {
         className='comment__avatar'
         width='40'
         height='40'
-        rounded
+        rounded={true}
       />
       <div className='comment__meta'>
         <skeleton-box className='comment__author' text='John Doe comm' />
@@ -448,14 +448,14 @@ function CommentForm({ onSubmit, parent, onCancel }: CommentFormProps) {
 }
 
 export default class Comments extends HTMLElement {
-  private target: string | null | undefined
+  private target: number | null | undefined
 
   constructor() {
     super()
   }
 
   connectedCallback() {
-    this.target = this.getAttribute('target')
+    this.target = parseInt(this.getAttribute('target') || '', 10)
     createRoot(this).render(
       <CommentsComponent target={this.target} parent={this} />,
     )
