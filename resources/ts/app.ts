@@ -17,7 +17,7 @@ declare global {
       'time-ago': TimeAgoProps
       'alert-message': AlertMessageProps
       'skeleton-box': SkeletonBoxProps
-      'lottie-player': LottiePlayerProps
+      'dotlottie-player': DotLottiePlayerProps
       'modal-dialog': ModalDialogProps
     }
   }
@@ -63,7 +63,7 @@ interface SkeletonBoxProps
   className?: string
 }
 
-interface LottiePlayerProps
+interface DotLottiePlayerProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLElement>,
     HTMLElement

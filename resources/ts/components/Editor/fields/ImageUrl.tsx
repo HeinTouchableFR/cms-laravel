@@ -43,7 +43,7 @@ const Component: FieldComponent<FieldArgs, string> = ({
   }, [value])
 
   const renderPreview = () => {
-    if (!preview || preview.includes('.json')) {
+    if (!preview || preview.includes('.lottie')) {
       return 'Prévisualisation impossible'
     } else {
       return (
