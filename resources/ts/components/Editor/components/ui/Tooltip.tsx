@@ -16,7 +16,9 @@ export function Tooltip({ content, children, visible, trigger }: TooltipProps) {
     tippyProps.interactive = true
   }
 
+  // @ts-ignore
   const Render = React.forwardRef((props, ref) => (
+    // @ts-ignore
     <div ref={ref}>{props.children}</div>
   ))
 

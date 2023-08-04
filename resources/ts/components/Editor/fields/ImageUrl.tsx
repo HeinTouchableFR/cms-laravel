@@ -31,7 +31,7 @@ const Component: FieldComponent<FieldArgs, string> = ({
       .catch(e => {})
   }
 
-  const [preview, setPreview] = useState('')
+  const [preview, setPreview] = useState<string | null>(null)
   // @ts-ignore
   useEffect(() => {
     async function fetchData() {
@@ -43,7 +43,7 @@ const Component: FieldComponent<FieldArgs, string> = ({
   }, [value])
 
   const renderPreview = () => {
-    if (preview.includes('.json')) {
+    if (!preview || preview.includes('.json')) {
       return 'Prévisualisation impossible'
     } else {
       return (
