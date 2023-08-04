@@ -19,17 +19,17 @@ class Attachment extends Model
         'filesize',
     ];
 
-    public function resize(?int $width = null, ?int $height = null): string
-    {
-        $urlBuilder = UrlBuilderFactory::create('/media/resize/', config('glide.key'));
-
-        return $urlBuilder->getUrl($this->filename, ['w' => $width, 'h' => $height, 'fit' => 'crop']);
-    }
-
     protected static function booted(): void
     {
         static::deleted(function (Attachment $item) {
             Storage::disk('public')->delete($item->filename);
         });
+    }
+
+    public function resize(?int $width = null, ?int $height = null): string
+    {
+        $urlBuilder = UrlBuilderFactory::create('/media/resize/', config('glide.key'));
+
+        return $urlBuilder->getUrl($this->filename, ['w' => $width, 'h' => $height, 'fit' => 'crop', 'fm' => 'webp']);
     }
 }
