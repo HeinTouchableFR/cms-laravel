@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { PropsWithChildren, ReactNode } from 'react'
 import Tippy, { TippyProps } from '@tippyjs/react'
 
 type TooltipProps = {
@@ -16,11 +16,9 @@ export function Tooltip({ content, children, visible, trigger }: TooltipProps) {
     tippyProps.interactive = true
   }
 
-  // @ts-ignore
-  const Render = React.forwardRef((props, ref) => (
-    // @ts-ignore
-    <div ref={ref}>{props.children}</div>
-  ))
+  const Render = React.forwardRef<HTMLDivElement, PropsWithChildren>(
+    (props, ref) => <div ref={ref}>{props.children}</div>,
+  )
 
   return (
     <Tippy
