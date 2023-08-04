@@ -1,0 +1,68 @@
+@use "../tools/mixins";
+
+.error {
+    margin: auto;
+    height: 500px;
+
+    .error__content {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        .error__content-header {
+            h3 {
+                font-size: 16px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: var(--color-dark);
+                margin: 0;
+                letter-spacing: 3px;
+                padding-left: 6px;
+            }
+
+            h1 {
+                font-size: 252px;
+                font-weight: 900;
+                color: var(--contrast);
+                text-transform: uppercase;
+                letter-spacing: -40px;
+                margin: 0 0 0 -20px;
+
+                > span {
+                    text-shadow: -8px 0px 0px var(--background);
+                }
+            }
+        }
+
+        .error__content-message {
+            text-align: center;
+            color: var(--color-dark);
+        }
+    }
+
+    a {
+        width: 200px;
+        margin: auto;
+    }
+}
+
+@include mixins.down(1100) {
+    .error {
+        .error__content {
+            position: relative;
+        }
+    }
+}
+
+@include mixins.down(600) {
+    .error {
+        .error__content {
+            .error__content-header {
+                h1 {
+                    font-size: 180px;
+                }
+            }
+        }
+    }
+}
