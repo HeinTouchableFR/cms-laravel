@@ -25,6 +25,23 @@
                         d'authentification et ne sont pas partagées avec des tiers.</small>
                 </p>
             </form>
+            <section class="m-top-4">
+                <h2 class="section-title text-center">Utiliser les réseaux sociaux</h2>
+                <div class="btn-social-stack">
+                    <a href="{{ route('oauth.connect', 'google') }}" title="Se connecter avec Google"
+                       class="btn primary-outlined mb-3">
+                        <svg class="icon">
+                            <use xlink:href="/social.svg#google"></use>
+                        </svg>
+                    </a>
+                    <a href="{{ route('oauth.connect', 'github') }}" title="Se connecter avec Github"
+                       class="btn primary-outlined">
+                        <svg class="icon">
+                            <use xlink:href="/social.svg#github"></use>
+                        </svg>
+                    </a>
+                </div>
+            </section>
         </div>
     </div>
 @endsection

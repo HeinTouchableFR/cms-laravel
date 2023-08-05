@@ -62,10 +62,10 @@
                             <use xlink:href="/social.svg#google"></use>
                         </svg>
                     </a>
-                    <a href="{{ route('oauth.connect', 'facebook') }}" title="Se connecter avec Facebook"
+                    <a href="{{ route('oauth.connect', 'github') }}" title="Se connecter avec Github"
                        class="btn primary-outlined">
                         <svg class="icon">
-                            <use xlink:href="/social.svg#facebook"></use>
+                            <use xlink:href="/social.svg#github"></use>
                         </svg>
                     </a>
                 </div>
