@@ -13,13 +13,14 @@ type Props = PropsWithChildren<{
 
 export function Alert({
   type = 'success',
-  children = '',
+  message = '',
   duration = 3,
   isFloating = false,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const [alertType, setAlertType] = useState(type)
   const [icon, setIcon] = useState('')
+  const spanRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     if (type !== null || true) {
@@ -35,6 +36,12 @@ export function Alert({
     }
   }, [type])
 
+  useEffect(() => {
+    if (spanRef.current) {
+      spanRef.current.innerHTML = message
+    }
+  }, [spanRef.current, message])
+
   const close = (e: any) => {
     if (ref.current) {
       const alertElement = ref.current as HTMLDivElement
@@ -48,8 +55,10 @@ export function Alert({
   }
 
   useEffect(() => {
-    const timer = window.setTimeout(close, duration * 1000)
-    return () => clearTimeout(timer)
+    if (duration != 0) {
+      const timer = window.setTimeout(close, duration * 1000)
+      return () => clearTimeout(timer)
+    }
   }, [duration])
 
   return (
@@ -58,14 +67,16 @@ export function Alert({
       ref={ref}
     >
       <Icon name={icon} />
-      <div>{children}</div>
+      <span ref={spanRef} />
       <button className='alert-close' onClick={close}>
         <Icon name={'cross'} />
       </button>
-      <div
-        className='alert__progress'
-        style={{ animationDuration: `${duration}s` }}
-      ></div>
+      {duration != 0 && (
+        <div
+          className='alert__progress'
+          style={{ animationDuration: `${duration}s` }}
+        ></div>
+      )}
     </div>
   )
 }
