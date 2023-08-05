@@ -11,6 +11,22 @@ use Illuminate\Validation\Rules\Password;
 class PasswordController extends Controller
 {
     /**
+     * Define the user's password.
+     */
+    public function define(Request $request): RedirectResponse
+    {
+        $validated = $request->validateWithBag('updatePassword', [
+            'password' => ['required', Password::defaults(), 'confirmed'],
+        ]);
+
+        $request->user()?->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return redirect()->route('profile.index')->with('status', 'password-defined');
+    }
+
+    /**
      * Update the user's password.
      */
     public function update(Request $request): RedirectResponse

@@ -14,6 +14,11 @@
                     Le mot de passe a été modifié avec succès !
                 </alert-message>
             @endif
+            @if (session('status') === 'password-defined')
+                <alert-message type="success">
+                    Le mot de passe a été défini avec succès !
+                </alert-message>
+            @endif
             @if (session('status') === 'profile-updated')
                 <alert-message type="success">
                     Le profil a été modifié avec succès !

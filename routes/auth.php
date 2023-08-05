@@ -54,12 +54,14 @@ Route::middleware(['auth', 'lscache:no-cache'])->group(function () {
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::post('password/define', [PasswordController::class, 'define'])->name('password.define');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
 
 Route::middleware(['lscache:no-cache'])->prefix('oauth')->name('oauth.')->group(function () {
+    Route::get('define-password', [SocialController::class, 'defineOauthPassword'])->name('define-password');
     Route::get('{service}', [SocialController::class, 'connect'])->name('connect');
     Route::get('{service}/unlink', [SocialController::class, 'unlink'])->name('unlink');
     Route::get('{service}/callback', [SocialController::class, 'callback'])->name('callback');

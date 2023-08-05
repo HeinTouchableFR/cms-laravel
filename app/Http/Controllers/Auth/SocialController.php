@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialController extends Controller
@@ -30,17 +31,22 @@ class SocialController extends Controller
             Auth::login($auth);
             return Redirect::route('profile.index')->with('status', 'oauth-link');
         } else {
-            $this->registerOrLogin($user, $service);
+            $isNew = $this->registerOrLogin($user, $service);
+            if ($isNew) {
+                return Redirect::route('oauth.define-password');
+            }
         }
 
         return redirect()->route('profile.index');
     }
 
-    protected function registerOrLogin($incomingUser, string $service)
+    protected function registerOrLogin($incomingUser, string $service): bool
     {
         $method = $service . '_id';
 
         $user = User::where($method, $incomingUser->id)->first();
+
+        $isNew = false;
 
         if (!$user) {
             $user = new User();
@@ -50,9 +56,18 @@ class SocialController extends Controller
             $user->$method = $incomingUser->id;
             $user->password = encrypt('password');
             $user->save();
+            $isNew = true;
         }
 
         Auth::login($user);
+        return $isNew;
+    }
+
+    public function defineOauthPassword(): View
+    {
+        return view('auth.define-password', [
+            'menu' => route('profile.index'),
+        ]);
     }
 
     public function unlink(string $service): RedirectResponse
