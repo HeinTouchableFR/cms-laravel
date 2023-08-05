@@ -61,5 +61,6 @@ Route::middleware(['auth', 'lscache:no-cache'])->group(function () {
 
 Route::middleware(['lscache:no-cache'])->prefix('oauth')->name('oauth.')->group(function () {
     Route::get('{service}', [SocialController::class, 'connect'])->name('connect');
+    Route::get('{service}/unlink', [SocialController::class, 'unlink'])->name('unlink');
     Route::get('{service}/callback', [SocialController::class, 'callback'])->name('callback');
 });

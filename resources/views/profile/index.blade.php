@@ -24,6 +24,16 @@
                     Un nouveau lien de vérification a été envoyé à votre adresse email.
                 </alert-message>
             @endif
+            @if (session('status') === 'oauth-link')
+                <alert-message type="success">
+                    Votre compte a bien été lié.
+                </alert-message>
+            @endif
+            @if (session('status') === 'oauth-unlink')
+                <alert-message type="success">
+                    Votre compte a bien été dissocié.
+                </alert-message>
+            @endif
             <form id="send-verification" method="post" action="{{ route('verification.send') }}">
                 @csrf
             </form>
@@ -96,7 +106,8 @@
                 <div class="card p-3">
                     <p>Reliez votre compte à un réseau social afin de l'utiliser comme mode de connexion</p>
                     @if(config('services.facebook.client_id'))
-                        <a href="{{ route('oauth.connect', 'facebook') }}" title="Se connecter avec Facebook"
+                        <a href="{{ route($user->facebook_id  ? 'oauth.unlink' : 'oauth.connect', 'facebook') }}"
+                           title="Se connecter avec Facebook"
                            class="btn secondary">
                             <svg class="icon">
                                 <use xlink:href="/social.svg#facebook"></use>
@@ -105,21 +116,23 @@
                         </a>
                     @endif
                     @if(config('services.google.client_id'))
-                        <a href="{{ route('oauth.connect', 'google') }}" title="Se connecter avec Google"
+                        <a href="{{ route($user->google_id  ? 'oauth.unlink' : 'oauth.connect', 'google') }}"
+                           title="Se connecter avec Google"
                            class="btn secondary">
                             <svg class="icon">
                                 <use xlink:href="/social.svg#google"></use>
                             </svg>
-                            {{ $user->facebook_id ? 'Dissocier' : 'Lier' }} mon compte Google
+                            {{ $user->google_id ? 'Dissocier' : 'Lier' }} mon compte Google
                         </a>
                     @endif
                     @if(config('services.github.client_id'))
-                        <a href="{{ route('oauth.connect', 'github') }}" title="Se connecter avec Github"
+                        <a href="{{ route($user->github_id  ? 'oauth.unlink' : 'oauth.connect', 'github') }}"
+                           title="Se connecter avec Github"
                            class="btn secondary">
                             <svg class="icon">
                                 <use xlink:href="/social.svg#github"></use>
                             </svg>
-                            {{ $user->facebook_id ? 'Dissocier' : 'Lier' }} mon compte Github
+                            {{ $user->github_id ? 'Dissocier' : 'Lier' }} mon compte Github
                         </a>
                     @endif
                 </div>

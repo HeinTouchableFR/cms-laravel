@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialController extends Controller
@@ -20,12 +21,21 @@ class SocialController extends Controller
     {
         $user = Socialite::driver($service)->user();
         $this->registerOrLogin($user, $service);
-        return redirect()->route('home');
     }
 
-    protected function registerOrLogin($incomingUser, string $service)
+    protected function registerOrLogin($incomingUser, string $service): RedirectResponse
     {
         $method = $service . '_id';
+
+        $user = Auth::user();
+
+        if ($user) {
+            $user->$method = $incomingUser->id;
+            $user->save();
+            Auth::login($user);
+            return Redirect::route('profile.index')->with('status', 'oauth-link');
+        }
+
         $user = User::where($method, $incomingUser->id)->first();
 
         if (!$user) {
@@ -39,5 +49,26 @@ class SocialController extends Controller
         }
 
         Auth::login($user);
+
+        return redirect()->route('home');
+    }
+
+    public function link(string $service): RedirectResponse
+    {
+        $user = Socialite::driver($service)->user();
+        $this->registerOrLogin($user, $service);
+        return redirect()->route('home');
+    }
+
+    public function unlink(string $service): RedirectResponse
+    {
+        $method = $service . '_id';
+
+        $user = Auth::user();
+        $user->$method = null;
+        $user->save();
+        Auth::login($user);
+
+        return Redirect::route('profile.index')->with('status', 'oauth-unlink');
     }
 }
