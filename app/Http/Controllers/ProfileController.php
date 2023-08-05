@@ -23,21 +23,11 @@ class ProfileController extends Controller
         $notifications = NotificationResource::collection(Auth::user()->notifications)->toArray($request);
 
         return view('profile.index', [
+            'user' => $request->user(),
             'hasActivity' => $hasActivity,
             'notifications' => $notifications,
             'comments' => $comments,
             'menu' => route('profile.index'),
-        ]);
-    }
-
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-            'menu' => route('profile.edit'),
         ]);
     }
 
@@ -54,7 +44,7 @@ class ProfileController extends Controller
 
         $request->user()?->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.index')->with('status', 'profile-updated');
     }
 
     /**

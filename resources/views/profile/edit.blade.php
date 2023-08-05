@@ -107,27 +107,94 @@
                 </div>
             </main>
             <aside class="stack">
-                <h3 class="h4">Connexion social</h3>
-                <p>Reliez votre compte à un réseau social afin de l'utiliser comme mode de connexion</p>
-                <div class="stack m-bottom-4">
-                    <div>
-                        <a href="#"
-                           class="btn secondary">
-                            <svg class="icon">
-                                <use xlink:href="/social.svg#google"></use>
-                            </svg>
-                            {{ false ? 'Dissocier' : 'Lier' }} mon compte Google
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#"
+                <h3 class="h3">Connexion social</h3>
+                <div class="card p-3 grid m-bottom-4">
+                    <p>Reliez votre compte à un réseau social afin de l'utiliser comme mode de connexion</p>
+                    @if(config('services.facebook.client_id'))
+                        <a href="{{ route('oauth.connect', 'facebook') }}" title="Se connecter avec Facebook"
                            class="btn secondary">
                             <svg class="icon">
                                 <use xlink:href="/social.svg#facebook"></use>
                             </svg>
-                            {{ false ? 'Dissocier' : 'Lier' }} mon compte Facebook
+                            {{ $user->facebook_id ? 'Dissocier' : 'Lier' }} mon compte Facebook
                         </a>
+                    @endif
+                    @if(config('services.google.client_id'))
+                        <a href="{{ route('oauth.connect', 'google') }}" title="Se connecter avec Google"
+                           class="btn secondary">
+                            <svg class="icon">
+                                <use xlink:href="/social.svg#google"></use>
+                            </svg>
+                            {{ $user->facebook_id ? 'Dissocier' : 'Lier' }} mon compte Google
+                        </a>
+                    @endif
+                    @if(config('services.github.client_id'))
+                        <a href="{{ route('oauth.connect', 'github') }}" title="Se connecter avec Github"
+                           class="btn secondary">
+                            <svg class="icon">
+                                <use xlink:href="/social.svg#github"></use>
+                            </svg>
+                            {{ $user->facebook_id ? 'Dissocier' : 'Lier' }} mon compte Github
+                        </a>
+                    @endif
+                </div>
+                <div class="stack">
+                    <div class="flex">
+                        <h3 class="h3">Mes notifications</h3>
+                        <form action="{{ route('profile.clean-notification') }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button class="danger">
+                                {!! icon('trash') !!}
+                            </button>
+                        </form>
                     </div>
+                    <div class="card p-3 m-top-2">
+                        @forelse ($notifications as $notification)
+                            <a class="p-block-2" href="{{ $notification['url'] }}">
+                                {!! $notification['message'] !!}
+                            </a>
+                        @empty
+                            <p class="text-muted text-center m-top-1 m-bottom-2">
+                                Vous n'avez aucune notifications.
+                            </p>
+                        @endforelse
+                    </div>
+                </div>
+                <div class="stack">
+                    @if($hasActivity)
+                        <div class="stack" style="--gap: 7; width: 100%">
+                            @if(count($comments) > 0)
+                                <div class="stack">
+                                    <div class="flex">
+                                        <h2 class="h3">Mes <strong>derniers</strong> commentaires</h2>
+                                    </div>
+                                    <table class="card p-3 table m-top-4">
+                                        <thead>
+                                        <tr>
+                                            <th>Article</th>
+                                            <th class="text-left">Commentaire</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($comments as $comment)
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ route('blog.show', $comment->getContent()->slug) }}">
+                                                        {{ $comment->getContent()->title }}
+                                                    </a>
+                                                </td>
+                                                <td width="50%">
+                                                    {{ $comment->content }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </aside>
         </div>

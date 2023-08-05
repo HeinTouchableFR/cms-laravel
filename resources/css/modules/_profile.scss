@@ -1,0 +1,45 @@
+@use '../tools/functions';
+@use '../tools/mixins';
+
+.profile {
+    display: grid;
+    grid-template-columns: 1fr 30%;
+    gap: functions.space(4);
+
+    aside {
+        display: flex;
+        flex-direction: column;
+        gap: functions.space(4);
+
+        .profile__notifications {
+            form {
+                margin-left: auto;
+            }
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+
+    h2, h3 {
+        display: flex;
+        align-items: center;
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            margin-inline: functions.space(1);
+        }
+    }
+
+    .text-danger {
+        color: var(--red);
+    }
+}
+
+@include mixins.down(1000) {
+    .profile {
+        grid-template-columns: 1fr;
+    }
+}
