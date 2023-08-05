@@ -48,6 +48,9 @@ services:
             SCOUT_DRIVER: meilisearch
             MEILISEARCH_HOST: https://ms-fd5db35557c6-2346.lon.meilisearch.io
             MEILISEARCH_KEY: f97b53b887601e5de1b8a54a46307150ecaafdb91a6437c73ef31dbd1ea8935f
+            FACEBOOK_CLIENT_ID: 986575499340932
+            FACEBOOK_CLIENT_SECRET: 6f0d25c6d9d58e58f120641344f3578e
+            FACEBOOK_CLIENT_REDIRECT: /oauth/facebook
 volumes:
     db-data:
         driver: local

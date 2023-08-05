@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,4 +57,9 @@ Route::middleware(['auth', 'lscache:no-cache'])->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+});
+
+Route::middleware(['lscache:no-cache'])->prefix('oauth')->name('oauth.')->group(function () {
+    Route::get('{service}', [SocialController::class, 'connect'])->name('connect');
+    Route::get('{service}/callback', [SocialController::class, 'callback'])->name('callback');
 });

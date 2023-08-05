@@ -53,6 +53,23 @@
                     <a href="{{ route('register') }}" class="auth-register">Pas de compte ? S'inscrire</a>
                 </div>
             </form>
+            <section class="m-top-4">
+                <h2 class="section-title text-center">Utiliser les réseaux sociaux</h2>
+                <div class="btn-social-stack">
+                    <a href="{{ route('oauth.connect', 'google') }}" title="Se connecter avec Google"
+                       class="btn primary-outlined mb-3">
+                        <svg class="icon">
+                            <use xlink:href="/social.svg#google"></use>
+                        </svg>
+                    </a>
+                    <a href="{{ route('oauth.connect', 'facebook') }}" title="Se connecter avec Facebook"
+                       class="btn primary-outlined">
+                        <svg class="icon">
+                            <use xlink:href="/social.svg#facebook"></use>
+                        </svg>
+                    </a>
+                </div>
+            </section>
         </div>
     </div>
 @endsection
