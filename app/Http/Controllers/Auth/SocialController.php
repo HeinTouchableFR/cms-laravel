@@ -20,6 +20,7 @@ class SocialController extends Controller
     {
         $user = Socialite::driver($service)->user();
         $this->registerOrLogin($user, $service);
+        return redirect()->route('home');
     }
 
     protected function registerOrLogin($incomingUser, string $service)
