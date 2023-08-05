@@ -26,20 +26,35 @@
                 </p>
             </form>
             <section class="m-top-4">
-                <h2 class="section-title text-center">Utiliser les réseaux sociaux</h2>
-                <div class="btn-social-stack">
-                    <a href="{{ route('oauth.connect', 'google') }}" title="Se connecter avec Google"
-                       class="btn primary-outlined mb-3">
-                        <svg class="icon">
-                            <use xlink:href="/social.svg#google"></use>
-                        </svg>
-                    </a>
-                    <a href="{{ route('oauth.connect', 'github') }}" title="Se connecter avec Github"
-                       class="btn primary-outlined">
-                        <svg class="icon">
-                            <use xlink:href="/social.svg#github"></use>
-                        </svg>
-                    </a>
+                <h2 class="h2 text-center m-bottom-2">Utiliser les réseaux sociaux</h2>
+                <div class="grid">
+                    @if(config('services.facebook.client_id'))
+                        <a href="{{ route('oauth.connect', 'facebook') }}" title="Se connecter avec Facebook"
+                           class="btn secondary">
+                            <svg class="icon">
+                                <use xlink:href="/social.svg#facebook"></use>
+                            </svg>
+                            Se connecter avec Facebook
+                        </a>
+                    @endif
+                    @if(config('services.google.client_id'))
+                        <a href="{{ route('oauth.connect', 'google') }}" title="Se connecter avec Google"
+                           class="btn secondary">
+                            <svg class="icon">
+                                <use xlink:href="/social.svg#google"></use>
+                            </svg>
+                            Se connecter avec Google
+                        </a>
+                    @endif
+                    @if(config('services.github.client_id'))
+                        <a href="{{ route('oauth.connect', 'github') }}" title="Se connecter avec Github"
+                           class="btn secondary">
+                            <svg class="icon">
+                                <use xlink:href="/social.svg#github"></use>
+                            </svg>
+                            Se connecter avec Github
+                        </a>
+                    @endif
                 </div>
             </section>
         </div>
