@@ -17,24 +17,28 @@ class SocialController extends Controller
         return Socialite::driver($service)->redirect();
     }
 
-    public function callback(string $service)
-    {
-        $user = Socialite::driver($service)->user();
-        $this->registerOrLogin($user, $service);
-    }
-
-    protected function registerOrLogin($incomingUser, string $service): RedirectResponse
+    public function callback(string $service): RedirectResponse
     {
         $method = $service . '_id';
+        $user = Socialite::driver($service)->user();
 
-        $user = Auth::user();
+        $auth = Auth::user();
 
-        if ($user) {
-            $user->$method = $incomingUser->id;
-            $user->save();
-            Auth::login($user);
+        if ($auth) {
+            $auth->$method = $user->id;
+            $auth->save();
+            Auth::login($auth);
             return Redirect::route('profile.index')->with('status', 'oauth-link');
+        } else {
+            $this->registerOrLogin($user, $service);
         }
+
+        return redirect()->route('profile.index');
+    }
+
+    protected function registerOrLogin($incomingUser, string $service)
+    {
+        $method = $service . '_id';
 
         $user = User::where($method, $incomingUser->id)->first();
 
@@ -49,15 +53,6 @@ class SocialController extends Controller
         }
 
         Auth::login($user);
-
-        return redirect()->route('home');
-    }
-
-    public function link(string $service): RedirectResponse
-    {
-        $user = Socialite::driver($service)->user();
-        $this->registerOrLogin($user, $service);
-        return redirect()->route('home');
     }
 
     public function unlink(string $service): RedirectResponse
