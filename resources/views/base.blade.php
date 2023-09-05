@@ -17,10 +17,10 @@
     <meta property="og:title" content="@yield('title')" />
     <meta property="og:site_name" content="{{ siteName() }}" />
     <meta property="og:language" content="fr" />
-    <meta property='og:url' content="{{ Request::root() }}" />
+    <meta property='og:url' content="{{ Request::url() }}" />
     <meta property='og:image' content="{{ openGraphLogo() }}" />
     <meta name='twitter:card' content='summary' />
-    <meta name='twitter:site' content="{{ Request::root() }}" />
+    <meta name='twitter:site' content="{{ Request::url() }}" />
     <meta name='twitter:title' content="@yield('title') | {{ siteName() }}" />
     <meta name='twitter:image' content="{{ openGraphLogo() }}" />
 
@@ -38,14 +38,14 @@
         <link rel="stylesheet" href="/themes/{{ theme() }}/css/modules/{{ $bloc['_name'] }}.css">
     @endforeach
 
-    <link rel='canonical' href="{{ Request::root() }}" />
+    <link rel='canonical' href="{{ Request::url() }}" />
     <script type="application/ld+json">
     @section('jsonLd')
             {
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "{{ siteName() }}",
-              "url": "{{ Request::root() }}",
+              "url": "{{ Request::url() }}",
               "logo": "{{ openGraphLogo() }}",
               "potentialAction": {
                 "@type": "SearchAction",
@@ -63,6 +63,7 @@
                 "{{ social('github') }}"
               ]
             }
+
 
 
 

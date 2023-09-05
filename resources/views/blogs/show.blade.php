@@ -26,7 +26,7 @@
     "author": {
     "@type": "Person",
     "name": "{{ $content->user->username }}",
-    "url": "{{ Request::root() }}"
+    "url": "{{ Request::url() }}"
     },
     "publisher": {
     "@type": "Organization",
