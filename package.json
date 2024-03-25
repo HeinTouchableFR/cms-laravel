@@ -11,7 +11,7 @@
         "build:sass": "sass --no-source-map storage/app/public/themes/**/sass:storage/app/public/themes/**/css",
         "watch": "npm-run-all --parallel watch:*",
         "watch:sass": "sass --watch --no-source-map storage/app/public/themes/aymericlhomme/sass:storage/app/public/themes/aymericlhomme/css",
-        "postbuild": "postcss storage/app/public/themes/aymericlhomme/css/*.css -u autoprefixer cssnano -r --no-map",
+        "build:post": "postcss storage/app/public/themes/aymericlhomme/css/*.css -u autoprefixer cssnano -r --no-map",
         "format": "prettier --config .prettierrc 'resources/ts/**/*.{ts,tsx}' --write",
         "tsc-check": "tsc --noEmit"
     },
