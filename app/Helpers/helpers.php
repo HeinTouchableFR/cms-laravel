@@ -228,6 +228,7 @@ if (!function_exists('logoTag')) {
 
         return imageTag(
             $option?->value ?? '',
+            null,
             $width,
             $height
         );
