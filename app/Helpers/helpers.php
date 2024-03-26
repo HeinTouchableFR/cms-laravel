@@ -11,7 +11,6 @@ if (! function_exists('option')) {
     function option(string $name): string
     {
         $option = Option::where('key', $name)->first();
-
         return $option?->value ?? '';
     }
 }
