@@ -7,6 +7,15 @@ use App\Models\Extension;
 use App\Models\Option;
 use Illuminate\Support\Facades\Storage;
 
+if (! function_exists('option')) {
+    function option(string $name): string
+    {
+        $option = Option::where('key', $name)->first();
+
+        return $option?->value ?? '';
+    }
+}
+
 if (!function_exists('sitename')) {
     function sitename(): string
     {
