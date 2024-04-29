@@ -1,4 +1,4 @@
-FROM node:20-alpine3.18 as base
+FROM --platform=linux/arm64 node:20-alpine3.18 as base
 
 FROM base as deps
 WORKDIR /app
@@ -19,7 +19,7 @@ COPY --from=deps /app/node_modules /app/node_modules
 ADD . .
 RUN npm run build
 
-FROM php:8.1-fpm-alpine as install-composer
+FROM --platform=linux/arm64 php:8.1-fpm-alpine as install-composer
 RUN apk --no-cache add curl git wget bash dpkg
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && \
