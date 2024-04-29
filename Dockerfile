@@ -30,7 +30,7 @@ WORKDIR /var/www/html
 ADD . .
 RUN composer install --optimize-autoloader --no-dev
 
-FROM php:8.1-fpm-alpine
+FROM --platform=linux/amd64 php:8.1-fpm-alpine
 # Add PHP extensions
 COPY --from=install-composer /usr/local/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions zip imagick pdo_mysql
