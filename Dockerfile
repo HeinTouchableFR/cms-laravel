@@ -19,7 +19,7 @@ COPY --from=deps /app/node_modules /app/node_modules
 ADD . .
 RUN npm run build
 
-FROM --platform=linux/arm64 php:8.1-fpm-alpine as install-composer
+FROM --platform=linux/arm64 arm64v8/php:8.1-fpm-alpine as install-composer
 RUN apk --no-cache add curl git wget bash dpkg
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && \
@@ -30,7 +30,7 @@ WORKDIR /var/www/html
 ADD . .
 RUN composer install --optimize-autoloader --no-dev
 
-FROM --platform=linux/arm64 php:8.1-fpm-alpine
+FROM --platform=linux/arm64 arm64v8/php:8.1-fpm-alpine
 # Add PHP extensions
 COPY --from=install-composer /usr/local/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions zip imagick pdo_mysql
