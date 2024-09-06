@@ -80,7 +80,7 @@
         "react-datepicker": "^4.15.0",
         "react-dom": "^18.0.0",
         "react-flip-toolkit": "^7.1.0",
-        "react-use": "^17.4.0",
+        "react-use": "^17.5.1",
         "scriptjs": "^2.5.9",
         "sortablejs": "^1.10.2",
         "tom-select": "^1.7.5",
