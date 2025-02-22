@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Routing\UrlGenerator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,8 +20,13 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(UrlGenerator $url): void
     {
+        if(env('APP_ENV') !== 'dev')
+        {
+            $url->forceScheme('https');
+        }
+
         Paginator::defaultView('shared.partials.paginator');
         Paginator::defaultSimpleView('pagination::simple-bootstrap-5');
 
